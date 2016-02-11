@@ -113,7 +113,31 @@ display(ep);
 	
 	\[ e^{-1} = \sum_{k=0}^{n} \frac{(-1)^{k}e^{-0.25}}{k!} (0.75)^{k} + R_{n} \]
 	
-	Thus is remains only to employ each given order and compute their respective errors:
+	Thus is remains only to employ each given order and compute their respective errors (when the true value is $e^{-1} \approx 0.3679$):\\
+	
+	Zero Order:
+	\begin{align*}
+	e^{-1} &\approx e^{-0.25} \approx \boxed{0.7788}\\	
+	\left| \epsilon_{t} \right| &= \left| \frac{e^{-1}-e^{-0.25}}{e^{-1}} \right| \approx \left| \frac{0.3679-0.7788}{0.3679} \right| \approx 111.70\%
+	\end{align*}
+	
+	First Order:
+	\begin{align*}
+	e^{-1} &\approx e^{-0.25} - e^{-0.25}(0.75) \approx \boxed{0.1947}\\	
+	\left| \epsilon_{t} \right| &= \left| \frac{e^{-1}-e^{-0.25}}{e^{-1}} \right| \approx \left| \frac{0.3679-0.1947}{0.3679} \right| \approx 47.07\%
+	\end{align*}
+	
+	Second Order:
+	\begin{align*}
+	e^{-1} &\approx e^{-0.25} - e^{-0.25}(0.75) + \frac{e^{-0.25}}{2} (0.75)^{2} \approx \boxed{0.4137}\\	
+	\left| \epsilon_{t} \right| &= \left| \frac{e^{-1}-e^{-0.25}}{e^{-1}} \right| \approx \left| \frac{0.3679-0.4137}{0.3679} \right| \approx 12.47\%
+	\end{align*}
+	
+	Third Order:
+	\begin{align*}
+	e^{-1} &\approx e^{-0.25} - e^{-0.25}(0.75) + \frac{e^{-0.25}}{2} (0.75)^{2} - \frac{e^{-0.25}}{6}(0.75)^{3} \approx \boxed{0.3590}\\
+	\left| \epsilon_{t} \right| &= \left| \frac{e^{-1}-e^{-0.25}}{e^{-1}} \right| \approx \left| \frac{0.3679-0.3590}{0.3679} \right| \approx 2.42\%
+	\end{align*}
 		
 \end{itemize}
 
@@ -124,5 +148,37 @@ display(ep);
 	
 \end{problem}
 
+\begin{proof}
+Note that $f'(x) = 2ax+b$, $f''(x) = 2a$, and $\forall n\in\mathbb{N}, n>2$
+
+\[ \frac{d^{n}}{dx^{n}}\left[ f(x) \right] = 0 \]
+
+We then use equation 4.13 as in the previous problems, and notice that with $f$ defined as above, 
+
+\begin{align*}
+f(x_{i+1}) &= \sum_{k=0}^{n} \frac{f^{(k)}(x_{i})}{k!} h^{k} + R_{n}\\
+ax_{i+1}^{2} + bx_{i+1} + c &= \sum_{k=0}^{2} \frac{f^{(k)}(x_{i})}{k!} h^{k} + R_{n}\\
+							&= (ax_{i}^{2} + bx_{i} + c) + (2ax_{i} + b)h + \frac{2a}{2}h^{2} + R_{n}\\
+ax_{i+1}^{2} + bx_{i+1} + c	&= (ax_{i}^{2} + bx_{i} + c) + (2ax_{i} + b)h + ah^{2} + R_{n}
+\end{align*}
+
+Which implies
+\begin{align*}
+R_{n} 	&= (ax_{i+1}^{2} - ax_{i}^{2} - 2ax_{i}h - ah^{2}) + (bx_{i+1} - bx_{i} - bh) + (c - c)\\
+		&= a(x_{i+1}^{2} - x_{i}^{2} - 2x_{i}h - h^{2}) + b(x_{i+1} - x_{i} - h) + 0\\
+		&= a(x_{i+1}^{2} - x_{i}^{2} - 2x_{i}(x_{i+1} - x_{i}) - (x_{i+1} - x_{i})^{2}) + b(0)\\
+		&= a(x_{i+1}^{2} - x_{i}^{2} - 2x_{i}x_{i+1} + 2x_{i}^{2} - (x_{i+1}^{2} - 2x_{i}x_{i+1} + x_{i}^{2}))\\
+		&= a(x_{i+1}^{2} - 2x_{i}x_{i+1} + x_{i}^{2} - (x_{i+1}^{2} - 2x_{i}x_{i+1} + x_{i}^{2}))\\
+		&= a(0)\\
+R_{n}	&= 0
+\end{align*}
+
+But this is true for all $n\geq 2$, so then for any order Taylor expansion greater than or equal to 2,
+
+\[ ax_{i+1}^{2} + bx_{i+1} + c = f(0) + f'(0) + \frac{f''(x_{i})}{2}h^{2} \]
+
+exactly and without approximation.
+
+\end{proof}
 
 \end{document}
