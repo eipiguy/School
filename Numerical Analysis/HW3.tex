@@ -157,9 +157,8 @@ We then use equation 4.13 as in the previous problems, and notice that with $f$ 
 
 \begin{align*}
 f(x_{i+1}) &= \sum_{k=0}^{n} \frac{f^{(k)}(x_{i})}{k!} h^{k} + R_{n}\\
-ax_{i+1}^{2} + bx_{i+1} + c &= \sum_{k=0}^{2} \frac{f^{(k)}(x_{i})}{k!} h^{k} + R_{n}\\
-							&= (ax_{i}^{2} + bx_{i} + c) + (2ax_{i} + b)h + \frac{2a}{2}h^{2} + R_{n}\\
-ax_{i+1}^{2} + bx_{i+1} + c	&= (ax_{i}^{2} + bx_{i} + c) + (2ax_{i} + b)h + ah^{2} + R_{n}
+ax_{i+1}^{2} + bx_{i+1} + c &= (ax_{i}^{2} + bx_{i} + c) + (2ax_{i} + b)h + \frac{2a}{2}h^{2} + R_{n}\\
+							&= ax_{i}^{2} + bx_{i} + c + 2ax_{i}h + bh + ah^{2} + R_{n}
 \end{align*}
 
 Which implies
