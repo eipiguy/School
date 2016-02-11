@@ -1,0 +1,128 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+
+
+% Opening
+\title{HW3 - Ch4(pg120) - 2,4,10,16}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\lstset{basicstyle=\ttfamily,
+		language=Matlab,
+		keywordstyle=\bf\color{blue},
+		commentstyle=\it\color{magenta},
+		identifierstyle=\bf
+		}
+
+\setcounter{problem}{1}
+\begin{problem}
+
+	Convert the following numbers from binary into decimal:
+	
+\end{problem}
+
+\begin{itemize}
+
+	\item \verb|1011001|\\
+	\\
+	$2^{0} + 2^{3} + 2^{4} + 2^{6} = 1 + 8 + 16 + 64 = \boxed{89}$
+	
+	\item \verb|0.01011|\\
+	\\
+	$2^{-2} + 2^{-4} + 2^{-5} = 0.25 + 0.0625 + 0.03125 = \boxed{0.34375}$
+	
+	\item \verb|110.01001|\\
+	\\
+	$2^{2} + 2^{1} + 2^{-2} + 2^{-5} = 4 + 2 + 0.25 + 0.03125 = \boxed{6.28125}$
+		
+\end{itemize}
+
+\setcounter{problem}{3}
+\begin{problem}
+
+	The machine epsilon is the smallest number that can be added to 1 and register as greater than 1 by the computer. Write a MATLAB program (based on the given algorithm in the book) to compute this number, and validate the script by comparing to the built in function \verb|eps|.
+	
+\end{problem}
+	
+\begin{lstlisting}[frame=single]
+% Clear our memory and working space
+clear;
+clc;
+
+% Begin by displaying the value we wish to achieve
+check = eps;
+display(check);
+
+% Calculate and display the manually computed value
+ep = 1;
+while ep+1>1
+	ep = ep/2;
+end
+ep = ep*2;
+
+display(ep);
+\end{lstlisting}
+
+\setcounter{problem}{9}
+\begin{problem}
+
+	The following infinite series can be used to approximate $e^{x}$
+
+	\[ e^{x} = 1 + x + \frac{x^{2}}{2} + \frac{x^{3}}{3!} + \dots + \frac{x^{n}}{n!} \]
+	
+\end{problem}
+
+\begin{itemize}
+
+	\item Prove that this Maclaurin series expansion is a special case of the Taylor series expansion (Eq. 4.13) with $x_{i}=0$ and $h=x$.\\
+	
+	\begin{proof}
+		
+		By equation 4.13 we know that a complete Taylor series expansion of $f$ about $x_{i}$ is given by:
+		
+		\[ f(x_{i+1}) = \sum_{k=0}^{n} \frac{f^{(k)}(x_{i})}{k!} h^{k} + R_{n} \]
+		
+		where $h = x_{i+1} - x_{i}$.\\
+		\\
+		Then if we set $x_{i}=0$ and $h=x$ as proposed, then $x_{i+1} = x_{i} + h = 0 + x = x$, and we have that
+		
+		\[ f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(0)}{k!} x^{k} + R_{n} \]
+		
+		Thus if we take $f(x)=e^{x}$ noting that $e^{0}=1$, we arrive at the given formula as desired.\\
+		
+	\end{proof}
+
+	\item Use the Taylor series to estimate $f(x)=e^{-x}$ at $x_{i+1}=1$ for $x_{i}=0.25$. Employ the zero through third order versions and compute the $\left|\epsilon_{t}\right|$ in each case.\\
+	\\
+	Again, using the given formula, we substitute in the appropriate values, finding that $h = x_{i+1} - x_{i} = 1 - 0.25 = 0.75$.
+	
+	\[ f(1) = \sum_{k=0}^{n} \frac{f^{(k)}(0.25)}{k!} (0.75)^{k} + R_{n} \]
+	
+	Implying that for $f(x)=e^{-x}$, where $\forall m\in\mathbb{N}$,
+	
+	\[ \frac{d^{m}}{dx^{m}}\left[e^{-x}\right] = (-1)^{n}e^{-x} \]
+	
+	we have that
+	
+	\[ e^{-1} = \sum_{k=0}^{n} \frac{(-1)^{k}e^{-0.25}}{k!} (0.75)^{k} + R_{n} \]
+	
+	Thus is remains only to employ each given order and compute their respective errors:
+		
+\end{itemize}
+
+\setcounter{problem}{13}
+\begin{problem}
+
+	Prove that Eq.4.11 is exact for all value of $x$ if $f(x)=ax^{2} + bx + c$.
+	
+\end{problem}
+
+
+\end{document}
