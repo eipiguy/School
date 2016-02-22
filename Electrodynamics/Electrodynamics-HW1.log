@@ -1,7 +1,7 @@
 This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.23)  22 FEB 2016 12:11
 entering extended mode
-**Electrodynamics-HW2.tex
-(C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW2.tex
+**Electrodynamics-HW1.tex
+(C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW1.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -175,7 +175,7 @@ Package graphics Info: Driver file: pdftex.def on input line 91.
 \Gin@req@height=\dimen116
 \Gin@req@width=\dimen117
 )
-(C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW2.aux)
+(C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW1.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
@@ -213,95 +213,41 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 14.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 \c@problem=\count115
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 23.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
-File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 23.
-
-Underfull \hbox (badness 10000) in paragraph at lines 30--38
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 30--38
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 30--38
-
+Overfull \hbox (44.63733pt too wide) in paragraph at lines 43--43
+[] 
  []
 
 [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-Underfull \hbox (badness 10000) in paragraph at lines 63--69
-
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Overfull \hbox (11.07243pt too wide) in paragraph at lines 53--53
+[] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 63--69
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 83--89
-
- []
-
-[3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 115--116
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 122--123
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 140--143
-
- []
-
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 145--149
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 162--166
-
- []
-
-[6] [7] [8]
-(C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW2.aux)
+[2]
+(C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW1.aux)
  ) 
 Here is how much of TeX's memory you used:
- 3342 strings out of 493921
- 44292 string characters out of 3147285
- 104421 words of memory out of 3000000
- 6616 multiletter control sequences out of 15000+200000
- 11556 words of font info for 45 fonts, out of 3000000 for 9000
+ 3319 strings out of 493921
+ 43945 string characters out of 3147285
+ 108416 words of memory out of 3000000
+ 6599 multiletter control sequences out of 15000+200000
+ 10591 words of font info for 42 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,13n,32p,664b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,12n,32p,433b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
-/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pf
-b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Electrodynamics-HW2.pdf (8 pages, 160104 bytes).
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on Electrodynamics-HW1.pdf (2 pages, 112877 bytes).
 PDF statistics:
- 77 PDF objects out of 1000 (max. 8388607)
+ 49 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

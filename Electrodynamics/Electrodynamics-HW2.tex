@@ -7,7 +7,7 @@
 
 % Opening
 \title{Electrodynamics HW2\\
-pg51 - Ch1 - 6,9,12}
+Ch1 - 6,9,12 (pg51)}
 \author{Neal D. Nesbitt}
 
 \begin{document}
@@ -191,5 +191,32 @@ and substitute into our previously derived equation for the force on each of the
 	\[ \int_{V}\rho\Phi' d^{3}x + \int_{S}\sigma\Phi' da = \int_{V}\rho'\Phi d^{3}x + \int_{S}\sigma'\Phi da \]
 \end{problem}
 
+Let us begin by recalling Green's Theorem.
+\[ \int_{V} \left( \phi\nabla^{2}\psi - \psi\nabla^{2}\phi \right) d^{3}x = \int_{S} \left( \phi\nabla\psi - \psi\nabla\phi \right) \cdot \mathbf{\hat{n}} da \]
+\\
+If we substitute $\phi = \Phi$ and $\psi = \Phi'$, we end up with
+\[ \int_{V} \left( \Phi\nabla^{2}\Phi' - \Phi'\nabla^{2}\Phi \right) d^{3}x = \int_{S} \left( \Phi\nabla\Phi' - \Phi'\nabla\Phi \right) \cdot \mathbf{\hat{n}} da \]
+Then we can use Poisson's equation to substitute $\nabla^{2}\Phi=-\rho/\epsilon_{0}$ as well as for $\Phi'$.
+\[ \int_{V} \left( \frac{-\Phi\rho'}{\epsilon_{0}} + \frac{\Phi'\rho}{\epsilon_{0}} \right) d^{3}x = \int_{S} \left( \Phi\nabla\Phi' - \Phi'\nabla\Phi \right) \cdot \mathbf{\hat{n}} da \]
+We then distribute to separate te integrals, and use the fact that $\nabla\Phi\cdot\mathbf{\hat{n}}=\frac{d\Phi}{d\mathbf{\hat{n}}}$
+\[ \frac{-1}{\epsilon_{0}}\int_{V} \Phi\rho' d^{3}x + \frac{1}{\epsilon_{0}}\int_{V} \Phi'\rho d^{3}x = \int_{S} \Phi\frac{d\Phi'}{d\mathbf{\hat{n}}} da - \int_{S} \Phi'\frac{d\Phi}{d\mathbf{\hat{n}}} da \]
+For the final step of the derivation we must recall Gauss's law, reducing to a surface density rather than a volume density, and then apply the definition of scalar potential.
+\begin{align*}
+\oint_{S} \mathbf{E}\cdot\mathbf{\hat{n}} da &= \frac{1}{\epsilon_{0}} \int_{V} \rho(\mathbf{x}) d^{3}x = \frac{1}{\epsilon_{0}} \oint_{S} \sigma(\mathbf{x}) da\\
+-\oint_{S} \nabla\Phi\cdot\mathbf{\hat{n}} da &= \frac{1}{\epsilon_{0}} \oint_{S} \sigma(\mathbf{x}) da\\
+-\oint_{S} \frac{d\Phi}{d\mathbf{\hat{n}}} da &= \frac{1}{\epsilon_{0}} \oint_{S} \sigma(\mathbf{x}) da\\
+0 &= \oint_{S} \left( \frac{d\Phi}{d\mathbf{\hat{n}}} + \frac{\sigma(\mathbf{x})}{\epsilon_{0}} \right) da
+\end{align*}
+Implying that 
+\[ \frac{d\Phi}{d\mathbf{\hat{n}}} = \frac{-\sigma}{\epsilon_{0}} \]
+\\
+We then continue by substituting this into our previous identity
+\begin{align*}
+\frac{-1}{\epsilon_{0}}\int_{V} \Phi\rho' d^{3}x + \frac{1}{\epsilon_{0}}\int_{V} \Phi'\rho d^{3}x &= \int_{S} \Phi\frac{d\Phi'}{d\mathbf{\hat{n}}} da - \int_{S} \Phi'\frac{d\Phi}{d\mathbf{\hat{n}}} da \\
+\frac{-1}{\epsilon_{0}}\int_{V} \Phi\rho' d^{3}x + \frac{1}{\epsilon_{0}}\int_{V} \Phi'\rho d^{3}x &= \frac{1}{\epsilon_{0}}\int_{S} \Phi\sigma' da - \frac{1}{\epsilon_{0}}\int_{S} \Phi'\sigma da \\
+-\int_{V} \Phi\rho' d^{3}x + \int_{V} \Phi'\rho d^{3}x &= \int_{S} \Phi\sigma' da - \int_{S} \Phi'\sigma da
+\end{align*}
+\[ \boxed{\int_{V} \Phi\rho' d^{3}x + \int_{S} \Phi\sigma' da = \int_{V} \Phi'\rho d^{3}x + \int_{S} \Phi'\sigma da} \]
+Which is Green's reciprocation theorem as given.
 
 \end{document}
