@@ -1,8 +1,8 @@
-function [root,fx,ea,iter] = bisectAbs(func,xl,xu,es,maxit,varargin)
-% bisect: root locations
-%   [root,fx,ea,iter] = bisectAbs(func,x1,xu,es,maxit,p1,p2,...)
-%       uses bisection to find a root of func 
-%       within an absolute error margin
+function [root,fx,ea,iter] = falsepositionRel(func,xl,xu,es,maxit,varargin)
+% false position: root locations
+%   [root,fx,ea,iter] = falsepositionRel(func,x1,xu,es,maxit,p1,p2,...)
+%       uses false position to find a root of func 
+%       within an relative error margin (% of estimate)
 % input:
 %   func = name of function
 %   xl,xu = lower and upper guesses
@@ -27,17 +27,13 @@ if test > 0,error('no sign change'),end
 if nargin < 4 | isempty(es),es=0.0001;end
 if nargin < 5 | isempty(maxit),maxit=50;end
 
-% shrink needed iterations if possible
-% based on the desired absolute error
-if ceil(log2(xu-xl/es)) < maxit,maxit=ceil(log2(xu-xl/es));end
-
 % initialize iterations, root guess, and resulting error
 iter = 0; xr = xl; ea = 100;
 % while we have not reached the maximum iterations needed
 while(1)
     % save the last root guess, and pick the new one, and step
     xrold = xr;
-    xr = (xl + xu)/2;
+    xr = xu - func(xu)*(xl - xu)/(func(xl)-func(xu));
     iter = iter + 1;
     
     % if we are not at an exact root,
@@ -58,6 +54,6 @@ while(1)
     
     % if we've hit the maximum number of iterations,
     % stop the loop and set the values to return
-    if iter >= maxit,break,end
+    if ea <= es | iter >= maxit,break,end
 end
 root = xr; fx = func(xr,varargin{:});

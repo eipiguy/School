@@ -2,6 +2,7 @@
 
 \usepackage{amsmath,amsfonts,amssymb,amsthm}
 \usepackage{listings,color}
+\usepackage{graphicx}
 
 
 % Opening
@@ -154,11 +155,33 @@ root = xr; fx = func(xr,varargin{:});
 	
 \end{problem}
 
+Given the same function as before, we proceed with our iterations.
+
+\[ f(c_{d}) = v(4) - 36 = \sqrt{\frac{(9.81)(80)}{c_{d}}} \tanh\left( 4 \sqrt{\frac{(9.81)c_{d}}{80}} \right) - 36 \]
+
+First Iteration:
+\[ f(x_{l1}=0.1) = 0.8603, f(x_{u1}=0.2) = -1.1974 \]
+\[ f(x_{r1}=0.1418) = -0.0352 \]
+
+Lower half contains the root.\\
+
+Second Iteration:
+\[ f(x_{l2}=0.1) = 0.8603, f(x_{u2}=0.1418) = -0.0352 \]
+\[ f(x_{r2}=0.1402) = -0.0010, \left| \varepsilon_{a} \right| = 1.14\% \]
+
+And this completes the process with the result that $\boxed{c_{d}\approx 0.1402}$.
+
 \begin{problem}
 
 	Develop an M-file for the false position method. Test is by solving Prob. 5.1
 	
 \end{problem}
+
+This is the exact same code as the previous example, except that the line for computing $x_{r}$ in the while loop is changed to reflect the false position algorithm.
+
+\begin{lstlisting}
+    xr = xu - func(xu)*(xl - xu)/(func(xl)-func(xu));
+\end{lstlisting}
 
 \setcounter{problem}{6}
 \begin{problem}
@@ -166,5 +189,11 @@ root = xr; fx = func(xr,varargin{:});
 	Determine the roots of $f(x)=-12-21x+18x^{2}-2.75x^{3}$ graphically. In addition, determine the first root of the function with bisection and false position. Use initial guesses of $x_{l}=-1$ and $x_{u}=0$ and a stopping criterion of 1\%.
 	
 \end{problem}
+
+\includegraphics[width=\linewidth]{HW4-PolynomialGraph.jpg}
+
+The graph suggests a root between -0.5 and -0.4; possibly at -0.425.\\
+
+The bisect method calculated a root in 8 iterations at $x=-0.4180$ achieving a relative error of $\left| \varepsilon_{a} \right| =0.9346\%$ where $f(-0.4180)=0.1227$, while the false position method calculated a root in 5 iterations at $x=-0.4140$ achieving a relative error of $\left| \varepsilon_{a} \right| =0.4464\%$  where $f(-0.4140)=-0.0249$.
 
 \end{document}

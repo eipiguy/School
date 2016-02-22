@@ -1,0 +1,63 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Electrodynamics HW1\\
+pg51 - Ch1 - 5}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\begin{problem}
+	The time-averaged potential of a hydrogen atom is given by
+	\[ \Phi = \frac{q}{4\pi\epsilon_{0}} \frac{e^{-\alpha r}}{r} \left( 1 + \frac{\alpha r}{2} \right) \]
+	where $q$ is the magnitude of the electronic charge, and $\alpha^{-1}=a_{0}/2$, $a_{0}$ being the Bohr radius. Find the distribution of charge (both continuous and discrete) that will give this potential and interpret your result physically.	
+\end{problem}
+
+Given the potential $\Phi$, we make use of the Poisson equation in spherical coordinates with only an $r$ dependence to find
+\[ \nabla^{2}\Phi = \frac{1}{r^{2}}\frac{\partial}{\partial r} \left[ r^{2} \frac{\partial\Phi}{\partial r}\right] = -\rho / \epsilon_{0} \]
+which implies
+\[ \rho = -\epsilon_{0} \nabla^{2}\Phi = \frac{-\epsilon_{0}}{r^{2}}\frac{\partial}{\partial r} \left[ r^{2} \frac{\partial\Phi}{\partial r}\right] \]
+\\
+So if we begin by assuming that $r\ne 0$ (to account for the singularity in our potential) we can take the Laplacian directly:
+\begin{align*}
+	\rho &= \frac{-\epsilon_{0}}{r^{2}}\frac{\partial}{\partial r} \left[ r^{2} \frac{\partial}{\partial r} \left[ \frac{q}{4\pi\epsilon_{0}} \frac{e^{-\alpha r}}{r} \left( 1 + \frac{\alpha r}{2} \right) \right] \right]\\
+		&= \frac{-q}{4\pi r^{2}} \frac{\partial}{\partial r} \left[ r^{2} \frac{\partial}{\partial r} \left[ e^{-\alpha r} \left( \frac{1}{r} + \frac{\alpha}{2} \right) \right] \right]\\
+		&= \frac{-q}{4\pi r^{2}} \frac{\partial}{\partial r} \left[ r^{2} \frac{\partial}{\partial r} \left[ e^{-\alpha r} \left( \frac{1}{r} + \frac{\alpha}{2} \right) \right] \right]\\
+\end{align*}
+
+At his stage I would like to bring the $r^{2}$ term into the inner partial, and so I add and subtract the necessary component to account for the product rule.
+\begin{align*}
+	\rho &= \frac{-q}{4\pi r^{2}} \frac{\partial}{\partial r} \left[ r^{2} \frac{\partial}{\partial r} \left[ e^{-\alpha r} \left( \frac{1}{r} + \frac{\alpha}{2} \right) \right] + \frac{\partial}{\partial r} \left[ r^{2} \right] e^{-\alpha r} \left( \frac{1}{r} + \frac{\alpha}{2} \right) - \frac{\partial}{\partial r} \left[ r^{2} \right] e^{-\alpha r} \left( \frac{1}{r} + \frac{\alpha}{2} \right) \right]\\
+		&= \frac{-q}{4\pi r^{2}} \frac{\partial}{\partial r} \left[ \frac{\partial}{\partial r} \left[ r^{2}e^{-\alpha r} \left( \frac{1}{r} + \frac{\alpha}{2} \right) \right] - \frac{\partial}{\partial r} \left[ r^{2} \right] e^{-\alpha r} \left( \frac{1}{r} + \frac{\alpha}{2} \right) \right]\\
+		&= \frac{-q}{4\pi r^{2}} \frac{\partial}{\partial r} \left[ \frac{\partial}{\partial r} \left[ r^{2}e^{-\alpha r} \left( \frac{1}{r} + \frac{\alpha}{2} \right) \right] - 2r e^{-\alpha r} \left( \frac{1}{r} + \frac{\alpha}{2} \right) \right]\\
+		&= \frac{-q}{4\pi r^{2}} \frac{\partial}{\partial r} \left[ \frac{\partial}{\partial r} \left[ e^{-\alpha r} \left( r + \frac{\alpha r^{2}}{2} \right) \right] - e^{-\alpha r} \left( 2 + \alpha r \right) \right]\\
+\end{align*}
+		
+We then proceed with the computation.
+\begin{align*}
+	\rho &= \frac{-q}{4\pi r^{2}} \left( \frac{\partial^{2}}{\partial r^{2}} \left[ e^{-\alpha r} \left( r + \frac{\alpha r^{2}}{2} \right) \right] - \frac{\partial}{\partial r} \left[ e^{-\alpha r} \left( 2 + \alpha r \right) \right] \right)\\
+		&= \frac{-q}{4\pi r^{2}} \left( \frac{\partial}{\partial r} \left[ -\alpha e^{-\alpha r} \left( r + \frac{\alpha r^{2}}{2} \right) + e^{-\alpha r} \left( 1 + \alpha r \right) \right] + \alpha e^{-\alpha r} \left( 2 + \alpha r \right) - \alpha e^{-\alpha r} \right)\\
+		&= \frac{-q}{4\pi r^{2}} \left( \frac{\partial}{\partial r} \left[ e^{-\alpha r} \left( 1 - \frac{\alpha^{2} r^{2}}{2} \right) \right] + \alpha e^{-\alpha r} \left( 1 + \alpha r \right) \right)\\
+		&= \frac{-q}{4\pi r^{2}} \left( -\alpha e^{-\alpha r} \left( 1 - \frac{\alpha^{2} r^{2}}{2} \right) - \alpha^{2}re^{-\alpha r} + \alpha e^{-\alpha r} \left( 1 + \alpha r \right) \right)\\
+		&= \frac{q\alpha e^{-\alpha r}}{4\pi r^{2}} \left( 1 - \frac{\alpha^{2} r^{2}}{2} + \alpha r - \left( 1 + \alpha r \right) \right)\\
+		&= \frac{q\alpha e^{-\alpha r}}{4\pi r^{2}} \frac{\alpha^{2} r^{2}}{2} = \boxed{\frac{q\alpha^{3}e^{-\alpha r}}{8\pi}}\\
+\end{align*}
+
+So having computed the charge density for $r\ne 0$ we now proceed to account for the case where $r=0$ by taking the limit as $r\to 0$ of the potential, leaving the singularity, and then computing $\rho$.
+
+\[ \lim\limits_{r\to 0} \Phi = \lim\limits_{r\to 0} \left( \frac{q}{4\pi\epsilon_{0}} \frac{e^{-\alpha r}}{r} \left( 1 + \frac{\alpha r}{2} \right)\right) = \frac{q}{4\pi\epsilon_{0}} \lim\limits_{r\to 0} \left( \frac{1}{r} \right)\]
+
+And since $\nabla^{2}\left(\frac{1}{r}\right)=-4\pi\delta(r)$ we know that
+\[ \rho(r\to 0) = -\epsilon_{0}\nabla^{2}\left[\lim\limits_{r\to 0}\Phi\right] = \boxed{q\delta(r)} \]
+implying there is a point charge of magnitude $q$ at $r=0$.
+
+\end{document}

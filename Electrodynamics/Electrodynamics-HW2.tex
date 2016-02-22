@@ -1,0 +1,195 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Electrodynamics HW2\\
+pg51 - Ch1 - 6,9,12}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\setcounter{problem}{5}
+\begin{problem}
+	A simple capacitor is a device formed by two insulated conductors adjacent to each other. If equal and opposite charges are placed on the conductors, there will be a certain difference of potential between them. The ratio of the magnitude of the charge on one conductor to the magnitude of the potential difference is called the capacitance (in SI units it is measured in farads). Using Gauss's law, calculate the capacitance of
+	\begin{itemize}
+		\item two large, flat, conducting sheets of area A, separated by a small distance d
+		\item two concentric conducting spheres with radii $a$, $b$ $(b>a)$
+		\item two concentric conducting cylinders of length $L$, large compared to their radii $a$, $b$ $(b>a)$
+		\item What is the inner diameter of the outer conductor in an air-filled coaxial cable whose center conductor is a cylindrical wire of diameter 1 mm and whose capacitance is $3\times 10^{-11}$ F/m? $3\times 10^{-12}$ F/m
+	\end{itemize}
+\end{problem}
+
+Flat Plate Capacitor:\\
+So let's begin by considering two large flat sheets of area $A$, separated by a small distance $d$, one with charge $+q$, and the other with equal and opposite charge $-q$. We orient the sheets in the x-y plane, consider the top face of the positive plate at $z=0$, and the bottom face of the negative plate at $z=d$.\\
+\\
+We assume that we only have to account for the interior of the capacitor, without edge effects, since the plates are large compared to their separation. This also allows us to assume that the bulk of the electric field between the capacitors is constant and uniformly pointing along the z axis.\\
+\\
+We then construct a Gaussian pillbox straddling only the positive plate on the bottom of the capacitor. We orient this pillbox such that the top and bottom faces are parallel to the plate, but are a negligible distance apart. This way we can ignore the effects of the electric field on the sides of the pillbox, as we shrink them away to zero with a limit, leaving only the effect on the parallel faces to consider. (This limiting process seems irrelevant since the normal components of the uniform field on opposite sides of the pillbox should cancel out anyway, and moreover are zero because the normal is perpendicular to the field)\\
+\\
+Call the area of the plate enclosed in the pillbox $a$, and note that the charge density on the plate is $q/A$. Recalling Gauss's law:
+\begin{align*}
+	\oint_{S} \mathbf{E}_{+}\cdot \mathbf{\hat{n}} da &= \frac{1}{\epsilon_{0}} \int_{V} \rho(\mathbf{x}) d^{3}x\\
+	\int_{S} \mathbf{E}_{+\text{top}}\cdot \mathbf{\hat{n}}_{\text{top}} da + \int_{S} \mathbf{E}_{+\text{bottom}}\cdot \mathbf{\hat{n}}_{\text{bottom}} da &= \frac{qa}{A\epsilon_{0}}\\
+\end{align*}
+where since the electric fields on both side of the plates are pointing in the same directions as the normals of the pillbox, and $\left|\mathbf{E}_{+\text{top}}\right| = \left|\mathbf{E}_{+\text{bottom}}\right|$, we then have:
+\begin{align*}
+	\left|\mathbf{E}_{+}\right| \int_{S} da + \left|\mathbf{E}_{+}\right|\int_{S} da &= \frac{qa}{A\epsilon_{0}}\\
+	2a \left|\mathbf{E}_{+}\right| &= \frac{qa}{A\epsilon_{0}}\\
+	\left|\mathbf{E}_{+}\right| &= \frac{q}{2A\epsilon_{0}}
+\end{align*}
+
+This is then the magnitude of the field caused by the charge on the positive plate. A similar procedure will show that the field from the negative plate has the same magnitude: \[ \left|\mathbf{E}_{-}\right| = \frac{q}{2A\epsilon_{0}} \] such that the total field between the plates is twice as strong.
+\[ \left|\mathbf{E}\right| = \left|\mathbf{E}_{+}\right| + \left|\mathbf{E}_{-}\right| = \frac{q}{A\epsilon_{0}} \]
+
+What remains is to calculate the potential difference between the plates using the definition:
+\[ \mathbf{E} = -\nabla\Phi = -\left( \frac{d\Phi}{dx}, \frac{d\Phi}{dy}, \frac{d\Phi}{dz} \right) \]
+
+Since the plates can be thought of to produce a one dimensional uniform field, and $\mathbf{E}$ has only a z component, we can dot each side with $\mathbf{\hat{z}}$ and integrate to show
+\begin{align*}
+\frac{d\Phi}{dz} &= -\mathbf{E}\cdot\mathbf{\hat{z}} = \frac{-q}{A\epsilon_{0}}\\
+\Phi &= -\int\frac{q}{A\epsilon_{0}}dz = \frac{-qz}{A\epsilon_{0}}
+\end{align*}
+Thus the potential difference between the plates is 
+\[ V = \Phi\rvert_{-}^{+} = \frac{qd}{A\epsilon_{0}} \]
+and altogether we find
+\[ \frac{q}{V} = \boxed{\frac{A\epsilon_{0}}{d}}\]
+\\
+Concentric Sphere Capacitor:\\
+Now consider two concentric spheres of radii $a$ and $b$ centered at the origin st $a<b$. (They are considered infinitely thin, although I believe measuring the outer radius of the inner sphere to be $a$ and the inner radius of the outer sphere to be $b$ will accomplish the same goal.) Place a charge $+q$ on the inner sphere, and an equal and opposite charge $-q$ on the outer sphere so that the electric field between them is pointing radially outward.\\
+\\
+We then approach the problem in the same way, except instead of a pillbox, in this example we use a Gaussian sphere with radius $r\in(a,b)$, taking note that the field in this scenario is radial, and therefore lined up with the normal of the Gaussian surface.\\
+\begin{align*}
+\oint_{S} \mathbf{E}_{+}\cdot \mathbf{\hat{n}} da &= \frac{1}{\epsilon_{0}} \int_{V} \rho(\mathbf{x}) d^{3}x\\
+\left|\mathbf{E}\right|\oint_{S}da &= \frac{q}{\epsilon_{0}}\\
+4\pi r^{2}\left|\mathbf{E}\right| &= \frac{q}{\epsilon_{0}}\\
+\left|\mathbf{E}\right| &= \frac{q}{4\pi\epsilon_{0}r^{2}}
+\end{align*}
+Since the field is radial, and $\mathbf{E}=-\nabla\Phi$, we can dot the field with the normal radial vector and integrate to find:
+\begin{align*}
+\nabla\Phi\cdot\mathbf{\hat{r}} = \frac{d\Phi}{dr} &= \frac{-q}{4\pi\epsilon_{0}r^{2}}\\
+\Phi &= \frac{-q}{4\pi\epsilon_{0}}\int\frac{dr}{r^{2}} = \frac{q}{4\pi\epsilon_{0}r}
+\end{align*}
+Thus the potential difference between the spheres is
+\[ V = \Phi\rvert_{-}^{+} = \frac{q}{4\pi\epsilon_{0}}\left(\frac{1}{a}-\frac{1}{b}\right) = \frac{q(b-a)}{4\pi\epsilon_{0}ab} \]
+meaning the capacitance is
+\[ \frac{q}{V} = \boxed{\frac{4\pi\epsilon_{0}ab}{(b-a)}} \]
+\\
+Concentric Cylinder Capacitor:\\
+Finally we set up two concentric cylinders of length $L$ along the z axis with radii $a$ and $b$ where $a<b$. We put a charge of $+q$ on the inner cylinder and an equal and opposite charge of $-q$ on the outer cylinder.\\
+\\
+To find the field between them, we construct a cylindrical Gaussian surface of radius $s\in(a,b)$ and height $L$ between the cylinders and proceed as before. In this case the field is in the $\mathbf{\hat{s}}$ direction, and is again normal to the Gaussian surface, which does most of the work in the integral for us:
+\begin{align*}
+\oint_{S} \mathbf{E}_{+}\cdot \mathbf{\hat{n}} da &= \frac{1}{\epsilon_{0}} \int_{V} \rho(\mathbf{x}) d^{3}x\\
+\left|\mathbf{E}\right|\oint_{S}da &= \frac{q}{\epsilon_{0}}\\
+2\pi Ls\left|\mathbf{E}\right| &= \frac{q}{\epsilon_{0}}\\
+\left|\mathbf{E}\right| &= \frac{q}{2\pi\epsilon_{0}Ls}
+\end{align*}
+\\
+Again we can use the definition of the scalar potential $\mathbf{E}=-\nabla\Phi$, dot with $\mathbf{\hat{s}}$ in this case, and integrate to show
+\begin{align*}
+\nabla\Phi\cdot\mathbf{\hat{s}} = \frac{d\Phi}{ds} &= \frac{-q}{2\pi\epsilon_{0}Ls}\\
+\Phi &= \frac{-q}{2\pi\epsilon_{0}L}\int \frac{ds}{s} = \frac{-q\ln s}{2\pi\epsilon_{0}L}
+\end{align*}
+Then we find the potential difference between the cylinders and compute the capacitance.
+\begin{align*}
+V = \Phi\rvert_{-}^{+} = \frac{-q\ln (a)}{2\pi\epsilon_{0}L}-\frac{-q\ln (b)}{2\pi\epsilon_{0}L} &= \frac{q\ln (b/a)}{2\pi\epsilon_{0}L}\\
+\frac{q}{V} &= \boxed{\frac{2\pi\epsilon_{0}L}{\ln (b/a)}}
+\end{align*}
+
+We now plug in values for the formula of capacitance in concentric cylinders to calculate the diameter of the outer conductor in a coaxial cable with a given inner conductor diameter $2a = 1$mm, or $1\times 10^{-3}$ m.
+\begin{align*}
+\frac{C}{L} &= \frac{2\pi\epsilon_{0}}{\ln (b/a)}\\
+\ln (b/a) &= \frac{2\pi\epsilon_{0}}{C/L}\\
+b/a &= \exp\left(\frac{2\pi\epsilon_{0}}{C/L}\right)\\
+2b &= 2a\cdot\exp\left(\frac{2\pi\epsilon_{0}}{C/L}\right)
+\end{align*}
+
+So then with a given capacitance per length of$C/L = 3\times 10^{-11}$ F/m, we need an outer conductor with diameter:\\
+\begin{align*}
+2b &= (1\times 10^{-3}(\text{m})) \cdot \exp\left( \frac{2\pi(8.85\times 10^{-12}(\text{F/m}))}{3\times 10^{-11}(\text{F/m})} \right)\\
+2b &= (1\times 10^{-3}(\text{m})) \cdot \exp\left( 1.853 \right)\\
+2b &= 6.38 \times 10^{-3}\text{m} = \boxed{6.38\text{ mm}}
+\end{align*}
+
+Similarly for a capacitance per length of $C/L = 3\times 10^{-12}$ F/m, the outer conductor must have a diameter of:\\
+\begin{align*}
+2b &= 2a\cdot\exp\left(\frac{2\pi\epsilon_{0}}{C/L}\right)\\
+2b &= (1\times 10^{-3}(\text{m})) \cdot \exp\left( \frac{2\pi(8.85\times 10^{-12}(\text{F/m}))}{3\times 10^{-12}(\text{F/m})} \right)\\
+2b &= (1\times 10^{-3}(\text{m})) \cdot \exp\left( 18.54 \right)\\
+2b &= 1.13 \times 10^{5}\text{m} = \boxed{113\text{ km}}
+\end{align*}
+
+
+\setcounter{problem}{8}
+\begin{problem}
+	Calculate the attractive force  between conductors in the parallel plate capacitor (Problem 1.6a) and the parallel cylinder capacitor (Problem 1.7) for
+	\begin{itemize}
+		\item fixed charges on each conductor
+		\item fixed potential difference between conductors
+	\end{itemize}
+\end{problem}
+
+As calculated in Problem 1.6, the magnitude of the electric field between two large conductive plates, each of area $A$, with equal and opposite charges $\pm q$, separated by a small distance, can be approximated to uniformly point perpendicular to their surfaces at a constant magnitude from the positive plate to the negative one.\\
+\\
+The field for each plate was shown to have a contribution of
+\[ \left|\mathbf{E}_{\pm}\right| = \frac{q}{2A\epsilon_{0}} \]
+to the total field, and since $\left| \mathbf{F} \right| = \left| q\mathbf{E} \right|$ we know that the magnitude of the force on each plate due to the other is
+\[ \left| \mathbf{F} \right| = \boxed{\frac{q^{2}}{2A\epsilon_{0}}} \]
+where this force attracts the plates to each other in the direction of their separation due to the opposite nature of their charges.\\
+\\
+If instead we fix the potential difference between the plates, as was found to be
+\[ V = \Phi\rvert_{-}^{+} = \frac{qd}{A\epsilon_{0}} \]
+then the corresponding charge that accumulates on each plate is
+\[ q = \frac{VA\epsilon_{0}}{d} \]
+Plugging this in to the previously derived equation then shows that
+\begin{align*}
+\left| \mathbf{F} \right| &= \frac{q^{2}}{2A\epsilon_{0}}\\
+&= \left( \frac{VA\epsilon_{0}}{d} \right)^{2} \frac{1}{2A\epsilon_{0}}\\
+&= \boxed{\frac{A\epsilon_{0}}{2} \left( \frac{V}{d} \right)^{2}}
+\end{align*}
+
+Now we can consider the electric field due to a charged cylinder in the same way: we neglect edge effect and the "bending" of the cylinder in the middle. As calculated in Problem 1.6, the magnitude of the field associated with a single cylinder with charge $q$ measured a distance from the axis of $d$ is
+\[ \left|\mathbf{E}\right| = \frac{q}{2\pi\epsilon_{0}Ld} \]
+and thus the magnitude of the force on a cylinder due to another of equal and opposite charge separated by an axial distance $d$ is
+\[ \left|\mathbf{F}\right| = \left|q\mathbf{E}\right| = \frac{q^{2}}{2\pi\epsilon_{0}Ld} \]
+These forces are directed such as to attract the cylinders together along their axes.\\
+\\
+We must then add the electric fields of each of the cylinders to find the total field between them, and since they produce the same fields, this reduces to
+\[ \left|\mathbf{E}_{\text{Total}}\right| = \frac{q}{\pi\epsilon_{0}Ld} \]
+We then use the definition of potential where $\mathbf{E} = -\nabla\Phi$, then assuming the cylinders are separated along the x axis, we dot each side with $\mathbf{\hat{x}}$ and integrate to find:
+\begin{align*}
+\frac{d\Phi}{dx} &= \frac{q}{\pi\epsilon_{0}Lx}\\
+\Phi &= \frac{q}{\pi\epsilon_{0}L} \int \frac{dx}{x} = \frac{q\ln x}{\pi\epsilon_{0}L}
+\end{align*}
+If the positive and negative cylinder each have a respective radius of $a_{0}$ and $a_{1}$, and we note that $d$ is an axial rather than a surface separation, then the potential difference between them is found by
+\[ V = \Phi\rvert_{-}^{+} = \frac{-q\ln (a_{0})}{\pi\epsilon_{0}L} - \frac{-q\ln (d-{a_1})}{\pi\epsilon_{0}L} = \frac{q}{\pi\epsilon_{0}L}\ln\left(\frac{d-a_{1}}{a_{0}}\right) \]
+\\
+This allows us to find the accumulated charge with a given potential difference using some algebra
+\begin{align*}
+V &= \frac{q}{\pi\epsilon_{0}L}\ln\left(\frac{d-a_{1}}{a_{0}}\right)\\
+q &= V\pi\epsilon_{0}L \ln\left(\frac{a_{0}}{d-a_{1}}\right)\\
+\end{align*}
+and substitute into our previously derived equation for the force on each of them as before
+\begin{align*}
+\left|\mathbf{F}\right| &= \frac{q^{2}}{2\pi\epsilon_{0}Ld}\\
+&= \frac{1}{2\pi\epsilon_{0}Ld} \left( V\pi\epsilon_{0}L \ln\left(\frac{a_{0}}{d-a_{1}}\right) \right)^{2}\\
+&= \boxed{\frac{\pi\epsilon_{0}L}{2d} \left( V \ln\left(\frac{a_{0}}{d-a_{1}}\right) \right)^{2}}
+\end{align*}
+
+
+\setcounter{problem}{11}
+\begin{problem}
+	Prove \textit{Green's reciprocation theorem}: If $\Phi$ is the potential due to a volume-charge density $\rho$ within a volume $V$ and a surface-charge density $\sigma$ on the conducting surface $S$ bounding the volume $V$, while $\Phi'$ is the potential due to another charge distribution $\rho'$ and $\sigma'$, then
+	\[ \int_{V}\rho\Phi' d^{3}x + \int_{S}\sigma\Phi' da = \int_{V}\rho'\Phi d^{3}x + \int_{S}\sigma'\Phi da \]
+\end{problem}
+
+
+\end{document}
