@@ -1,0 +1,235 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Electrodynamics HW2\\
+Ch2 - 7,11,23 (pg85)}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\setcounter{problem}{6}
+\begin{problem}
+Consider a potential problem in the half-space defined by $z\ge 0$, with Derichlet boundary conditions on the plane $z=0$ (and at infinity)
+\begin{itemize}
+\item Write down the appropriate Green function $G(\mathbf{x},\mathbf{x}')$
+\item If the potential on the plane $z=0$ is specified to be $\Phi=V$ inside a circle of radius $a$ centered at the origin, and $\Phi = 0$ outside that circle, find an integral expression for the potential at the point $P$ specified in terms of cylindrical coordinates $(\rho,\phi,z)$
+\item Show that, along the axis of the circle $(\rho = 0)$, the potential is given by
+\[ \Phi = V \left( 1 - \frac{z}{\sqrt{a^{2}+z^{2}}} \right) \]
+\item Show that at large distances $(\rho^{2}+z^{2} \gg a^{2} )$ the potential can be expanded in a power series in $(\rho^{2}+z^{2})^{-1}$, and that the leading terms are
+\[ \Phi = \frac{Va^{2}}{2} \frac{z}{(\rho^{2}+z^{2})^{3/2}} \left[ 1 - \frac{3a^{2}}{4(\rho^{2}+z^{2})} + \frac{5(3\rho^{2}a^{2}+a^{4})}{8(\rho^{2}+z^{2})^{2}} + \cdots \right] \]
+Verify the consistence of the solution with your previous results.
+\end{itemize}
+\end{problem}
+
+We know from the book's derivations using Green's theorem that
+\[ \Phi = \frac{1}{4\pi\epsilon_{0}} \int_{V} \rho(\mathbf{x'}) G(\mathbf{x},\mathbf{x'}) d^{3}x' + \frac{1}{4\pi} \oint_{S} \left[ G(\mathbf{x},\mathbf{x'}) \frac{\partial\Phi}{\partial n'}(\mathbf{x'}) -\Phi(\mathbf{x'}) \frac{\partial G(\mathbf{x},\mathbf{x'})}{\partial n'}) \right] da' \]
+
+
+Where for Dirichlet boundary conditions, $G_{D}(\mathbf{x},\mathbf{x'})=0$ for $\mathbf{x'}$ on $S$ ( $\mathbf{x'}=(x,y,0)$), and this reduces to
+\[ \Phi = \frac{1}{4\pi\epsilon_{0}} \int_{V} \rho(\mathbf{x'}) G_{D}(\mathbf{x},\mathbf{x'}) d^{3}x' + \frac{1}{4\pi} \oint_{S} \Phi(\mathbf{x'}) \frac{\partial G_{D}(\mathbf{x},\mathbf{x'})}{\partial n'}) da' \]
+
+We also know that a Green function is defined by
+\begin{align*}
+G(\mathbf{x},\mathbf{x'}) &= \frac{1}{\left| \mathbf{x}-\mathbf{x'} \right|} + F(\mathbf{x},\mathbf{x'})\\
+\nabla'^{2} G(\mathbf{x},\mathbf{x'}) &= -4\pi\delta(\mathbf{x}-\mathbf{x'})
+\end{align*}
+and that inside the specified volume (in this case $z\ge 0$) 
+\[ \nabla'^{2} F(\mathbf{x},\mathbf{x'}) = 0 \]
+
+We are then looking for the function $F_{D}(\mathbf{x},\mathbf{x'})$ that makes the Green function match the boundary conditions, but still satisfies the restrictions on their Laplacians.
+
+To use the method of images, we notice that the first term of the Green function $1/|\mathbf{x}-\mathbf{x'}|$ is the potential of a point charge $q=4\pi\epsilon_{0}$. We then search for a corresponding distribution of imaginary charges (outside of the given volume) whose potential will satisfy the boundary conditions when added to $1/|\mathbf{x}-\mathbf{x'}|$.
+
+This will replace the problem with the given boundary conditions to an equivalent problem where we only need to compute the potential of the charge distribution. The imaginary charges ``stand in" for the boundary because they produce the same effect, and by including them in the charge distribution they allow us to remove the boundary from the problem. We then set $F$ as the potential of these imaginary charges, and this will properly complete the Green function.
+
+Because this imaginary charge distribution would be outside of the volume, we are guaranteed its potential, given by $F$, will satisfy Laplace's equation inside the volume ($\nabla'^{2} F(\mathbf{x},\mathbf{x'}) = 0$). We also know by definition of the Green function that $\nabla'^{2} G(\mathbf{x},\mathbf{x'}) = -4\pi\delta(\mathbf{x}-\mathbf{x'})$, so if we can find such a setup, the resulting Green function $G$ will provide a unique solution to the original potential problem.\\
+\\
+In cases of symmetrical boundaries, such as this flat sheet, this scheme may work out, and the imaginary charges needed to produce a usable $F$ will hopefully be simple to find. But in general cases with potentially wild boundaries they may not be. It is important to note that the boundaries are what matter. Since we are only finding the Green function, the charge distribution for the associated problem plays no role. We only have the first term of this function $1/|\mathbf{x}-\mathbf{x'}|$, which represents the potential of one charge, to account for with image potentials from $F$. So it is how our placement of the image charges (giving image potential $F$) account for the boundary conditions alone that form the bulk of the problem for finding the full Green function.
+
+\paragraph{}
+In this case we imagine a plane with the single charge above it, and then, given the symmetry of a plane, it does not seem a large step to guess that another charge opposite the plane from the first may produce the desired result.
+
+We write the position of the charge above the plane in Cartesian coordinates $(\mathbf{x}=(x,y,z))$, and if for each coordinate $i$, we call $\Delta x_{i}=(x_{i}-x_{i}')$, our definition for $G$ becomes
+\[ G_{D}(\mathbf{x},\mathbf{x'}) = \frac{1}{\sqrt{\Delta x^{2}+\Delta y^{2}+\Delta z^{2}}} + F_{D}(\mathbf{x},\mathbf{x'}) \]
+We then use our guess and take $F$ to represent the potential of a charge equal and opposite to the first, and therefore of charge $-4\pi\epsilon_{0}$ located at $(x,y,-z)$ such that
+\begin{align*}
+F_{D}(\mathbf{x},\mathbf{x'}) &= \frac{-1}{\sqrt{\Delta x^{2}+\Delta y^{2}+(z+z')^{2}}}\\
+G_{D}(\mathbf{x},\mathbf{x'}) &= \boxed{\frac{1}{\sqrt{\Delta x^{2}+\Delta y^{2}+\Delta z^{2}}} - \frac{1}{\sqrt{\Delta x^{2}+\Delta y^{2}+(z+z')^{2}}}}
+\end{align*}
+Notice that by construction this Green function satisfies the boundary conditions
+\[ G_{D}(\mathbf{x}\ni(z=0),\mathbf{x'}) = \frac{1}{\sqrt{\Delta x^{2}+\Delta y^{2}+(z')^{2}}} - \frac{1}{\sqrt{\Delta x^{2}+\Delta y^{2}+(z')^{2}}} = 0 \]
+It also satisfies the restrictions on the Laplacians as previously mentioned, and therefore represents the unique function needed for any charge distribution problem with this given boundary.
+
+\paragraph{}
+Now we turn our attention to finding the potential at some point in space $P=(\rho,\phi,z)$ given that inside a circle of radius $a$ centered at the origin on the plane $z'=0$ there is a fixed potential $\Phi=V$, and everywhere else on the same plane the potential is $\Phi=0$.
+
+Let us begin by noticing that we are still using Dirichlet boundaries by specifying the potential on the plane. There is also no specified charge in the volume, only a fixed potential on the surface to account for. Thus our original motivating equation reduces as before, and more so: $G_{D}(\mathbf{x},\mathbf{x'})=0$ for $\mathbf{x'}$ on $S$, and for $\mathbf{x'}$ in $V$, $\rho(\mathbf{x'})=0$
+\begin{align*}
+\Phi &= \frac{1}{4\pi\epsilon_{0}} \int_{V} \rho(\mathbf{x'}) G(\mathbf{x},\mathbf{x'}) d^{3}x' + \frac{1}{4\pi} \oint_{S} \left[ G(\mathbf{x},\mathbf{x'}) \frac{\partial\Phi}{\partial n'}(\mathbf{x'}) -\Phi(\mathbf{x'}) \frac{\partial G(\mathbf{x},\mathbf{x'})}{\partial n'}) \right] da'\\
+\Phi &= \frac{1}{4\pi} \oint_{S} \Phi(\mathbf{x'}) \frac{\partial G_{D}(\mathbf{x},\mathbf{x'})}{\partial n'}) da'
+\end{align*}
+
+Then, since we are using the same planar boundary, even with the new potential specifications, the restrictions on the Green function itself have not changed, allowing us to reuse the function found previously:
+\begin{align*}
+G_{D}(\mathbf{x},\mathbf{x'}) &= \frac{1}{\sqrt{\Delta x^{2}+\Delta y^{2}+\Delta z^{2}}} - \frac{1}{\sqrt{\Delta x^{2}+\Delta y^{2}+(z+z')^{2}}}\\
+\frac{\partial G_{D}}{\partial n'}(\mathbf{x},\mathbf{x'}) = \frac{\partial G_{D}}{\partial z'}(\mathbf{x},\mathbf{x'}) &= \frac{z-z'}{[\Delta x^{2}+\Delta y^{2}+\Delta z^{2}]^{3/2}} + \frac{z+z'}{[\Delta x^{2}+\Delta y^{2}+(z+z')^{2}]^{3/2}}
+\end{align*}
+(notice the chain rule causes a change in sign) 
+
+If we then switch to cylindrical coordinates
+\begin{align*}
+\Delta x^{2} = (x-x')^{2} = (\rho\cos\phi - \rho'\cos\phi')^{2} &= \rho^{2}\cos^{2}\phi - 2\rho\rho'\cos\phi\cos\phi' + (\rho')^{2}\cos^{2}\phi'\\
+\Delta y^{2} = (y-y')^{2} = (\rho\sin\phi - \rho'\sin\phi')^{2} &= \rho^{2}\sin^{2}\phi - 2\rho\rho'\sin\phi\sin\phi' + (\rho')^{2}\sin^{2}\phi'\\
+\Delta x^{2} + \Delta y^{2} &= \rho^{2} + (\rho')^{2} - 2\rho\rho'(\cos\phi\cos\phi' + \sin\phi\sin\phi')\\
+&= \rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')
+\end{align*}
+and thus
+\begin{multline*}
+\frac{\partial G_{D}}{\partial z'}(\mathbf{x},\mathbf{x'}) = \frac{z-z'}{[\rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') + (z-z')^{2}]^{3/2}}\\ + \frac{z+z'}{[\rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') + (z+z')^{2}]^{3/2}}
+\end{multline*}
+\begin{multline*}
+\Phi = \frac{1}{4\pi} \oint_{S} \Phi(\mathbf{x'}) \left( \frac{z-z'}{[\rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') + (z-z')^{2}]^{3/2}} \right. \\ \left. + \frac{z+z'}{[\rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') + (z+z')^{2}]^{3/2}} \right) da'
+\end{multline*}
+
+Now, we are integrating over a surface that should contain the upper half space. So imagine a pillbox resting on the x-y plane that grows to infinity on the sides and upwards on the z-axis. The side components cancel as in any pillbox setup, the roof falls out because we specified $\Phi(\mathbf{x'}\ni(z\to\infty))=0$, and we are left with the surface on the plane $z'=0$. Also, $\Phi(\mathbf{x'})=0$ outside our circle of radius $a$, so all together our integral reduces to
+\begin{align*}
+\Phi &= \frac{1}{4\pi} \int_{(z'=0)} \frac{2z\Phi(\mathbf{x'})}{[\rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') + z^{2}]^{3/2}} da'\\
+\Phi &= \boxed{\frac{Vz}{2\pi} \int_{0}^{2\pi}\int_{0}^{a} \frac{\rho' d\rho'd\phi'}{[\rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') + z^{2}]^{3/2}}}\\
+\end{align*}
+
+If we then set $\rho=0$ we can see what the potential would be along the z-axis
+\begin{align*}
+\Phi(\rho=0) &= \frac{Vz}{2\pi} \int_{0}^{2\pi}\int_{0}^{a} \frac{\rho' d\rho'd\phi'}{[(\rho')^{2} + z^{2}]^{3/2}}\\
+&= Vz \int_{0}^{a} \frac{\rho' d\rho'}{[(\rho')^{2} + z^{2}]^{3/2}}\\
+&= -Vz \left.\frac{1}{\sqrt{(\rho')^{2} + z^{2}}}\right|_{\rho'=0}^{a}\\
+\Phi(\rho=0) &= \frac{-Vz}{\sqrt{a^{2} + z^{2}}} - \frac{-Vz}{\sqrt{z^{2}}} = \boxed{V\left( 1 - \frac{z}{\sqrt{a^{2}+z^{2}}} \right)}
+\end{align*}
+Although we really need to be careful here. $z/\sqrt{z^{2}}$ is actually $z/|z|$ which breaks us into two cases. Since we are above the x-y plane, $(z\ge 0)\to z/|z|=1$ and this equation is fine. If on the other hand we wished to include points below the plane, we would have to adjust our Green function for the new boundary, and the given reduction would change: $(z<0)\to z/|z|=-1$. But symmetry allows us to find the full solution with relative ease if we note that the potential at both $\pm z$ should be the same.
+\[ \Phi(\rho=0) = \boxed{V\left( 1 - \frac{|z|}{\sqrt{a^{2}+z^{2}}} \right)} \]
+
+Now, going back to the general potential in the upper half space, we consider the case where $(\rho^{2}+z^{2}\gg a^{2})$. So let us look again at the formula we calculated
+\begin{align*}
+\Phi &= \frac{Vz}{2\pi} \int_{0}^{2\pi}\int_{0}^{a} \frac{\rho' d\rho'd\phi'}{[\rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') + z^{2}]^{3/2}}\\
+&= \frac{Vz}{2\pi} \int_{0}^{2\pi}\int_{0}^{a} \left[\rho^{2} + z^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')\right]^{-3/2}\rho' d\rho'd\phi'\\
+&= \frac{Vz}{2\pi} \int_{0}^{2\pi}\int_{0}^{a} \left[(\rho^{2} + z^{2})\left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]\right]^{-3/2}\rho' d\rho'd\phi'\\
+&= \frac{Vz}{2\pi(\rho^{2} + z^{2})^{3/2}} \int_{0}^{2\pi}\int_{0}^{a} \left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]^{-3/2}\rho' d\rho'd\phi'\\
+\end{align*}
+
+We then expand the integrand using the generalized binomial theorem.
+\begin{align*}
+(1+x)^{z} &= \sum_{k=0}^{\infty} {z\choose k} x^{k} = 1 + zx + \frac{z(z-1)}{2!}x^{2} + \cdots\\
+\left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})} \right]^{-3/2} &= \sum_{k=0}^{\infty} {-3/2\choose k} \left( \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})} \right)^{k}
+\end{align*}
+
+This only converges properly if 
+\[ \left| \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})} \right| < 1 \]
+or equivalently
+\[ \left| (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') \right| < (\rho^{2} + z^{2}) \]
+But since by the triangle inequality, and the fact that $\rho'\le a$
+\[ \left| (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') \right| \le \left| (\rho')^{2} \right| + \left| 2\rho\rho'\cos(\phi-\phi') \right| \le a^{2} + 2\rho a\]
+Then $a^{2} \ll \rho^{2} + z^{2}$ implies we can assume the smaller $2\rho a$ term drops out, and
+\[ \left| (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') \right| \le a^{2} + 2\rho a < (\rho^{2} + z^{2}) \]
+which verifies that the expansion is valid.\\
+\\
+So expanding using generalized binomials:
+\begin{multline*} 
+\left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]^{-3/2} = 1 - \frac{3}{2}\left( \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})} \right)\\
++ \frac{(-\frac{3}{2})(-\frac{3}{2}-1)}{2!}\left( \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})} \right)^{2} - \cdots \end{multline*}
+
+We then integrate this term by term 
+\begin{align*} 
+&\int_{0}^{2\pi}\int_{0}^{a} \left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]^{-3/2} \rho' d\rho'd\phi'\\
+=& \int_{0}^{2\pi}\int_{0}^{a} \rho' d\rho'd\phi'\\
+&- \int_{0}^{2\pi}\int_{0}^{a} \frac{3}{2}\left( \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})} \right) \rho' d\rho'd\phi'\\
+&+ \int_{0}^{2\pi}\int_{0}^{a} \frac{(-\frac{3}{2})(-\frac{3}{2}-1)}{2!}\left( \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})} \right)^{2} \rho' d\rho'd\phi'\\
+&- \cdots\\
+\end{align*}
+
+Separating each term to make the integration easier to follow:
+\[ \int_{0}^{2\pi}\int_{0}^{a} \rho' d\rho'd\phi' = \boxed{\pi a^{2}} \]
+\\
+\[ \int_{0}^{2\pi}\int_{0}^{a} \frac{-3}{2}\left( \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})} \right) \rho' d\rho'd\phi' \]
+\begin{align*} 
+&= \frac{-3}{2(\rho^{2} + z^{2})} \int_{0}^{2\pi}\int_{0}^{a} \left[ (\rho')^{3} - 2\rho(\rho')^{2}\cos(\phi-\phi') \right] d\rho'd\phi'\\
+&= \frac{-3}{2(\rho^{2} + z^{2})} \left[ \frac{\pi a^{4}}{2} - 2\rho \int_{0}^{2\pi}\int_{0}^{a} \left[ (\rho')^{2}\cos(\phi-\phi') \right] d\rho'd\phi' \right]\\
+&= \frac{-3}{2(\rho^{2} + z^{2})} \left[ \frac{\pi a^{4}}{2} - \frac{2a\rho}{3} \int_{0}^{2\pi} \cos(\phi-\phi') d\phi' \right]\\
+&= \frac{-3}{2(\rho^{2} + z^{2})} \left[ \frac{\pi a^{4}}{2} + \frac{2a\rho}{3} \left[ \sin(\phi-2\pi) - \sin(\phi) \right] \right]\\
+&= \frac{-3}{2(\rho^{2} + z^{2})} \left[ \frac{\pi a^{4}}{2} \right] = \boxed{\frac{-3\pi a^{4}}{4(\rho^{2} + z^{2})}}\\
+\end{align*}
+
+\[ \int_{0}^{2\pi}\int_{0}^{a} \frac{(-\frac{3}{2})(-\frac{3}{2}-1)}{2!}\left( \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})} \right)^{2} \rho' d\rho'd\phi' \]
+\begin{align*}
+&= \frac{15}{8(\rho^{2} + z^{2})^{2}} \int_{0}^{2\pi}\int_{0}^{a} \left[ (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') \right]^{2} \rho' d\rho'd\phi'\\
+&= \frac{15}{8(\rho^{2} + z^{2})^{2}} \int_{0}^{2\pi}\int_{0}^{a} \left[ (\rho')^{4} - 4\rho(\rho')^{3}\cos(\phi-\phi') + 4\rho^{2}(\rho')^{2}\cos^{2}(\phi-\phi') \right] \rho' d\rho'd\phi'\\
+&= \frac{15}{8(\rho^{2} + z^{2})^{2}} \int_{0}^{2\pi}\int_{0}^{a} \left[ (\rho')^{5} - 4\rho(\rho')^{4}\cos(\phi-\phi') + 4\rho^{2}(\rho')^{3}\cos^{2}(\phi-\phi') \right] d\rho'd\phi'\\
+&= \frac{3}{8(\rho^{2} + z^{2})^{2}} \left[ \frac{\pi a^{6}}{3} - 4\rho \int_{0}^{2\pi}\int_{0}^{a} \left[ (\rho')^{4}\cos(\phi-\phi') - \rho(\rho')^{3}\cos^{2}(\phi-\phi') \right] d\rho'd\phi' \right]\\
+&= \frac{15}{8(\rho^{2} + z^{2})^{2}} \left[ \frac{\pi a^{6}}{3} - 4\rho \left( \frac{a^{5}}{5} \int_{0}^{2\pi} \cos(\phi-\phi') d\phi' - \rho \int_{0}^{2\pi}\int_{0}^{a} (\rho')^{3}\cos^{2}(\phi-\phi') d\rho'd\phi' \right) \right]\\
+&= \frac{15}{8(\rho^{2} + z^{2})^{2}} \left[ \frac{\pi a^{6}}{3} + 4\rho^{2} \int_{0}^{2\pi}\int_{0}^{a} (\rho')^{3}\cos^{2}(\phi-\phi') d\rho'd\phi' \right]\\
+&= \frac{15}{8(\rho^{2} + z^{2})^{2}} \left[ \frac{\pi a^{6}}{3} + \rho^{2}a^{4} \int_{0}^{2\pi} \cos^{2}(\phi-\phi') d\phi' \right] = \frac{15}{8(\rho^{2} + z^{2})^{2}} \left[ \frac{\pi a^{6}}{3} - \pi\rho^{2}a^{4} \right]\\
+&= \frac{15}{8(\rho^{2} + z^{2})^{2}} \left[ \frac{\pi a^{6} - 3\pi\rho^{2}a^{4}}{3} \right] = \boxed{\frac{5\pi a^{4}(a^{2} - 3\rho^{2})}{8(\rho^{2} + z^{2})^{2}}}
+\end{align*}
+
+Adding these back together shows
+\begin{multline*}
+\int_{0}^{2\pi}\int_{0}^{a} \left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]^{-3/2} \rho' d\rho'd\phi'\\
+= \pi a^{2} - \frac{3\pi a^{4}}{4(\rho^{2} + z^{2})} + \frac{5\pi a^{4}(a^{2} - 3\rho^{2})}{8(\rho^{2} + z^{2})^{2}} - \cdots = \boxed{\pi a^{2} \left[ 1 - \frac{3a^{2}}{4(\rho^{2} + z^{2})} + \frac{5a^{2}(a^{2} - 3\rho^{2})}{8(\rho^{2} + z^{2})^{2}} - \cdots \right]}
+\end{multline*}
+
+And thus
+\begin{multline*}
+\Phi = \frac{Vz}{2\pi(\rho^{2} + z^{2})^{3/2}} \int_{0}^{2\pi}\int_{0}^{a} \left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]^{-3/2}\rho' d\rho'd\phi'\\
+= \frac{Vz}{2\pi(\rho^{2} + z^{2})^{3/2}}\left[ \pi a^{2} \left[ 1 - \frac{3a^{2}}{4(\rho^{2} + z^{2})} + \frac{5a^{2}(a^{2} - 3\rho^{2})}{8(\rho^{2} + z^{2})^{2}} - \cdots \right] \right]\\
+= \boxed{\frac{Vza^{2}}{2(\rho^{2} + z^{2})^{3/2}}\left[ 1 - \frac{3a^{2}}{4(\rho^{2} + z^{2})} + \frac{5a^{2}(a^{2} - 3\rho^{2})}{8(\rho^{2} + z^{2})^{2}} - \cdots \right]}
+\end{multline*}
+which is what we were looking for.
+
+Finally we check that this is consistent with what we got previously by setting $\rho=0$:
+\begin{align*}
+\Phi(\rho=0) &= \frac{Vza^{2}}{2(z^{2})^{3/2}}\left[ 1 - \frac{3a^{2}}{4(z^{2})} + \frac{5a^{2}(a^{2})}{8(z^{2})^{2}} - \cdots \right]\\
+&= \frac{Va^{2}}{2z^{2}}\left[ 1 - \frac{3a^{2}}{4z^{2}} + \frac{5a^{4}}{8z^{4}} - \cdots \right]\\
+&= V\left[ \frac{1}{2}\left(\frac{a^{2}}{z^{2}}\right) - \frac{3}{8}\left(\frac{a^{2}}{z^{2}}\right)^{2} + \frac{5}{16}\left(\frac{a^{2}}{z^{2}}\right)^{3} - \cdots \right]\\
+&= V\left[ 1 - \left( 1 - \frac{1}{2}\left(\frac{a^{2}}{z^{2}}\right) + \frac{3}{4\cdot2}\left(\frac{a^{2}}{z^{2}}\right)^{2} - \frac{5\cdot3}{8\cdot6}\left(\frac{a^{2}}{z^{2}}\right)^{3} + \cdots \right)\right]\\
+&= V\left[ 1 - \left( 1 - \frac{1}{2} \left(\frac{a^{2}}{z^{2}}\right) + \frac{\frac{3}{4}}{2!} \left(\frac{a^{2}}{z^{2}}\right)^{2} + \frac{\frac{-15}{8}}{3!} \left(\frac{a^{2}}{z^{2}}\right)^{3} + \cdots \right)\right]\\
+&= V\left[ 1 - \left( 1 - \frac{1}{2} \left(\frac{a^{2}}{z^{2}}\right) + \frac{\frac{-1}{2}(\frac{-3}{2})}{2!} \left(\frac{a^{2}}{z^{2}}\right)^{2} + \frac{\frac{-1}{2}(\frac{-3}{2})\frac{-5}{2}}{3!} \left(\frac{a^{2}}{z^{2}}\right)^{3} + \cdots \right)\right]\\
+&= V\left[ 1 - \left( 1 - \frac{1}{2} \left(\frac{a^{2}}{z^{2}}\right) + \frac{\frac{-1}{2}(\frac{-1}{2}-1)}{2!} \left(\frac{a^{2}}{z^{2}}\right)^{2} + \frac{\frac{-1}{2}(\frac{-1}{2}-1)(\frac{-1}{2}-2)}{3!}\left(\frac{a^{2}}{z^{2}}\right)^{3} + \cdots \right)\right]
+\end{align*}
+
+So recognizing a binomial expansion that converges when \[\left|\frac{a^{2}}{z^{2}}\right|<1 \implies a^{2} < z^{2} \implies a < |z| \]
+We can substitute and find
+\begin{align*}
+\Phi(\rho=0) &= V\left[ 1 - \left( 1 + \frac{a^{2}}{z^{2}} \right)^{-1/2} \right]\\
+&= V\left[ 1 - \left(\frac{z^{2}+a^{2}}{z^{2}} \right)^{-1/2} \right]\\
+\Phi(\rho=0) &= \boxed{V\left[ 1 - \frac{|z|}{\sqrt{a^{2}+z^{2}}} \right]}
+\end{align*}
+which matches up with our previous answer under the given conditions.
+
+\setcounter{problem}{10}
+\begin{problem}
+A line charge with linear charge density $\tau$ is placed parallel to, and a distance $R$ away from, the axis of a conducting cylinder of radius $b$ held at a fixed voltage such that the potential vanishes at infinity. Find
+\begin{itemize}
+\item The magnitude and position of the image charge(s)
+\item The potential at any point (expressed in polar coordinates with the origin at the axis of the cylinder and the direction from the origin to the line charge as the x axis), including the asymptotic form far from the cylinder
+\item The induced surface-charge density, and plot it as a function of angle for $R/b = 2,4$ in units of $\tau/2\pi b$
+\item The force per unit length on the line charge
+\end{itemize}
+\end{problem}
+
+\setcounter{problem}{22}
+\begin{problem}
+A hollow cube has conducting walls defined by six planes $x=0,y=0,z=0$ and $x=a,y=a,z=a$. The walls $z=0$ and $z=a$ are held at a constant potential $V$. The other four sides are at zero potential.
+\begin{itemize}
+\item Find the potential $\Phi(x,y,z)$ at any point in the cube
+\item Evaluate the potential at the center of the cube numerically, accurate to three significant figures. How many terms in the series is it necessary to keep in order to attain this accuracy? Compare your numerical result with the average value of the potential on the walls. See Problem 2.28
+\item Find the surface-charge density on the wall $z=a$
+\end{itemize}
+\end{problem}
+\end{document}

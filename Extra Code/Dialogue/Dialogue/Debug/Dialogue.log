@@ -1,0 +1,6 @@
+﻿  stdafx.cpp
+  Dialogue.cpp
+c:\users\neal\documents\github\school\extra code\dialogue\dialogue\dialogue.cpp(15): error C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(453): note: see declaration of 'strtok'
+c:\users\neal\documents\github\school\extra code\dialogue\dialogue\dialogue.cpp(22): error C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(453): note: see declaration of 'strtok'

@@ -1,0 +1,50 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Convince Yourself}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\begin{problem} 
+\textbf{Why Do Green Functions Work?}\\
+I am told to start with a point charge $q$ in the specified and find the corresponding image charge that will fulfill the boundary conditions. This is then worked into cylindrical and so on to solve the problem. Why am I doing this?\\
+\\How do we know that finding the Green function for these imaginary charges will solve the original potential problem?\\
+\\
+Even if the Green function cancels out on our boundary conditions, how can we be assured that the resulting potential integrals will as well?\\
+\\
+Plus there is still a redundancy in the original integral requiring us to know the potential to compute the potential. Does plugging in the Green function cancel this part of the integral?
+\end{problem}
+Given that
+\[ \Phi = \frac{1}{4\pi\epsilon_{0}} \int_{V} \rho(\mathbf{x'}) G(\mathbf{x},\mathbf{x'}) d^{3}x' + \frac{1}{4\pi} \oint_{S} \left[ G(\mathbf{x},\mathbf{x'}) \frac{\partial\Phi}{\partial n'} -\Phi(\mathbf{x}) \frac{\partial G(\mathbf{x},\mathbf{x'})}{\partial n'}) \right] da' \]
+
+\begin{align*}
+G(\mathbf{x},\mathbf{x'}) &= \frac{1}{\left| \mathbf{x}-\mathbf{x'} \right|} + F(\mathbf{x},\mathbf{x'})\\
+\nabla'^{2} G(\mathbf{x},\mathbf{x'}) &= -4\pi\delta(\mathbf{x}-\mathbf{x'})
+\end{align*}
+and that inside the specified volume $V$ 
+\[ \nabla'^{2} F(\mathbf{x},\mathbf{x'}) = 0 \]
+
+If we then work backwards through the derivation of this formula using $\Phi=\phi$ and $1/\left|\mathbf{x}-\mathbf{x'}\right|=\psi$, we should arrive at Green's theorem
+\[ \int_{V} \left( \phi\nabla^{2}\psi - \psi\nabla^{2}\phi \right) d^{3}x = \oint_{s} \left[ \phi\frac{\partial\psi}{\partial n} - \psi\frac{\partial\phi}{\partial n} \right] da \]
+which is derived from the divergence theorem
+\[ \int_{V} \nabla\cdot\mathbf{A} d^{3}x = \oint_{S} \mathbf{A}\cdot\mathbf{\hat{n}} da \]
+where our vector field in this case is 
+\[ \mathbf{A}=\phi\nabla\psi = \Phi\nabla\left(\frac{1}{\left|\mathbf{x}-\mathbf{x'}\right|}\right) = \Phi \frac{-(\mathbf{x}-\mathbf{x'})}{\left|\mathbf{x}-\mathbf{x'}\right|^{3}} = \frac{-\Phi\mathbf{\hat{r}}}{\left|\mathbf{x}-\mathbf{x'}\right|^{2}} \]
+
+\begin{problem}
+What is the potential for a point charge $q$ located at $\mathbf{x'}$?
+\end{problem}
+
+
+
+\end{document}
