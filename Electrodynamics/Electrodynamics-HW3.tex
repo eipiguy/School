@@ -6,7 +6,7 @@
 
 
 % Opening
-\title{Electrodynamics HW2\\
+\title{Electrodynamics HW3\\
 Ch2 - 7,11,23 (pg85)}
 \author{Neal D. Nesbitt}
 
@@ -203,7 +203,7 @@ Finally we check that this is consistent with what we got previously by setting 
 &= V\left[ 1 - \left( 1 - \frac{1}{2} \left(\frac{a^{2}}{z^{2}}\right) + \frac{\frac{-1}{2}(\frac{-1}{2}-1)}{2!} \left(\frac{a^{2}}{z^{2}}\right)^{2} + \frac{\frac{-1}{2}(\frac{-1}{2}-1)(\frac{-1}{2}-2)}{3!}\left(\frac{a^{2}}{z^{2}}\right)^{3} + \cdots \right)\right]
 \end{align*}
 
-So recognizing a binomial expansion that converges when \[\left|\frac{a^{2}}{z^{2}}\right|<1 \implies a^{2} < z^{2} \implies a < |z| \]
+So if we recognize that this is a binomial expansion that converges when \[\left|\frac{a^{2}}{z^{2}}\right|<1 \implies a^{2} < z^{2} \implies a < |z| \]
 We can substitute and find
 \begin{align*}
 \Phi(\rho=0) &= V\left[ 1 - \left( 1 + \frac{a^{2}}{z^{2}} \right)^{-1/2} \right]\\
@@ -222,6 +222,121 @@ A line charge with linear charge density $\tau$ is placed parallel to, and a dis
 \item The force per unit length on the line charge
 \end{itemize}
 \end{problem}
+
+So let us first imagine the scenario. Put the axis of a cylinder of radius $b$ along the z-axis, and regulate a constant voltage $v$ on its surface. Add a line charge with charge density $\tau$ parallel to the cylinder and a distance $R$ away from its axis. If we keep the surface of the cylinder fixed at this constant potential, and say that the potential drops off as you move away from the axis, we can imagine this as a boundary value problem as before.
+
+\paragraph{}
+So it seems easiest to work in cylindrical coordinates given the geometry of the problem. So as usual, call $\mathbf{x}=(\rho,\phi,z)$ the observation point, and $\mathbf{x'}=(\rho',\phi',z')$ the points from which our integration components are calculated.
+
+It also seems reasonable to imagine a parallel imaginary line charge on the same radial vector as the given one, but inside the cylinder. This we will say is a distance $R'$ away from the axis of the cylinder, and carries a charge density of $\tau'$.
+
+So we start by finding the potential of each of the line charges, real and imaginary, and then find the position and magnitude of the image line such that the boundary conditions are satisfied.
+
+Construct a Gaussian cylinder of radius $\alpha$ and length $L$ around our line charge. This makes the radial field the line produces constant along the curved surface of the Gaussian cylinder, and assures the field also points normal to it at every point. The top and bottom cancel for sufficiently large $L$, and thus Gauss' law gives us the magnitude of e the field at he radius $\alpha$ away from the line:
+\begin{align*}
+\oint_{S} \mathbf{E}\cdot\mathbf{n} da &= \frac{1}{\epsilon_{0}} \int_{V} \rho(\mathbf{x'}) d^{3}x\\
+\left| \mathbf{E} \right| \oint_{S} da &= \frac{\tau L}{\epsilon_{0}}\\
+\left| \mathbf{E} \right| 2\pi \alpha L &= \frac{\tau L}{\epsilon_{0}}\\
+\left| \mathbf{E} \right| &= \frac{\tau}{2\pi \alpha \epsilon_{0}}\\
+\end{align*}
+Where this was assumed to point radially away from the line charge.
+
+Thus we use our definition of the potential, and if we call $\mathbf{\hat{\alpha}}$ the radial vector pointing away from the line, we can dot our gradient to show that the potential at the same radius is
+\begin{align*}
+\mathbf{E}&=-\nabla\Phi\\
+\mathbf{E}\cdot\mathbf{\hat{\alpha}}&=\frac{-\partial\Phi}{\partial \alpha}\\
+\frac{\partial\Phi}{\partial \alpha} &= \frac{-\tau}{2\pi \alpha \epsilon_{0}}\\
+\Phi &= \frac{-\tau}{2\pi\epsilon_{0}} \int \frac{d\alpha}{\alpha} = \frac{-\tau}{2\pi\epsilon_{0}}\ln\alpha\\
+\end{align*}
+where we can have no integration constant because potential is arbitrarily set against some constant value. So imagine taking the integral from some arbitrarily defined point, say the surface of the cylinder, to infinity. This removes the constant of integration, and makes life a little easier.
+
+If we construct a Gaussian cylinder of radius $\beta$ around the image line in a similar fashion, we will come up with an equivalent formula for its potential a radius $\beta$ away from it:
+\[ \Phi' = \frac{-\tau'}{2\pi\epsilon_{0}}\ln\beta \]
+
+We then recall the distance formula in cylindrical coordinates as computed in the previous problem
+\begin{align*}
+\Delta x^{2} = (x-x')^{2} = (\rho\cos\phi - \rho'\cos\phi')^{2} &= \rho^{2}\cos^{2}\phi - 2\rho\rho'\cos\phi\cos\phi' + (\rho')^{2}\cos^{2}\phi'\\
+\Delta y^{2} = (y-y')^{2} = (\rho\sin\phi - \rho'\sin\phi')^{2} &= \rho^{2}\sin^{2}\phi - 2\rho\rho'\sin\phi\sin\phi' + (\rho')^{2}\sin^{2}\phi'\\
+\Delta x^{2} + \Delta y^{2} &= \rho^{2} + (\rho')^{2} - 2\rho\rho'(\cos\phi\cos\phi' + \sin\phi\sin\phi')\\
+&= \rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')
+\end{align*}
+\[ \Delta\mathbf{x} = \sqrt{\Delta x^{2} + \Delta y^{2} + \Delta z^{2}} = \sqrt{\rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') + (z-z')^{2}} \]
+
+Since we imagined the line charge and image line charge to be on the same radial vector, their angles are the same, and we can imagine them on the x-axis so $\phi'=0$. Since they are considered infinitely long, we can ignore the z components of their distances to the observation point by just picking the same one as the observation point itself ($[z'=z]\to[(z-z')^{2}=0]$). If we can find the charge density of the image line, we then have only the radial position of the line and image lines and to account for, which we called $R$ and $R'$ respectively.
+
+So substitute in the appropriate values for $\alpha$ and $\beta$ and add together the potentials to get
+\begin{align*}
+\Phi_{Total} &= \frac{-\tau}{2\pi\epsilon_{0}}\ln\alpha + \frac{-\tau'}{2\pi\epsilon_{0}}\ln\beta\\
+&= \frac{-1}{2\pi\epsilon_{0}}\left[ \tau\ln\alpha + \tau'\ln\beta \right]\\
+&= \frac{-1}{2\pi\epsilon_{0}}\ln(\alpha^{\tau}\beta^{\tau'})\\
+\Phi_{Total} &= \frac{-1}{2\pi\epsilon_{0}}\ln([\rho^{2} + R^{2} - 2R\rho\cos\phi]^{\tau/2}[\rho^{2} + (R')^{2} - 2R'\rho\cos\phi]^{\tau'/2})
+\end{align*}
+
+So to make this a little more palatable let us take $\rho\to\infty$ where then $\Phi\to 0$. We will leave the $\rho^{2}$ terms that dominate in this case to isolate $\tau$ and $\tau'$:
+\begin{align*}
+0 &= \frac{-1}{2\pi\epsilon_{0}}\ln((\rho^{2})^{\tau/2}(\rho^{2})^{\tau'/2})\\
+0 &= \ln(\rho^{\tau+\tau'})\\
+\tau+\tau' &= 0\\
+\tau' &= \boxed{-\tau}
+\end{align*}
+
+Substituting this in gives
+\begin{align*}
+\Phi_{Total} &= \frac{-1}{2\pi\epsilon_{0}} \ln(\alpha^{\tau}\beta^{\tau'})\\
+&= \frac{-\tau}{2\pi\epsilon_{0}} \ln\left(\frac{\alpha}{\beta}\right)\\
+&= \frac{-\tau}{2\pi\epsilon_{0}} \ln\left(\frac{\sqrt{\rho^{2} + R^{2} - 2R\rho\cos\phi}}{\sqrt{\rho^{2} + (R')^{2} - 2R'\rho\cos\phi}}\right)\\
+\Phi_{Total} &= \frac{-\tau}{4\pi\epsilon_{0}}\ln\left(\frac{\rho^{2} + R^{2} - 2R\rho\cos\phi}{\rho^{2} + (R')^{2} - 2R'\rho\cos\phi}\right)
+\end{align*}
+and if we then use our main boundary condition $\rho=b\to\Phi=V$, we can isolate $\cos\phi$ and take advantage of symmetry
+\begin{align*}
+V &= \frac{-\tau}{4\pi\epsilon_{0}}\ln\left(\frac{b^{2} + R^{2} - 2Rb\cos\phi}{b^{2} + (R')^{2} - 2R'b\cos\phi}\right)\\
+\frac{-4\pi\epsilon_{0}V}{\tau} &= \ln\left(\frac{b^{2} + R^{2} - 2Rb\cos\phi}{b^{2} + (R')^{2} - 2R'b\cos\phi}\right)\\
+\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right) &= \frac{b^{2} + R^{2} - 2Rb\cos\phi}{b^{2} + (R')^{2} - 2R'b\cos\phi}\\
+\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(b^{2} + (R')^{2} - 2R'b\cos\phi) &= b^{2} + R^{2} - 2Rb\cos\phi\\
+\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(b^{2} + (R')^{2}) - (b^{2} + R^{2}) &= \exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(2R'b\cos\phi) - 2Rb\cos\phi\\
+\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(b^{2} + (R')^{2}) - (b^{2} + R^{2}) &= \left[\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(2R') - 2R\right]b\cos\phi\\
+b\cos\phi &= \frac{\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(b^{2} + (R')^{2}) - (b^{2} + R^{2})}{\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(2R') - 2R} 
+\end{align*}
+
+Then since the potential on the cylinder must be the same from any angle,
+\[ b\cos\phi = \frac{\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(b^{2} + (R')^{2}) - (b^{2} + R^{2})}{\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(2R') - 2R} \]
+must be true for any angle $\phi$ from which we view the cylinder.
+
+Thus the numerator must be zero to account for when we look down the y-axis $(\phi=\pi/2)\to(\cos\phi=0)$, and the numerator and denominator must be proportional to account for looking down the x-axis $(\phi=0)\to(\cos\phi=1)$. This means the denominator must be zero as well since both these values of $\phi$ must give the same result. Note that this is only the case where we are looking at the potential on the cylinder. If we were accounting for the potential anywhere in space, there would not be the symmetry we are making use of, and we would have to account for the line and image effects separately.
+
+\paragraph{}
+But given our situation currently we proceed by setting the numerator and denominator to zero to find $R'$
+\begin{align*}
+\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(b^{2} + (R')^{2}) - (b^{2} + R^{2}) &= 0 & \exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(2R') - 2R&=0\\
+\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(b^{2} + (R')^{2}) &= b^{2} + R^{2} & \exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)&=\frac{R}{R'}\\
+\frac{R}{R'}(b^{2} + (R')^{2}) &= b^{2} + R^{2}\\
+\frac{b^{2}}{R'} + R' &= \frac{b^{2}}{R} + R\\
+b^{2} \left(\frac{1}{R'} - \frac{1}{R}\right) &= R - R'\\
+b^{2} \left(\frac{R-R'}{RR'}\right) &= R - R'\\
+b^{2} &= RR'\\
+R' &= \boxed{\frac{b^{2}}{R}}
+\end{align*}
+
+We then have the full solution to the potential by substituting in the new found values. I now drop the ``Total" subscript and flip the numerator and denominator in the log with the negative constant, as I should have done previously.
+\[ \Phi = \boxed{\frac{\tau}{4\pi\epsilon_{0}}\ln\left(\frac{\rho^{2} + (\frac{b^{2}}{R})^{2} - \frac{2b^{2}}{R}\rho\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi}\right)} \]
+If we then set this up to expand $\ln$ in a power series
+\begin{align*}
+\Phi &= \frac{\tau}{4\pi\epsilon_{0}}\ln\left(1-1+\frac{\rho^{2} + (\frac{b^{2}}{R})^{2} - \frac{2b^{2}}{R}\rho\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi}\right)\\
+&= \frac{\tau}{4\pi\epsilon_{0}}\ln\left(1+\frac{\rho^{2} + (\frac{b^{2}}{R})^{2} - \frac{2b^{2}}{R}\rho\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi} - \frac{\rho^{2} + R^{2} - 2R\rho\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi}\right)\\
+&= \frac{\tau}{4\pi\epsilon_{0}}\ln\left(1+ \frac{(\frac{b^{2}}{R})^{2} - R^{2} - \left( \frac{b^{2}}{R} - R \right)2\rho\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi}\right)\\
+\Phi &= \frac{\tau}{4\pi\epsilon_{0}}\ln\left(1+ \frac{(b^{4} - R^{4})\frac{1}{R^{2}} + (R^{2}-b^{2})\frac{2\rho}{R}\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi}\right)
+\end{align*}
+and taking $\rho\gg R$, and $\rho\gg b$, we can approximate the potential very far away from the system and drop all but the largest terms
+\begin{align*}
+\Phi &= \frac{\tau}{4\pi\epsilon_{0}}\ln\left(1+ \frac{(b^{4} - R^{4})\frac{1}{R^{2}} + (R^{2}-b^{2})\frac{2\rho}{R}\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi}\right)\\
+\Phi &= \frac{\tau}{4\pi\epsilon_{0}}\ln\left(1+ \frac{(R^{2}-b^{2})\frac{2\rho}{R}\cos\phi}{\rho^{2}}\right)\\
+\Phi &= \frac{\tau}{4\pi\epsilon_{0}}\ln\left(1+ \frac{(R^{2}-b^{2})2\cos\phi}{R\rho}\right)
+\end{align*}
+
+We then use the McLauren series expansion of $\ln(1+x)$
+\[ \ln(1+x) = x - \frac{x^2}{2!} + \frac{2x^3}{3!} - \cdots \]
+to show that for $\ln(1+x)\approx x$ we can use the simpler approximation
+\[ \Phi = \boxed{\frac{\tau}{2\pi\epsilon_{0}}\left( \frac{(R^{2}-b^{2})\cos\phi}{R\rho} \right)} \]
 
 \setcounter{problem}{22}
 \begin{problem}
