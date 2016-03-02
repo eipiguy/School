@@ -1,12 +1,12 @@
 function [root,fx,ea,iter] = bisectRel(func,xl,xu,es,maxit,varargin)
-% bisect: root locations
+% bisect: root locations within relative error
 %   [root,fx,ea,iter] = bisectRel(func,x1,xu,es,maxit,p1,p2,...)
 %       uses bisection to find a root of func 
 %       within an relative error margin (% of estimate)
 % input:
 %   func = name of function
 %   xl,xu = lower and upper guesses
-%   es = desired absolute error (default = 0.0001)
+%   es = desired relative error (default = 0.0001)
 %   maxit = maximum allowable iterations (default = 50)
 %   p1,p2,... = additional parameters used by func
 % output:

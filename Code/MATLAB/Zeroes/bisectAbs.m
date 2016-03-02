@@ -1,8 +1,8 @@
 function [root,fx,ea,iter] = bisectAbs(func,xl,xu,es,maxit,varargin)
-% bisect: root locations
+% bisectAbs: root locations within absolute error
 %   [root,fx,ea,iter] = bisectAbs(func,x1,xu,es,maxit,p1,p2,...)
 %       uses bisection to find a root of func 
-%       within an absolute error margin
+%       within an absolute error margin (result +- error)
 % input:
 %   func = name of function
 %   xl,xu = lower and upper guesses

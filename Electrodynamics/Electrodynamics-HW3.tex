@@ -298,11 +298,11 @@ V &= \frac{-\tau}{4\pi\epsilon_{0}}\ln\left(\frac{b^{2} + R^{2} - 2Rb\cos\phi}{b
 b\cos\phi &= \frac{\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(b^{2} + (R')^{2}) - (b^{2} + R^{2})}{\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(2R') - 2R} 
 \end{align*}
 
-Then since the potential on the cylinder must be the same from any angle,
-\[ b\cos\phi = \frac{\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(b^{2} + (R')^{2}) - (b^{2} + R^{2})}{\exp\left(\frac{-4\pi\epsilon_{0}V}{\tau}\right)(2R') - 2R} \]
-must be true for any angle $\phi$ from which we view the cylinder.
+Then since the potential on the cylinder is the same at every angle we view the surface, this equation must be true for any angle $\phi$ we put into it.
 
-Thus the numerator must be zero to account for when we look down the y-axis $(\phi=\pi/2)\to(\cos\phi=0)$, and the numerator and denominator must be proportional to account for looking down the x-axis $(\phi=0)\to(\cos\phi=1)$. This means the denominator must be zero as well since both these values of $\phi$ must give the same result. Note that this is only the case where we are looking at the potential on the cylinder. If we were accounting for the potential anywhere in space, there would not be the symmetry we are making use of, and we would have to account for the line and image effects separately.
+Thus the numerator must be zero to account for when we look down the y-axis $(\phi=\pi/2)\to(\cos\phi=0)$, and the numerator and denominator must be proportional to account for looking down the x-axis $(\phi=0)\to(\cos\phi=1)$. This means the denominator must be zero as well since both these values of $\phi$ must give the same result.
+
+Note that this is only the case where we are looking at the potential on the surface of the cylinder alone. If we were accounting for the potential anywhere in space, there would not be the symmetry we are making use of, and we would have to account for the line and image charges separately.
 
 \paragraph{}
 But given our situation currently we proceed by setting the numerator and denominator to zero to find $R'$
@@ -338,6 +338,61 @@ We then use the McLauren series expansion of $\ln(1+x)$
 to show that for $\ln(1+x)\approx x$ we can use the simpler approximation
 \[ \Phi = \boxed{\frac{\tau}{2\pi\epsilon_{0}}\left( \frac{(R^{2}-b^{2})\cos\phi}{R\rho} \right)} \]
 
+\paragraph{}
+To find the surface charge density induced on the cylinder we again make use of Gauss' law.
+\[ \oint_{S} \mathbf{E}\cdot\mathbf{\hat{n}} da = \frac{1}{\epsilon_{0}} \int_{V} \rho(\mathbf{x'}) d^{3}x' \]
+where with a cylindrical Gaussian surface of length $L$ that we shrink down to the radius of the cylinder $b$, this becomes
+\begin{align*}
+\oint_{S} \mathbf{E}\cdot\mathbf{\hat{r}} da &= \frac{1}{\epsilon_{0}} \int_{V} \sigma(\mathbf{x'}) d^{3}x'\\
+\left|  \mathbf{E} \right|\oint_{S}da &= \frac{\sigma 2\pi bL}{\epsilon_{0}}\\
+\left|  \mathbf{E} \right| &= \frac{\sigma}{\epsilon_{0}}\\
+\sigma &= \left|  \mathbf{E} \right| \epsilon_{0}
+\end{align*}
+Then since the electrical field induced will point in a radial direction, we can use the fact that $\mathbf{E}=-\nabla\Phi$ and dot both sides with $\mathbf{\hat{r}}$ to get
+\[ \mathbf{E}\cdot\mathbf{\hat{r}} = \left|  \mathbf{E} \right| = -\frac{\partial\Phi}{\partial\mathbf{\hat{r}}} = -\frac{\partial\Phi}{\partial\rho} \]
+So then I substitute in our previous formula where
+\[ \Phi = \boxed{\frac{\tau}{4\pi\epsilon_{0}}\ln\left(\frac{\rho^{2} + (\frac{b^{2}}{R})^{2} - \frac{2b^{2}}{R}\rho\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi}\right)} \]
+to compute
+\begin{align*}
+\sigma &= \left|  \mathbf{E} \right| \epsilon_{0} = -\epsilon_{0}\frac{\partial\Phi}{\partial\rho}\\
+\sigma &= -\epsilon_{0} \frac{\partial}{\partial\rho} \left[ \frac{\tau}{4\pi\epsilon_{0}}\ln\left(\frac{\rho^{2} + (\frac{b^{2}}{R})^{2} - \frac{2b^{2}}{R}\rho\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi}\right) \right]\\
+&= \frac{\tau}{4\pi} \frac{\partial}{\partial\rho} \left[\ln\left(\frac{\rho^{2} + R^{2} - 2R\rho\cos\phi}{\rho^{2} + (\frac{b^{2}}{R})^{2} - \frac{2b^{2}}{R}\rho\cos\phi}\right) \right]\\
+&= \frac{\tau}{4\pi} \frac{\partial}{\partial\rho} \left[\ln\left(\rho^{2} + R^{2} - 2R\rho\cos\phi\right) - \ln\left( \rho^{2} + \left(\frac{b^{2}}{R}\right)^{2} - \frac{2b^{2}}{R}\rho\cos\phi \right)\right]\\
+\sigma &= \frac{\tau}{4\pi} \left[ \frac{ 2\rho - 2R\cos\phi }{\rho^{2} + R^{2} - 2R\rho\cos\phi} - \frac{2\rho - \frac{2b^{2}}{R}\cos\phi}{\rho^{2} + \left(\frac{b^{2}}{R}\right)^{2} - \frac{2b^{2}}{R}\rho\cos\phi} \right]\\
+\end{align*}
+Then since we are evaluating on the surface of the cylinder with radius $b$, we can take $\rho=b$ to find
+\begin{align*}
+\sigma &= \frac{\tau}{4\pi} \left[ \frac{ 2b - 2R\cos\phi }{b^{2} + R^{2} - 2Rb\cos\phi} - \frac{2b - 2\frac{b^{2}}{R}\cos\phi}{b^{2} + \left(\frac{b^{2}}{R}\right)^{2} - 2\frac{b^{3}}{R}\cos\phi} \right]\\
+&= \frac{\tau}{4\pi} \left[ \frac{R^{2}( 2\frac{b}{R^{2}} - \frac{2}{R}\cos\phi )}{ R^{2}(\left(\frac{b}{R}\right)^{2} + 1 - 2\frac{b}{R}\cos\phi )} - \frac{b^{2}(\frac{2}{b} - \frac{2}{R}\cos\phi)}{b^{2}( 1 + \left(\frac{b}{R}\right)^{2} - 2\frac{b}{R}\cos\phi)} \right]\\
+&= \frac{\tau}{4\pi} \left[ \frac{( 2\frac{b}{R^{2}} - \frac{2}{R}\cos\phi ) - ( \frac{2}{b} - \frac{2}{R}\cos\phi )}{ 1 + \left(\frac{b}{R}\right)^{2} - 2\frac{b}{R}\cos\phi} \right]\\
+&= \frac{\tau}{4\pi} \left[ \frac{ 2\frac{b}{R^{2}} - \frac{2}{b} }{ 1 + \left(\frac{b}{R}\right)^{2} - 2\frac{b}{R}\cos\phi} \right]\\
+&= \frac{\tau}{2\pi} \left[ \frac{ ( b^{2} - R^{2} )/R^{2}b }{ 1 + \left(\frac{b}{R}\right)^{2} - 2\frac{b}{R}\cos\phi} \right]\\
+\sigma &= \boxed{\frac{\tau}{2\pi b} \left[ \frac{ b^{2} - R^{2} }{ b^{2} + R^{2} - 2bR\cos\phi} \right]}\\
+\end{align*}
+
+To investigate ratios of $R/b$ we can reformulate this as
+\[ \sigma = \frac{\tau}{2\pi b} \left[ \frac{ 1 - (R/b)^{2} }{ 1 + (R/b)^{2} - 2(R/b)\cos\phi} \right] \]
+And then for $R/b=2$
+\[ \sigma = \frac{\tau}{2\pi b} \left[ \frac{ 1 - 4 }{ 1 + 4 - 4\cos\phi} \right] = \boxed{\frac{\tau}{2\pi b} \left[ \frac{ -3 }{ 5 - 4\cos\phi} \right]} \]
+And for $R/b=4$
+\[ \sigma = \frac{\tau}{2\pi b} \left[ \frac{ 1 - 16 }{ 1 + 16 - 8\cos\phi} \right] = \boxed{\frac{\tau}{2\pi b} \left[ \frac{ -15 }{ 17 - 8\cos\phi} \right]} \]
+
+So now we seek to find the force per unit length on the line charge from the induced charge on the cylinder. We do this by again utilizing Gauss' law (with a cylindrical Gaussian surface of radius $d$ and length $L$) to find the field a distance $d$ away from the image line we are using to represent the charge on the cylinder, noting the field is again normal to this surface, and the charge density on the image is $\tau'=-\tau$ making the field point towards it.
+\begin{align*}
+\oint_{S} \mathbf{E}\cdot\mathbf{\hat{n}} da &= \frac{1}{\epsilon_{0}} \int_{V} \rho(\mathbf{x'}) d^{3}x'\\
+\left| \mathbf{E} \right|\oint_{S} da &= \frac{\tau'}{\epsilon_{0}}\\
+\left| \mathbf{E} \right| 2\pi dL&= \frac{\tau L}{\epsilon_{0}}\\
+\left| \mathbf{E} \right| &= \frac{\tau}{2\pi d\epsilon_{0}}\\
+\mathbf{E} &= \frac{-\tau}{2\pi d\epsilon_{0}}\mathbf{\hat{\rho}}\\
+\end{align*}
+Thus since we are trying to find the force on the line charge which is a distance $R-R'$ away from the image charge, we can use the fact that we computed $R'=b^{2}/R$ to substitute $d=R-(b^{2}/R)$ and find
+\[ \mathbf{E} = \frac{-\tau}{2\pi\epsilon_{0}(R-(b^{2}/R))} \mathbf{\hat{\rho}} = \frac{-\tau R}{2\pi\epsilon_{0}(R^{2}-b^{2})} \mathbf{\hat{\rho}} \]
+
+Then since the force is $\mathbf{F}=q\mathbf{E}$ and the charge of the line is $q=\tau L$
+\[ \mathbf{F} = \frac{-\tau^{2}RL}{2\pi\epsilon_{0}(R^{2}-b^{2})}\mathbf{\hat{\rho}} \]
+and for charge per length, we just divide by the length of our calculation to find
+\[ \frac{\mathbf{F}}{L} = \boxed{\frac{-\tau^{2}R}{2\pi\epsilon_{0}(R^{2}-b^{2})} \mathbf{\hat{\rho}}} \]
+
 \setcounter{problem}{22}
 \begin{problem}
 A hollow cube has conducting walls defined by six planes $x=0,y=0,z=0$ and $x=a,y=a,z=a$. The walls $z=0$ and $z=a$ are held at a constant potential $V$. The other four sides are at zero potential.
@@ -347,4 +402,64 @@ A hollow cube has conducting walls defined by six planes $x=0,y=0,z=0$ and $x=a,
 \item Find the surface-charge density on the wall $z=a$
 \end{itemize}
 \end{problem}
+
+So imagining the box with a corner at the origin and sides of length $a$, to find the potential we begin with the Poisson equation. This reduces to Laplace because there is no charge inside the box, and working in Cartesian we can expand
+\begin{align*}
+\nabla^{2}\Phi(x,y,z) &= -\rho/\epsilon_{0} = 0\\
+\frac{\partial\Phi}{\partial x^{2}} + \frac{\partial\Phi}{\partial y^{2}} + \frac{\partial\Phi}{\partial z^{2}} &= 0
+\end{align*}
+
+So using the method of separation of variables, we assume that we can split $\Phi$ into a product of three functions, $X(x)$,$Y(y)$, and $Z(z)$, each depending respectively on one of the coordinates used in $\Phi$. Thus we can break up Poisson's equation using $\Phi=X(x)Y(y)Z(z)$ and divide through again by the same $\Phi=X(x)Y(y)Z(z)$
+\begin{align*}
+\frac{\partial}{\partial x^{2}}\left[X(x)Y(y)Z(z)\right] + \frac{\partial}{\partial y^{2}}\left[X(x)Y(y)Z(z)\right] + \frac{\partial}{dz^{2}}\left[X(x)Y(y)Z(z)\right] &= 0\\
+Y(y)Z(z)\frac{\partial}{\partial x^{2}}X(x) + X(x)Z(z)\frac{\partial}{\partial x^{2}}Y(y) + X(x)Y(y)\frac{\partial}{\partial x^{2}}Z(z) &= 0\\
+\frac{1}{X(x)}\frac{\partial}{\partial x^{2}}X(x) + \frac{1}{Y(y)}\frac{\partial}{\partial x^{2}}Y(y) + \frac{1}{Z(z)}\frac{\partial}{\partial x^{2}}Z(z) &= 0
+\end{align*}
+
+We are now left with three equations that depend on only one coordinate, and we can collapse our partials to full fledged derivatives. Then the terms in the sum cannot effect each other and therefore each must be a constant. Moreover when all are added together, they must cancel each other out.
+
+Imagine one term was variable depending on that coordinate. For example $X(x)$. Then I could evaluate it at different coordinates and its value would change, and therefore sum would change.\\
+\\
+Eg. If $X(x_{0})\ne X(x_{1})$ then 
+\begin{multline*}
+0 = \frac{1}{X(x_{0})}\frac{\partial}{\partial x^{2}}X(x_{0}) + \frac{1}{Y(y_{0})}\frac{\partial}{\partial x^{2}}Y(y_{0}) + \frac{1}{Z(z_{0})}\frac{\partial}{\partial x^{2}}Z(z_{0})\\
+\ne \frac{1}{X(x_{1})}\frac{\partial}{\partial x^{2}}X(x_{1}) + \frac{1}{Y(y_{0})}\frac{\partial}{\partial x^{2}}Y(y_{0}) + \frac{1}{Z(z_{0})}\frac{\partial}{\partial x^{2}}Z(z_{0}) = 0
+\end{multline*}
+Implying $0\ne0$\\
+\\
+But this makes no sense. So each term in the sum must have the same value irregardless of where we evaluate it. (Eg. $\forall x_{0},x_{1}$, $X(x_{0})=X(x_{1})$)
+
+\paragraph{}
+So with our new found constant terms, let us give the following names to their constant values:
+\begin{align*}
+\frac{1}{X(x)}\frac{\partial}{\partial x^{2}}X(x) &= J\\
+\frac{1}{Y(y)}\frac{\partial}{\partial y^{2}}Y(y) &= K\\
+\frac{1}{Z(z)}\frac{\partial}{\partial z^{2}}Z(z) &= -(J+K)\\
+\end{align*}
+Our equation is then reduced to ordinary differential equations
+\begin{align*}
+\frac{\partial}{\partial x^{2}}X(x) &= J X(x)\\
+\frac{\partial}{\partial y^{2}}Y(y) &= K Y(y)\\
+\frac{\partial}{\partial z^{2}}Z(z) &= -(J+K) Z(z)\\
+\end{align*}
+where if we set $J=j^{2}$ and $K=k^{2}$ we have potential solutions
+\begin{align*}
+\frac{\partial}{\partial x^{2}}X(x) &= J X(x)\\
+X(x) &= \pm e^{\pm jx}\\
+\frac{\partial}{\partial y^{2}}Y(y) &= K Y(y)\\
+Y(y) &= \pm e^{\pm ky}\\
+\frac{\partial}{\partial z^{2}}Z(z) &= -(J+K) Z(z)\\
+Z(z) &= \pm e^{\pm i(\sqrt{J+K})z}
+\end{align*}
+General solutions then for any of these equations can be found by adding together two potential solutions where the sum satisfies the given boundary conditions within the resulting product given for $\Phi=XYZ$
+
+So recall that we are given $\Phi(x=0)=0$ and $\Phi(x=a)=0$. Then if we add together two possibilities to get a general solution in an attempt to satisfy this, we can find $j$ by noticing
+\begin{align*}
+X(x) &= e^{jx} - e^{-jx}\\
+X(0) &= e^{j(0)} - e^{-j(0)} = 1-1 = 0\\
+X(a) &= e^{ja} - e^{-ja} = 0\\
+e^{ja} &= e^{-ja}
+\end{align*}
+\[ X(x) = e^{jx} + e^{-jx} \]
+
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.23)  29 FEB 2016 18:22
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.23)  2 MAR 2016 15:57
 entering extended mode
 **NumericalAnalysis-HW5.tex
 
@@ -220,26 +220,68 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 39.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 58.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 39.
- [1
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 58.
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
+<HW5-PolynomialGraph.jpg, id=1, 562.1pt x 421.575pt>
+File: HW5-PolynomialGraph.jpg Graphic file (type jpg)
+
+<use HW5-PolynomialGraph.jpg>
+Package pdftex.def Info: HW5-PolynomialGraph.jpg used on input line 67.
+(pdftex.def)             Requested size: 345.0pt x 258.74924pt.
+
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 67--69
+[] []
+ []
+
+[1
+
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2 <C:/Users/Neal/Documen
+ts/GitHub/School/Numerical Analysis/HW5-PolynomialGraph.jpg>]
+Overfull \hbox (39.71538pt too wide) in paragraph at lines 117--118
+[] \OT1/cmr/m/n/10 MAT-LAB's []\OT1/cmtt/m/n/10 roots() \OT1/cmr/m/n/10 com-man
+d tells us the 3 real roots are at $\OML/cmm/m/it/10 x \OT1/cmr/m/n/10 = 1\OML/
+cmm/m/it/10 :\OT1/cmr/m/n/10 0544\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1\OML/cmm/m
+/it/10 :\OT1/cmr/m/n/10 8990\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 3\OML/cmm/m/it/1
+0 :\OT1/cmr/m/n/10 0467$. 
+ []
+
+<HW5-PolynomialGraph2.jpg, id=19, 562.1pt x 421.575pt>
+File: HW5-PolynomialGraph2.jpg Graphic file (type jpg)
+
+<use HW5-PolynomialGraph2.jpg>
+Package pdftex.def Info: HW5-PolynomialGraph2.jpg used on input line 127.
+(pdftex.def)             Requested size: 345.0pt x 258.74924pt.
+
+Overfull \hbox (15.0pt too wide) in paragraph at lines 127--129
+[][]
+ []
+
+
+Overfull \hbox (2.7723pt too wide) detected at line 129
+\OML/cmm/m/it/10 f[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\OT1/cmr/m/n/10 ) = 0[
+]\OML/cmm/m/it/10 f[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\OT1/cmr/m/n/10 ) \OM
+L/cmm/m/it/10 > \OT1/cmr/m/n/10 0  =[]\OMS/cmsy/m/n/10 )  [] [] \OT1/cmr/m/n/10
+ = \OMS/cmsy/m/n/10  1[] [] [] \OT1/cmr/m/n/10 = +\OMS/cmsy/m/n/10 1
+ []
+
+[3 <C:/Users/Neal/Documents/GitHub/School/Numerical Analysis/HW5-PolynomialGrap
+h2.jpg>] [4] [5]
 ("C:\Users\Neal\Documents\GitHub\School\Numerical Analysis\NumericalAnalysis-HW
 5.aux") ) 
 Here is how much of TeX's memory you used:
- 3375 strings out of 493921
- 44916 string characters out of 3147285
- 132420 words of memory out of 3000000
- 6648 multiletter control sequences out of 15000+200000
- 10591 words of font info for 42 fonts, out of 3000000 for 9000
+ 3389 strings out of 493921
+ 45220 string characters out of 3147285
+ 137416 words of memory out of 3000000
+ 6658 multiletter control sequences out of 15000+200000
+ 10759 words of font info for 43 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,6n,40p,262b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,9n,40p,346b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Pro
 gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Fil
@@ -247,12 +289,14 @@ es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
 ublic/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-msy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb
->
-Output written on NumericalAnalysis-HW5.pdf (2 pages, 115290 bytes).
+fonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Progr
+am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on NumericalAnalysis-HW5.pdf (5 pages, 191196 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
+ 72 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
