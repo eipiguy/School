@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.23)  1 MAR 2016 18:56
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.23)  8 MAR 2016 15:18
 entering extended mode
 **Electrodynamics-HW3.tex
 (C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW3.tex
@@ -306,17 +306,72 @@ Underfull \hbox (badness 10000) in paragraph at lines 427--431
 
  []
 
-[17] [18]
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 458--462
+
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 476--480
+
+ []
+
+
+Overfull \hbox (76.6384pt too wide) in paragraph at lines 490--490
+[] 
+ []
+
+[19]
+Overfull \hbox (69.47493pt too wide) in paragraph at lines 504--504
+[] 
+ []
+
+
+Overfull \hbox (4.92282pt too wide) in paragraph at lines 511--511
+[] 
+ []
+
+
+Overfull \hbox (15.80367pt too wide) in paragraph at lines 519--519
+[] 
+ []
+
+[20]
+Overfull \hbox (36.98851pt too wide) in paragraph at lines 541--541
+[] 
+ []
+
+[21]
+Overfull \hbox (82.44034pt too wide) in paragraph at lines 556--556
+[] 
+ []
+
+
+Overfull \hbox (68.68147pt too wide) in paragraph at lines 570--570
+[] 
+ []
+
+[22] [23]
+Overfull \hbox (147.45587pt too wide) in paragraph at lines 601--601
+[] 
+ []
+
+
+Overfull \hbox (83.86832pt too wide) in paragraph at lines 607--607
+[] 
+ []
+
+[24] [25]
 (C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW3.aux)
  ) 
 Here is how much of TeX's memory you used:
  3341 strings out of 493921
  44277 string characters out of 3147285
- 116422 words of memory out of 3000000
+ 121422 words of memory out of 3000000
  6616 multiletter control sequences out of 15000+200000
  11210 words of font info for 44 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,13n,32p,811b,244s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,15n,32p,811b,244s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
@@ -327,10 +382,11 @@ msfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
 m/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb
 ><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Pro
 gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on Electrodynamics-HW3.pdf (18 pages, 206317 bytes).
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
+2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on Electrodynamics-HW3.pdf (25 pages, 236193 bytes).
 PDF statistics:
- 108 PDF objects out of 1000 (max. 8388607)
+ 135 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

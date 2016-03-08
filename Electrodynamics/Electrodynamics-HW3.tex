@@ -121,7 +121,7 @@ Now, going back to the general potential in the upper half space, we consider th
 \Phi &= \frac{Vz}{2\pi} \int_{0}^{2\pi}\int_{0}^{a} \frac{\rho' d\rho'd\phi'}{[\rho^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi') + z^{2}]^{3/2}}\\
 &= \frac{Vz}{2\pi} \int_{0}^{2\pi}\int_{0}^{a} \left[\rho^{2} + z^{2} + (\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')\right]^{-3/2}\rho' d\rho'd\phi'\\
 &= \frac{Vz}{2\pi} \int_{0}^{2\pi}\int_{0}^{a} \left[(\rho^{2} + z^{2})\left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]\right]^{-3/2}\rho' d\rho'd\phi'\\
-&= \frac{Vz}{2\pi(\rho^{2} + z^{2})^{3/2}} \int_{0}^{2\pi}\int_{0}^{a} \left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]^{-3/2}\rho' d\rho'd\phi'\\
+\Phi &= \frac{Vz}{2\pi(\rho^{2} + z^{2})^{3/2}} \int_{0}^{2\pi}\int_{0}^{a} \left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]^{-3/2}\rho' d\rho'd\phi'\\
 \end{align*}
 
 We then expand the integrand using the generalized binomial theorem.
@@ -185,11 +185,11 @@ Adding these back together shows
 \end{multline*}
 
 And thus
-\begin{multline*}
-\Phi = \frac{Vz}{2\pi(\rho^{2} + z^{2})^{3/2}} \int_{0}^{2\pi}\int_{0}^{a} \left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]^{-3/2}\rho' d\rho'd\phi'\\
-= \frac{Vz}{2\pi(\rho^{2} + z^{2})^{3/2}}\left[ \pi a^{2} \left[ 1 - \frac{3a^{2}}{4(\rho^{2} + z^{2})} + \frac{5a^{2}(a^{2} - 3\rho^{2})}{8(\rho^{2} + z^{2})^{2}} - \cdots \right] \right]\\
-= \boxed{\frac{Vza^{2}}{2(\rho^{2} + z^{2})^{3/2}}\left[ 1 - \frac{3a^{2}}{4(\rho^{2} + z^{2})} + \frac{5a^{2}(a^{2} - 3\rho^{2})}{8(\rho^{2} + z^{2})^{2}} - \cdots \right]}
-\end{multline*}
+\begin{align*}
+\Phi &= \frac{Vz}{2\pi(\rho^{2} + z^{2})^{3/2}} \int_{0}^{2\pi}\int_{0}^{a} \left[1 + \frac{(\rho')^{2} - 2\rho\rho'\cos(\phi-\phi')}{(\rho^{2} + z^{2})}\right]^{-3/2}\rho' d\rho'd\phi'\\
+\Phi &= \frac{Vz}{2\pi(\rho^{2} + z^{2})^{3/2}}\left[ \pi a^{2} \left[ 1 - \frac{3a^{2}}{4(\rho^{2} + z^{2})} + \frac{5a^{2}(a^{2} - 3\rho^{2})}{8(\rho^{2} + z^{2})^{2}} - \cdots \right] \right]\\
+\Phi &= \boxed{\frac{Vza^{2}}{2(\rho^{2} + z^{2})^{3/2}}\left[ 1 - \frac{3a^{2}}{4(\rho^{2} + z^{2})} + \frac{5a^{2}(a^{2} - 3\rho^{2})}{8(\rho^{2} + z^{2})^{2}} - \cdots \right]}
+\end{align*}
 which is what we were looking for.
 
 Finally we check that this is consistent with what we got previously by setting $\rho=0$:
@@ -200,7 +200,7 @@ Finally we check that this is consistent with what we got previously by setting 
 &= V\left[ 1 - \left( 1 - \frac{1}{2}\left(\frac{a^{2}}{z^{2}}\right) + \frac{3}{4\cdot2}\left(\frac{a^{2}}{z^{2}}\right)^{2} - \frac{5\cdot3}{8\cdot6}\left(\frac{a^{2}}{z^{2}}\right)^{3} + \cdots \right)\right]\\
 &= V\left[ 1 - \left( 1 - \frac{1}{2} \left(\frac{a^{2}}{z^{2}}\right) + \frac{\frac{3}{4}}{2!} \left(\frac{a^{2}}{z^{2}}\right)^{2} + \frac{\frac{-15}{8}}{3!} \left(\frac{a^{2}}{z^{2}}\right)^{3} + \cdots \right)\right]\\
 &= V\left[ 1 - \left( 1 - \frac{1}{2} \left(\frac{a^{2}}{z^{2}}\right) + \frac{\frac{-1}{2}(\frac{-3}{2})}{2!} \left(\frac{a^{2}}{z^{2}}\right)^{2} + \frac{\frac{-1}{2}(\frac{-3}{2})\frac{-5}{2}}{3!} \left(\frac{a^{2}}{z^{2}}\right)^{3} + \cdots \right)\right]\\
-&= V\left[ 1 - \left( 1 - \frac{1}{2} \left(\frac{a^{2}}{z^{2}}\right) + \frac{\frac{-1}{2}(\frac{-1}{2}-1)}{2!} \left(\frac{a^{2}}{z^{2}}\right)^{2} + \frac{\frac{-1}{2}(\frac{-1}{2}-1)(\frac{-1}{2}-2)}{3!}\left(\frac{a^{2}}{z^{2}}\right)^{3} + \cdots \right)\right]
+\Phi(\rho=0) &= V\left[ 1 - \left( 1 - \frac{1}{2} \left(\frac{a^{2}}{z^{2}}\right) + \frac{\frac{-1}{2}(\frac{-1}{2}-1)}{2!} \left(\frac{a^{2}}{z^{2}}\right)^{2} + \frac{\frac{-1}{2}(\frac{-1}{2}-1)(\frac{-1}{2}-2)}{3!}\left(\frac{a^{2}}{z^{2}}\right)^{3} + \cdots \right)\right]
 \end{align*}
 
 So if we recognize that this is a binomial expansion that converges when \[\left|\frac{a^{2}}{z^{2}}\right|<1 \implies a^{2} < z^{2} \implies a < |z| \]
@@ -355,7 +355,7 @@ So then I substitute in our previous formula where
 to compute
 \begin{align*}
 \sigma &= \left|  \mathbf{E} \right| \epsilon_{0} = -\epsilon_{0}\frac{\partial\Phi}{\partial\rho}\\
-\sigma &= -\epsilon_{0} \frac{\partial}{\partial\rho} \left[ \frac{\tau}{4\pi\epsilon_{0}}\ln\left(\frac{\rho^{2} + (\frac{b^{2}}{R})^{2} - \frac{2b^{2}}{R}\rho\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi}\right) \right]\\
+&= -\epsilon_{0} \frac{\partial}{\partial\rho} \left[ \frac{\tau}{4\pi\epsilon_{0}}\ln\left(\frac{\rho^{2} + (\frac{b^{2}}{R})^{2} - \frac{2b^{2}}{R}\rho\cos\phi}{\rho^{2} + R^{2} - 2R\rho\cos\phi}\right) \right]\\
 &= \frac{\tau}{4\pi} \frac{\partial}{\partial\rho} \left[\ln\left(\frac{\rho^{2} + R^{2} - 2R\rho\cos\phi}{\rho^{2} + (\frac{b^{2}}{R})^{2} - \frac{2b^{2}}{R}\rho\cos\phi}\right) \right]\\
 &= \frac{\tau}{4\pi} \frac{\partial}{\partial\rho} \left[\ln\left(\rho^{2} + R^{2} - 2R\rho\cos\phi\right) - \ln\left( \rho^{2} + \left(\frac{b^{2}}{R}\right)^{2} - \frac{2b^{2}}{R}\rho\cos\phi \right)\right]\\
 \sigma &= \frac{\tau}{4\pi} \left[ \frac{ 2\rho - 2R\cos\phi }{\rho^{2} + R^{2} - 2R\rho\cos\phi} - \frac{2\rho - \frac{2b^{2}}{R}\cos\phi}{\rho^{2} + \left(\frac{b^{2}}{R}\right)^{2} - \frac{2b^{2}}{R}\rho\cos\phi} \right]\\
@@ -418,9 +418,9 @@ Y(y)Z(z)\frac{\partial}{\partial x^{2}}X(x) + X(x)Z(z)\frac{\partial}{\partial x
 
 We are now left with three equations that depend on only one coordinate, and we can collapse our partials to full fledged derivatives. Then the terms in the sum cannot effect each other and therefore each must be a constant. Moreover when all are added together, they must cancel each other out.
 
-Imagine one term was variable depending on that coordinate. For example $X(x)$. Then I could evaluate it at different coordinates and its value would change, and therefore sum would change.\\
+Imagine one term was variable depending on that coordinate. For example $X(x)$. Then I could evaluate it at different coordinates, its value would change, and therefore sum would change.\\
 \\
-Eg. If $X(x_{0})\ne X(x_{1})$ then 
+Eg. If $\exists x_{0}\ne x_{1}\ni X(x_{0})\ne X(x_{1})$ then 
 \begin{multline*}
 0 = \frac{1}{X(x_{0})}\frac{\partial}{\partial x^{2}}X(x_{0}) + \frac{1}{Y(y_{0})}\frac{\partial}{\partial x^{2}}Y(y_{0}) + \frac{1}{Z(z_{0})}\frac{\partial}{\partial x^{2}}Z(z_{0})\\
 \ne \frac{1}{X(x_{1})}\frac{\partial}{\partial x^{2}}X(x_{1}) + \frac{1}{Y(y_{0})}\frac{\partial}{\partial x^{2}}Y(y_{0}) + \frac{1}{Z(z_{0})}\frac{\partial}{\partial x^{2}}Z(z_{0}) = 0
@@ -432,34 +432,178 @@ But this makes no sense. So each term in the sum must have the same value irrega
 \paragraph{}
 So with our new found constant terms, let us give the following names to their constant values:
 \begin{align*}
-\frac{1}{X(x)}\frac{\partial}{\partial x^{2}}X(x) &= J\\
-\frac{1}{Y(y)}\frac{\partial}{\partial y^{2}}Y(y) &= K\\
-\frac{1}{Z(z)}\frac{\partial}{\partial z^{2}}Z(z) &= -(J+K)\\
+\frac{1}{X(x)}\frac{\partial}{\partial x^{2}}X(x) &= j\\
+\frac{1}{Y(y)}\frac{\partial}{\partial y^{2}}Y(y) &= k\\
+\frac{1}{Z(z)}\frac{\partial}{\partial z^{2}}Z(z) &= -(j+k)\\
 \end{align*}
 Our equation is then reduced to ordinary differential equations
 \begin{align*}
-\frac{\partial}{\partial x^{2}}X(x) &= J X(x)\\
-\frac{\partial}{\partial y^{2}}Y(y) &= K Y(y)\\
-\frac{\partial}{\partial z^{2}}Z(z) &= -(J+K) Z(z)\\
+\frac{\partial}{\partial x^{2}}X(x) &= j X(x)\\
+\frac{\partial}{\partial y^{2}}Y(y) &= k Y(y)\\
+\frac{\partial}{\partial z^{2}}Z(z) &= -(j+k) Z(z)\\
 \end{align*}
-where if we set $J=j^{2}$ and $K=k^{2}$ we have potential solutions
+where for some other constants $\alpha_{n},\beta_{n},\gamma_{n}$ for $n\in\mathbb{N}$ we have solutions of the form
 \begin{align*}
-\frac{\partial}{\partial x^{2}}X(x) &= J X(x)\\
-X(x) &= \pm e^{\pm jx}\\
-\frac{\partial}{\partial y^{2}}Y(y) &= K Y(y)\\
-Y(y) &= \pm e^{\pm ky}\\
-\frac{\partial}{\partial z^{2}}Z(z) &= -(J+K) Z(z)\\
-Z(z) &= \pm e^{\pm i(\sqrt{J+K})z}
+\frac{\partial}{\partial x^{2}}X(x) &= j X(x)\\
+X(x) &= \sum_{l}\alpha_{l}e^{\pm x\sqrt{j}} = \alpha_{(+)}e^{x\sqrt{j}}+\alpha_{(-)}e^{-x\sqrt{j}}\\
+\frac{\partial}{\partial y^{2}}Y(y) &= k Y(y)\\
+Y(y) &= \sum_{l}\beta_{l}e^{\pm y\sqrt{k}} = \beta_{(+)}e^{y\sqrt{k}}+\beta_{(-)}e^{-y\sqrt{k}}\\
+\frac{\partial}{\partial z^{2}}Z(z) &= -(j+k) Z(z)\\
+Z(z) &= \sum_{l}\gamma_{l}e^{\pm iz\sqrt{j+k}} = \gamma_{(+)}e^{iz\sqrt{j+k}}+\gamma_{(-)}e^{-iz\sqrt{j+k}}
 \end{align*}
-General solutions then for any of these equations can be found by adding together two potential solutions where the sum satisfies the given boundary conditions within the resulting product given for $\Phi=XYZ$
+We then try to find the constants where the solution satisfies the given boundary conditions for the resulting product $\Phi=XYZ$.
 
-So recall that we are given $\Phi(x=0)=0$ and $\Phi(x=a)=0$. Then if we add together two possibilities to get a general solution in an attempt to satisfy this, we can find $j$ by noticing
+\paragraph{}
+So let us begin by looking at
+\[ X(x) = \alpha_{(+)}e^{x\sqrt{j}}+\alpha_{(-)}e^{-x\sqrt{j}}\\ \]
+and recall that we are given $\Phi(x=0)=0$ and $\Phi(x=a)=0$. Then we also know that $X(0)=0$ and $X(a)=0$.\\
+\\
+$X(0)=0$ implies:
 \begin{align*}
-X(x) &= e^{jx} - e^{-jx}\\
-X(0) &= e^{j(0)} - e^{-j(0)} = 1-1 = 0\\
-X(a) &= e^{ja} - e^{-ja} = 0\\
-e^{ja} &= e^{-ja}
+X(0) &= \alpha_{(+)} + \alpha_{(-)} = 0\\
+\alpha_{(-)} &= -\alpha_{(-)}
 \end{align*}
-\[ X(x) = e^{jx} + e^{-jx} \]
+so that we can simplify calling $\alpha = \alpha_{+} = -\alpha_{-}$, and thus
+\[ X(x) = \alpha \left( e^{x\sqrt{j}} - e^{-x\sqrt{j}} \right) \]
+Then $X(a)=0$ implies
+\begin{align*}
+X(a) &= \alpha \left( e^{a\sqrt{j}} - e^{-a\sqrt{j}} \right) = 0\\
+e^{a\sqrt{j}} &= e^{-a\sqrt{j}}\\
+e^{2a\sqrt{j}} &= 1
+\end{align*}
+
+It is at this point we must be careful. Naively using the real logarithm would let us simply remove the exponential to find either $a$ or $\sqrt{j}$ must be 0. But $a$ is not zero by supposition, and $j$ could be less than zero making $\sqrt{j}$ complex. In this case we cannot use the real logarithm, but find instead that $\sqrt{j} = im\pi/a$ for any $m\in\mathbb{Z}$ would also work (given Euler's ubiquitous formula: $e^{i\theta} = \cos\theta + i\sin\theta$)
+\[ e^{2a(im\pi/a)} = e^{i2m\pi} = \cos(2m\pi)+ i\sin(2m/\pi) = 1 \]
+Since this is a more general solution, (ie. it includes the case where $j\ge 0$) we proceed by using it rather than assuming the degenerate case where $j$ is non-negative.\\
+\\
+Thus $j=-(m\pi/a)^{2}$ and all together we have
+\[ X(x) = \alpha \sum_{m \text{ odd}}\left( e^{im\pi x/a} - e^{-im\pi x/a} \right) = i2\alpha \sum_{m \text{ odd}}\sin\left(\frac{ m\pi x }{ a }\right) \]
+and a similar process will show $\beta=\beta_{(+)}=-\beta_{(-)}$ and $\sqrt{k} = in\pi/a$ for any $n\in\mathbb{Z}$ giving
+\[ Y(y) = \beta \sum_{n \text{ odd}}\left( e^{in\pi y/a} - e^{-in\pi y/a} \right) = i2\beta \sum_{n \text{ odd}}\sin\left(\frac{ n\pi y }{ a }\right) \]
+This leaves us to find $Z(z)$ which has the more interesting boundary conditions.
+
+\paragraph{}
+We first replace $i\sqrt{j+k} = i\sqrt{-(m\pi/a)^{2} - (n\pi/a)^{2}} = (\pi/a)\sqrt{m^{2} + n^{2}}$. Then since $\Phi(z=0)=V$ does not necessarily imply $Z(0)=V$, we must instead use our newfound $X$ and $Y$ along with our previously agreed upon formula $\Phi=XYZ$ to work out the rest of the constants, collapsing our current ones into $\gamma_{(+)}$ and $\gamma_{(-)}$, which I should rename, but I will abuse notation for fear of having to pick another letter to keep track of, or having to use more tildes. 
+\begin{align*}
+\Phi(x,y,z) &= \sum_{m,n \text{ odd}}\left[i2\alpha \sin\left(\frac{ m\pi x }{ a }\right)\right] \left[ i2\beta \sin\left(\frac{ n\pi y }{ a }\right) \right] \left[ \gamma_{(+)}e^{z(\pi/a)\sqrt{m^{2} + n^{2}}}+\gamma_{(-)}e^{-z(\pi/a)\sqrt{m^{2} + n^{2}}} \right]\\
+\Phi(x,y,z) &= \sum_{m,n \text{ odd}}\sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \gamma_{(+)}e^{z(\pi/a)\sqrt{m^{2} + n^{2}}}+\gamma_{(-)}e^{-z(\pi/a)\sqrt{m^{2} + n^{2}}} \right]\\
+\end{align*}
+
+Then we use $\Phi(x,y,0)=V$ to find
+\[ V = \sum_{m,n \text{ odd}}\sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \gamma_{(+)}+\gamma_{(-)} \right] \]
+This sets us up to use Fourier's trick, where we let $\tilde{m},\tilde{n}\in\mathbb{Z}$, multiply through by $\sin( \tilde{m}\pi x / a )$ and $\sin( \tilde{n}\pi y / a )$, and integrate with respect to x and y. This takes advantage of the orthogonality condition
+\[ \int_{0}^{a}\sin(p\theta)\sin(\tilde{p}\theta)d\theta = \left\{
+\begin{array}{l l}
+0 & \mbox{if } p\ne\tilde{p},\\
+\frac{1}{4p}( 2pa - \sin(2pa) )  & \mbox{if } p=\tilde{p}
+\end{array} \right. \]
+So starting with multiplying through we get
+\begin{align*}
+V &= \sum_{m,n \text{ odd}} \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \gamma_{(+)}+\gamma_{(-)} \right]\\
+V \sin\left( \frac{ \tilde{m}\pi x }{ a } \right) \sin\left( \frac{ \tilde{n}\pi y }{ a } \right) &= \sum_{m,n \text{ odd}} \sin\left(\frac{ m\pi x }{ a } \right) \sin\left( \frac{ \tilde{m}\pi x }{ a } \right) \sin\left(\frac{ n\pi y }{ a }\right) \sin\left( \frac{ \tilde{n}\pi y }{ a } \right) \left[ \gamma_{(+)}+\gamma_{(-)} \right]
+\end{align*}
+\\
+We then integrate and first evaluate the left side
+\begin{align*}
+V \int_{0}^{a}\int_{0}^{a} \sin\left( \frac{ \tilde{m}\pi x }{ a } \right) \sin\left( \frac{ \tilde{n}\pi y }{ a } \right) dxdy &= V \int_{0}^{a} \sin\left( \frac{ \tilde{m}\pi x }{ a } \right) dx \int_{0}^{a} \sin\left( \frac{ \tilde{n}\pi y }{ a } \right) dy\\
+&= \frac{Va^{2}}{\pi^{2}\tilde{m}\tilde{n}} [ \cos(\tilde{m}\pi) - 1 ] [ \cos(\tilde{n}\pi) - 1 ]\\
+&= \frac{Va^{2}}{\pi^{2}\tilde{m}\tilde{n}} [ (-1)^{\tilde{m}} - 1 ] [ (-1)^{\tilde{n}} - 1 ]
+\end{align*}
+followed by matching and evaluating the integral of the right side
+\begin{align*}
+&= \sum_{m,n \text{ odd}} \left[ \gamma_{(+)}+\gamma_{(-)} \right] \int_{0}^{a}\int_{0}^{a} \sin\left(\frac{ m\pi x }{ a } \right) \sin\left( \frac{ \tilde{m}\pi x }{ a } \right) \sin\left(\frac{ n\pi y }{ a }\right) \sin\left( \frac{ \tilde{n}\pi y }{ a } \right) dxdy\\
+&= \sum_{m,n \text{ odd}} \left[ \gamma_{(+)}+\gamma_{(-)} \right] \int_{0}^{a} \sin\left(\frac{ m\pi x }{ a } \right) \sin\left( \frac{ \tilde{m}\pi x }{ a } \right) dx \int_{0}^{a} \sin\left(\frac{ n\pi y }{ a }\right) \sin\left( \frac{ \tilde{n}\pi y }{ a } \right) dy\\
+&= \sum_{m,n \text{ odd}} \frac{a^{2}}{16\pi^{2}mn}\left[ \gamma_{(+)}+\gamma_{(-)} \right] [ (2\pi m) - \sin(2\pi m) ][ (2\pi n) - \sin(2\pi n) ]\\
+&= \sum_{m,n \text{ odd}} \frac{a^{2}}{16\pi^{2}mn}\left[ \gamma_{(+)}+\gamma_{(-)} \right] (2\pi m) (2\pi n)\\
+&= \frac{a^{2}}{4}\left[ \gamma_{(+)}+\gamma_{(-)} \right]
+\end{align*}
+Where together we get
+\[ \frac{Va^{2}}{\pi^{2}\tilde{m}\tilde{n}} [ (-1)^{\tilde{m}} - 1 ] [ (-1)^{\tilde{n}} - 1 ] = \frac{a^{2}}{4}\left[ \gamma_{(+)}+\gamma_{(-)} \right] \]
+This has $\left[ \gamma_{(+)}+\gamma_{(-)} \right]$, and thus $\Phi$, collapsing for either $m$ or $n$ even, so to again avoid a degenerate case we take both to be odd. We can also remove the tildes because of our orthogonality condition that required us to use the case where $\tilde{m}=m$ and $\tilde{n}=n$.
+\[ \frac{16V}{\pi^{2}mn} = \gamma_{(+)}+\gamma_{(-)} \]
+We can also use the same Fourier trick with our other boundary condition $\Phi(x,y,a)=V$ to get a similar answer:
+\[ V = \sum_{m,n \text{ odd}} \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \gamma_{(+)}e^{a(\pi/a)\sqrt{m^{2} + n^{2}}}+\gamma_{(-)}e^{-a(\pi/a)\sqrt{m^{2} + n^{2}}} \right] \]
+\[ \frac{16V}{\pi^{2}mn} = \gamma_{(+)}e^{\pi\sqrt{m^{2} + n^{2}}}+\gamma_{(-)}e^{-\pi\sqrt{m^{2} + n^{2}}} \]
+and with these two equations we have a linear system that we can solve:
+\begin{align*}
+\gamma_{(+)}+\gamma_{(-)} &= \frac{16V}{\pi^{2}mn}\\
+\gamma_{(+)}e^{\pi\sqrt{m^{2} + n^{2}}}+\gamma_{(-)}e^{-\pi\sqrt{m^{2} + n^{2}}} &= \frac{16V}{\pi^{2}mn}
+\end{align*}
+Multiply the first equation by $\exp\left(\pi\sqrt{m^{2} + n^{2}}\right)$ and subtract it from the second
+\begin{align*}
+\gamma_{(-)}\left( e^{-\pi\sqrt{m^{2} + n^{2}}} - e^{\pi\sqrt{m^{2} + n^{2}}} \right) &= \frac{16V}{\pi^{2}mn} \left( 1 - e^{\pi\sqrt{m^{2} + n^{2}}} \right)\\
+\gamma_{(-)}\left( e^{-\pi\sqrt{m^{2} + n^{2}}} - e^{\pi\sqrt{m^{2} + n^{2}}} \right) &= \frac{16V}{\pi^{2}mn} \left( e^{\pi\sqrt{m^{2} + n^{2}} - \pi\sqrt{m^{2} + n^{2}}} - e^{\pi\sqrt{m^{2} + n^{2}}} \right)\\
+\gamma_{(-)}\left( e^{-\pi\sqrt{m^{2} + n^{2}}} - e^{\pi\sqrt{m^{2} + n^{2}}} \right) &= \frac{16V}{\pi^{2}mn} \left( e^{-\pi\sqrt{m^{2} + n^{2}}} - 1 \right)  e^{\pi\sqrt{m^{2} + n^{2}}}\\
+\gamma_{(-)}\left( e^{-\pi\sqrt{m^{2} + n^{2}}} - e^{\pi\sqrt{m^{2} + n^{2}}} \right) e^{-\pi\sqrt{m^{2} + n^{2}}} &= \frac{16V}{\pi^{2}mn} \left( e^{-\pi\sqrt{m^{2} + n^{2}}} - 1 \right) \\
+\gamma_{(-)}\left( e^{-2\pi\sqrt{m^{2} + n^{2}}} - 1 \right) &= \frac{16V}{\pi^{2}mn} \left( e^{-\pi\sqrt{m^{2} + n^{2}}} - 1 \right) \\
+\gamma_{(-)}\left( e^{-\pi\sqrt{m^{2} + n^{2}}} + 1 \right) \left( e^{-\pi\sqrt{m^{2} + n^{2}}} - 1 \right) &= \frac{16V}{\pi^{2}mn} \left( e^{-\pi\sqrt{m^{2} + n^{2}}} - 1 \right) \\
+\gamma_{(-)}  &= \frac{16V}{\pi^{2}mn \left( 1 + e^{-\pi\sqrt{m^{2} + n^{2}}} \right) } \\
+\end{align*}
+Then multiply it by $\exp\left(-\pi\sqrt{m^{2} + n^{2}}\right)$ instead and subtract it from the second, reusing the method from the last equation to simplify the result
+\begin{align*}
+\gamma_{(+)}\left( e^{\pi\sqrt{m^{2} + n^{2}}} - e^{-\pi\sqrt{m^{2} + n^{2}}} \right) &= \frac{16V}{\pi^{2}mn} \left( 1 - e^{-\pi\sqrt{m^{2} + n^{2}}} \right)\\
+\gamma_{(+)}\left( e^{\pi\sqrt{m^{2} + n^{2}}} - e^{-\pi\sqrt{m^{2} + n^{2}}} \right) &= \frac{16V}{\pi^{2}mn} \left( e^{\pi\sqrt{m^{2} + n^{2}}} - 1 \right) e^{-\pi\sqrt{m^{2} + n^{2}}}\\
+\gamma_{(+)}\left( e^{2\pi\sqrt{m^{2} + n^{2}}} - 1 \right) &= \frac{16V}{\pi^{2}mn} \left( e^{\pi\sqrt{m^{2} + n^{2}}} - 1 \right)\\
+\gamma_{(+)} &= \frac{16V}{\pi^{2}mn \left( 1 + e^{\pi\sqrt{m^{2} + n^{2}}} \right) }\\
+\end{align*}
+
+This allows us to fill in the last constants
+\begin{align*}
+\Phi(x,y,z) &= \sum_{m,n \text{ odd}} \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \gamma_{(+)}e^{(z\pi/a)\sqrt{m^{2} + n^{2}}}+\gamma_{(-)}e^{-(z\pi/a)\sqrt{m^{2} + n^{2}}} \right]\\
+&= \sum_{m,n \text{ odd}} \left(\frac{16V}{\pi^{2}mn}\right) \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \frac{ e^{(z\pi/a)\sqrt{m^{2} + n^{2}}} }{ 1 + e^{\pi\sqrt{m^{2} + n^{2}}} } + \frac{ e^{-(z\pi/a)\sqrt{m^{2} + n^{2}}} }{ 1 + e^{-\pi\sqrt{m^{2} + n^{2}}} }\right]\\
+&= \sum_{m,n \text{ odd}} \left(\frac{16V}{\pi^{2}mn}\right) \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \frac{ e^{(z\pi/a)\sqrt{m^{2} + n^{2}}} }{ 1 + e^{\pi\sqrt{m^{2} + n^{2}}} } + \frac{ e^{-(z\pi/a)\sqrt{m^{2} + n^{2}}} e^{\pi\sqrt{m^{2} + n^{2}}} }{ 1 + e^{\pi\sqrt{m^{2} + n^{2}}} }\right]\\
+\Phi(x,y,z) &= \boxed{ \sum_{m,n \text{ odd}} \left(\frac{16V}{\pi^{2}mn}\right) \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \frac{ e^{(z/a)\pi\sqrt{m^{2} + n^{2}}} + e^{(1-(z/a))\pi\sqrt{m^{2} + n^{2}}}}{ 1 + e^{\pi\sqrt{m^{2} + n^{2}}} } \right] }\\
+\end{align*}
+
+Now we can evaluate this at the center of the cube:
+\begin{align*}
+\Phi(a/2,a/2,a/2) &= \sum_{m,n \text{ odd}} \left(\frac{16V}{\pi^{2}mn}\right) \sin\left(\frac{ m\pi }{ 2 }\right) \sin\left(\frac{ n\pi }{ 2 }\right) \left[ \frac{ e^{(\pi/2)\sqrt{m^{2} + n^{2}}} + e^{(\pi/2)\sqrt{m^{2} + n^{2}}}}{ 1 + e^{\pi\sqrt{m^{2} + n^{2}}} } \right]\\
+&= \sum_{m,n \text{ odd}} \left(\frac{32V}{\pi^{2}mn}\right) \sin\left(\frac{ m\pi }{ 2 }\right) \sin\left(\frac{ n\pi }{ 2 }\right) \left[ \frac{ e^{(\pi/2)\sqrt{m^{2} + n^{2}}}}{ 1 + e^{\pi\sqrt{m^{2} + n^{2}}} } \right]\\
+&= \sum_{m,n \text{ odd}} \left(\frac{32V}{\pi^{2}mn}\right) \left[ \frac{ \sin\left(\frac{ m\pi }{ 2 }\right) \sin\left(\frac{ n\pi }{ 2 }\right) }{ e^{-(\pi/2)\sqrt{m^{2} + n^{2}}} + e^{(\pi/2)\sqrt{m^{2} + n^{2}}} } \right]\\
+&= \sum_{m,n \text{ odd}} \left(\frac{16V}{\pi^{2}mn}\right) \left[ \frac{ \sin\left(\frac{ m\pi }{ 2 }\right) \sin\left(\frac{ n\pi }{ 2 }\right) }{ \cosh\left((\pi/2)\sqrt{m^{2} + n^{2}}\right) } \right]\\
+&= \left(\frac{16V}{\pi^{2}}\right) \left[ \frac{ \sin\left(\frac{ \pi }{ 2 }\right) \sin\left(\frac{ \pi }{ 2 }\right) }{ \cosh\left((\pi/2)\sqrt{1^{2} + 1^{2}}\right) } \right] + \left(\frac{16V}{3\pi^{2}}\right) \left[ \frac{ \sin\left(\frac{ 3\pi }{ 2 }\right) \sin\left(\frac{ \pi }{ 2 }\right) }{ \cosh\left((\pi/2)\sqrt{3^{2} + 1^{2}}\right) } \right]\\
+&+ \left(\frac{16V}{3\pi^{2}}\right) \left[ \frac{ \sin\left(\frac{ \pi }{ 2 }\right) \sin\left(\frac{ 3\pi }{ 2 }\right) }{ \cosh\left((\pi/2)\sqrt{1^{2} + 3^{2}}\right) } \right] + \left(\frac{16V}{5\pi^{2}}\right) \left[ \frac{ \sin\left(\frac{ 5\pi }{ 2 }\right) \sin\left(\frac{ \pi }{ 2 }\right) }{ \cosh\left((\pi/2)\sqrt{5^{2} + 1^{2}}\right) } \right]\\
+&+ \left(\frac{16V}{9\pi^{2}}\right) \left[ \frac{ \sin\left(\frac{ 3\pi }{ 2 }\right) \sin\left(\frac{ 3\pi }{ 2 }\right) }{ \cosh\left((\pi/2)\sqrt{3^{2} + 3^{2}}\right) } \right] + \left(\frac{16V}{5\pi^{2}}\right) \left[ \frac{ \sin\left(\frac{ \pi }{ 2 }\right) \sin\left(\frac{ 5\pi }{ 2 }\right) }{ \cosh\left((\pi/2)\sqrt{1^{2} + 5^{2}}\right) } \right] + \cdots\\
+\Phi(a/2,a/2,a/2) &= V\left[ \frac{ 16 }{ \pi^{2}\cosh\left((\pi/2)\sqrt{2}\right) } + \frac{ -16 }{ 3\pi^{2}\cosh\left((\pi/2)\sqrt{10}\right) } + \frac{ -16 }{ 3\pi^{2}\cosh\left((\pi/2)\sqrt{10}\right) } \right.\\
+&+ \left. \frac{ 16 }{ 5\pi^{2}\cosh\left((\pi/2)\sqrt{26}\right) } + \frac{ 16 }{ 9\pi^{2}\cosh\left((\pi/2)\sqrt{18}\right) } + \frac{ 16 }{ 5\pi^{2}\cosh\left((\pi/2)\sqrt{26}\right) } + \cdots \right]\\
+\Phi(a/2,a/2,a/2) &= V\left[ 0.3475 - 0.0075 - 0.0075 + 0.0002 + 0.0005 + 0.0002 + \cdots \right]\\
+\end{align*}
+Then our partial sums are:
+\begin{align*}
+\Phi(a/2,a/2,a/2)_{1} &= V\left[ 0.3475 \right]\\
+\Phi(a/2,a/2,a/2)_{2} &= V\left[ 0.3475 - 0.0075 \right] = V\left[ 0.3400 \right]\\
+\Phi(a/2,a/2,a/2)_{3} &= V\left[ 0.3400 - 0.0075 \right] = V\left[ 0.3325 \right]\\
+\Phi(a/2,a/2,a/2)_{4} &= V\left[ 0.3325 + 0.0002 \right] = V\left[ 0.3327 \right]\\
+\Phi(a/2,a/2,a/2)_{5} &= V\left[ 0.3325 + 0.0005 \right] = V\left[ 0.3332 \right]\\
+\Phi(a/2,a/2,a/2)_{6} &= V\left[ 0.3325 + 0.0002 \right] = V\left[ 0.3334 \right]\\
+\end{align*}
+Which shows we only need 3 terms in the sum before we can round to our numerical factor to 0.333 times the voltage which is accurate to three decimal places.
+
+This makes it look as if the potential at the center of the cube approaches the average value of the walls $=1/3$, since 2 out of the 6 walls are fixed at potential $V$ while the rest are grounded at potential 0.
+
+\paragraph{}
+We can then find the charge density on the top surface. Start with Gauss's law and remember how we can use the definition of the potential:
+\begin{align*}
+\oint \mathbf{E} \cdot \mathbf{\hat{n}} da &= \frac{1}{\epsilon_{0}} \oint \rho(\mathbf{x}) da = \frac{1}{\epsilon_{0}} \oint \sigma(\mathbf{x}) da\\
+-\oint \nabla\Phi \cdot \mathbf{\hat{n}} da &= \frac{1}{\epsilon_{0}} \oint \sigma(\mathbf{x}) da\\
+-\oint \frac{\partial\Phi}{\partial\mathbf{\hat{n}}} da &= \frac{1}{\epsilon_{0}} \oint \sigma(\mathbf{x}) da\\
+0 &= \oint \frac{\sigma(\mathbf{x})}{\epsilon_{0}} +  \frac{\partial\Phi}{\partial\mathbf{\hat{n}}} da\\
+0 &= \frac{\sigma(\mathbf{x})}{\epsilon_{0}} +  \frac{\partial\Phi}{\partial\mathbf{\hat{n}}}\\
+\sigma(\mathbf{x}) &= -\epsilon_{0} \frac{\partial\Phi}{\partial\mathbf{\hat{n}}}\\
+\end{align*}
+Then we must notice that the inward facing normal for the top of the cube is $-\mathbf{\hat{z}}$, and then use the formula we found for the potential in the box to get that on the top face
+\begin{align*}
+\sigma(\mathbf{x})_{\text{Top}} &= -\epsilon_{0} \frac{\partial\Phi}{\partial\mathbf{\hat{n}}} = \epsilon_{0} \frac{\partial\Phi}{\partial z}\\
+&= \epsilon_{0} \frac{\partial}{\partial z}\left[ \sum_{m,n \text{ odd}} \left(\frac{16V}{\pi^{2}mn}\right) \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \frac{ e^{(z/a)\pi\sqrt{m^{2} + n^{2}}} + e^{(1-(z/a))\pi\sqrt{m^{2} + n^{2}}}}{ 1 + e^{\pi\sqrt{m^{2} + n^{2}}} } \right] \right]\\
+&= \frac{16V\epsilon_{0}}{\pi^{2}} \sum_{m,n \text{ odd}} \left( \frac{\sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right)}{ mn \left( 1 + e^{\pi\sqrt{m^{2} + n^{2}}} \right)} \right) \frac{\partial}{\partial z}\left[ e^{(z/a)\pi\sqrt{m^{2} + n^{2}}} + e^{(1-(z/a))\pi\sqrt{m^{2} + n^{2}}} \right]\\
+&= \frac{16V\epsilon_{0}}{\pi^{2}} \sum_{m,n \text{ odd}} \left( \frac{\sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right)}{ mn \left( 1 + e^{\pi\sqrt{m^{2} + n^{2}}} \right)} \right) \left( \frac{\pi\sqrt{m^{2} + n^{2}}}{a} e^{(z/a)\pi\sqrt{m^{2} + n^{2}}} - \frac{ \pi\sqrt{m^{2} + n^{2}} }{a} e^{(1-(z/a))\pi\sqrt{m^{2} + n^{2}}} \right)\\
+\sigma(\mathbf{x})_{\text{Top}} &= \frac{16V\epsilon_{0}}{\pi^{2}} \sum_{m,n \text{ odd}} \left( \frac{ \sqrt{m^{2} + n^{2}} }{ mn } \right) \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \frac{ e^{(z/a)\pi\sqrt{m^{2} + n^{2}}} - e^{(1-(z/a))\pi\sqrt{m^{2} + n^{2}}} }{ 1 + e^{\pi\sqrt{m^{2} + n^{2}}} } \right]\\
+\end{align*}
+Since this is only valid on the top face where $z=a$, we find
+\begin{align*}
+\sigma(x,y,a)_{\text{Top}} &= \frac{ 16V\epsilon_{0} }{ \pi a } \sum_{m,n \text{ odd}} \left( \frac{ \sqrt{m^{2} + n^{2}} }{ mn } \right) \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \frac{ e^{\pi\sqrt{m^{2} + n^{2}}} }{ 1 + e^{\pi\sqrt{m^{2} + n^{2}}} } \right]\\
+&= \frac{ 16V\epsilon_{0} }{ \pi a } \sum_{m,n \text{ odd}} \left( \frac{ \sqrt{m^{2} + n^{2}} }{ mn } \right) \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) \left[ \frac{ e^{\pi\sqrt{m^{2} + n^{2}}} }{ \left( e^{-\pi\sqrt{m^{2} + n^{2}}} + 1 \right) e^{\pi\sqrt{m^{2} + n^{2}}} } \right]\\
+\sigma(x,y,a)_{\text{Top}} &= \boxed{ \frac{ 16V\epsilon_{0} }{ \pi a } \sum_{m,n \text{ odd}} \left( \frac{ \sqrt{m^{2} + n^{2}} }{ mn \left( e^{-\pi\sqrt{m^{2} + n^{2}}} + 1 \right)} \right) \sin\left(\frac{ m\pi x }{ a }\right) \sin\left(\frac{ n\pi y }{ a }\right) }\\
+\end{align*}
 
 \end{document}
