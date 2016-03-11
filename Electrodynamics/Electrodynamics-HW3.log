@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.23)  8 MAR 2016 15:18
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.23)  10 MAR 2016 20:45
 entering extended mode
 **Electrodynamics-HW3.tex
 (C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW3.tex
@@ -110,57 +110,13 @@ Package: amsthm 2004/08/06 v2.20
 \thm@headsep=\skip48
 \dth@everypar=\toks24
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks25
 )
-\lst@mode=\count99
-\lst@gtempboxa=\box28
-\lst@token=\toks26
-\lst@length=\count100
-\lst@currlwidth=\dimen112
-\lst@column=\count101
-\lst@pos=\count102
-\lst@lostspace=\dimen113
-\lst@width=\dimen114
-\lst@newlines=\count103
-\lst@lineno=\count104
-\lst@maxwidth=\dimen115
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
-File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
-\c@lstnumber=\count105
-\lst@skipnumbers=\count106
-\lst@framebox=\box29
-)
-("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.cfg"
-File: listings.cfg 2007/02/22 1.4 listings configuration
-))
-Package: listings 2007/02/22 1.4 (Carsten Heinz)
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
-Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
-File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
-)
-Package color Info: Driver file: pdftex.def on input line 130.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
-File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
-Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
-)
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
-Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
-)
-\Gread@gobject=\count107
-))
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
-Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
-
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
@@ -171,57 +127,67 @@ Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-\Gin@req@height=\dimen116
-\Gin@req@width=\dimen117
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count99
+))
+\Gin@req@height=\dimen112
+\Gin@req@width=\dimen113
 )
 (C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW3.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-\c@lstlisting=\count108
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count109
-\scratchdimen=\dimen118
-\scratchbox=\box30
-\nofMPsegments=\count110
-\nofMParguments=\count111
-\everyMPshowfont=\toks27
-\MPscratchCnt=\count112
-\MPscratchDim=\dimen119
-\MPnumerator=\count113
-\makeMPintoPDFobject=\count114
-\everyMPtoPDFconversion=\toks28
+\scratchcounter=\count100
+\scratchdimen=\dimen114
+\scratchbox=\box28
+\nofMPsegments=\count101
+\nofMParguments=\count102
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count103
+\MPscratchDim=\dimen115
+\MPnumerator=\count104
+\makeMPintoPDFobject=\count105
+\everyMPtoPDFconversion=\toks27
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 14.
+LaTeX Font Info:    Try loading font information for U+msa on input line 13.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 14.
+LaTeX Font Info:    Try loading font information for U+msb on input line 13.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-\c@problem=\count115
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 23.
+\c@problem=\count106
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 22.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 23.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 22.
 
-Overfull \hbox (1.92813pt too wide) detected at line 34
+Overfull \hbox (1.92813pt too wide) detected at line 33
 \OT1/cmr/m/n/10  = [] [][] \OML/cmm/m/it/10 \OT1/cmr/m/n/10 ([])\OML/cmm/m/it
 /10 G\OT1/cmr/m/n/10 (\OT1/cmr/bx/n/10 x\OML/cmm/m/it/10 ; []\OT1/cmr/m/n/10 )\
 OML/cmm/m/it/10 d[]x[] \OT1/cmr/m/n/10 + [] [][] [] \OML/cmm/m/it/10 da[]
@@ -230,22 +196,22 @@ OML/cmm/m/it/10 d[]x[] \OT1/cmr/m/n/10 + [] [][] [] \OML/cmm/m/it/10 da[]
 [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 54--57
+Underfull \hbox (badness 10000) in paragraph at lines 53--56
 
  []
 
 [2]
-Overfull \hbox (6.37247pt too wide) in paragraph at lines 79--79
+Overfull \hbox (6.37247pt too wide) in paragraph at lines 78--78
 [] 
  []
 
 
-Overfull \hbox (13.5358pt too wide) in paragraph at lines 85--85
+Overfull \hbox (13.5358pt too wide) in paragraph at lines 84--84
 [] 
  []
 
 
-Overfull \hbox (21.31873pt too wide) in paragraph at lines 94--94
+Overfull \hbox (21.31873pt too wide) in paragraph at lines 93--93
 [] 
  []
 
@@ -253,111 +219,111 @@ Overfull \hbox (21.31873pt too wide) in paragraph at lines 94--94
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 131.
+(amsmath)                 on input line 130.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 140--144
+Underfull \hbox (badness 10000) in paragraph at lines 139--143
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 158--160
+Underfull \hbox (badness 10000) in paragraph at lines 157--159
 
  []
 
 [6]
-Overfull \hbox (42.3149pt too wide) in paragraph at lines 179--179
+Overfull \hbox (42.3149pt too wide) in paragraph at lines 178--178
 [] 
  []
 
 
-Overfull \hbox (54.87541pt too wide) detected at line 185
+Overfull \hbox (54.87541pt too wide) detected at line 184
  []$[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 a[] \OMS/cmsy/m/n/10   [] \OT1/cmr/m
 /n/10 + [] \OMS/cmsy/m/n/10   [] \OT1/cmr/m/n/10 = []  $ 
  []
 
 
-Overfull \hbox (73.53847pt too wide) in paragraph at lines 204--204
+Overfull \hbox (73.53847pt too wide) in paragraph at lines 203--203
 [] 
  []
 
 [7] [8] [9]
-Overfull \hbox (21.31873pt too wide) in paragraph at lines 262--262
+Overfull \hbox (21.31873pt too wide) in paragraph at lines 261--261
 [] 
  []
 
 [10]
-Overfull \hbox (18.95262pt too wide) in paragraph at lines 299--299
+Overfull \hbox (18.95262pt too wide) in paragraph at lines 298--298
 [] 
  []
 
 [11]
-Overfull \hbox (32.85957pt too wide) in paragraph at lines 318--318
+Overfull \hbox (32.85957pt too wide) in paragraph at lines 317--317
 [] 
  []
 
 [12] [13] [14] [15] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 421--424
+Underfull \hbox (badness 10000) in paragraph at lines 420--423
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--431
+Underfull \hbox (badness 10000) in paragraph at lines 426--430
 
  []
 
 [17]
-Underfull \hbox (badness 10000) in paragraph at lines 458--462
+Underfull \hbox (badness 10000) in paragraph at lines 457--461
 
  []
 
 [18]
-Underfull \hbox (badness 10000) in paragraph at lines 476--480
+Underfull \hbox (badness 10000) in paragraph at lines 475--479
 
  []
 
 
-Overfull \hbox (76.6384pt too wide) in paragraph at lines 490--490
+Overfull \hbox (76.6384pt too wide) in paragraph at lines 489--489
 [] 
  []
 
 [19]
-Overfull \hbox (69.47493pt too wide) in paragraph at lines 504--504
+Overfull \hbox (69.47493pt too wide) in paragraph at lines 503--503
 [] 
  []
 
 
-Overfull \hbox (4.92282pt too wide) in paragraph at lines 511--511
+Overfull \hbox (4.92282pt too wide) in paragraph at lines 510--510
 [] 
  []
 
 
-Overfull \hbox (15.80367pt too wide) in paragraph at lines 519--519
+Overfull \hbox (15.80367pt too wide) in paragraph at lines 518--518
 [] 
  []
 
 [20]
-Overfull \hbox (36.98851pt too wide) in paragraph at lines 541--541
+Overfull \hbox (36.98851pt too wide) in paragraph at lines 540--540
 [] 
  []
 
 [21]
-Overfull \hbox (82.44034pt too wide) in paragraph at lines 556--556
+Overfull \hbox (82.44034pt too wide) in paragraph at lines 555--555
 [] 
  []
 
 
-Overfull \hbox (68.68147pt too wide) in paragraph at lines 570--570
+Overfull \hbox (68.68147pt too wide) in paragraph at lines 569--569
 [] 
  []
 
 [22] [23]
-Overfull \hbox (147.45587pt too wide) in paragraph at lines 601--601
+Overfull \hbox (147.45587pt too wide) in paragraph at lines 600--600
 [] 
  []
 
 
-Overfull \hbox (83.86832pt too wide) in paragraph at lines 607--607
+Overfull \hbox (83.86832pt too wide) in paragraph at lines 606--606
 [] 
  []
 
@@ -365,13 +331,13 @@ Overfull \hbox (83.86832pt too wide) in paragraph at lines 607--607
 (C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW3.aux)
  ) 
 Here is how much of TeX's memory you used:
- 3341 strings out of 493921
- 44277 string characters out of 3147285
- 121422 words of memory out of 3000000
- 6616 multiletter control sequences out of 15000+200000
+ 2114 strings out of 493921
+ 26145 string characters out of 3147285
+ 100016 words of memory out of 3000000
+ 5405 multiletter control sequences out of 15000+200000
  11210 words of font info for 44 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,15n,32p,811b,244s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,15n,24p,811b,236s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
@@ -384,7 +350,7 @@ m/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb
 gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Electrodynamics-HW3.pdf (25 pages, 236193 bytes).
+Output written on Electrodynamics-HW3.pdf (25 pages, 235622 bytes).
 PDF statistics:
  135 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
