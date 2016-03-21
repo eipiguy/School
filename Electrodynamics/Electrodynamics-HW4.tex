@@ -1,0 +1,386 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Electrodynamics HW4\\
+Ch3 - 1,3,6 (pg135)}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{solution}{Solution}
+
+\setcounter{section}{3}
+\section{HW4 Solutions}
+
+\begin{problem}\label{problem3.1}
+Two concentric spheres have radii $a$, $b$, ($b>a$), and each is divided into two hemispheres by the same horizontal plane. The upper hemisphere of the inner sphere and the lower hemisphere of the outer sphere are maintained at potential $V$. The other hemispheres are at zero potential.
+
+Determine the potential in the region $a \le r \le b$ as a series in Legendre polynomials. Include terms at least up to $l=4$. Check your solution against known results in the limiting cases $b \to \infty$, and $a \to 0$
+\end{problem}
+
+\begin{solution}
+Position the origin at the center of the spheres and point the z-axis at the center of the charged half of the inner sphere. Then we have azimuthal symmetry, and we can just consider the problem in polar coordinates about any longitudinal line $\mathbf{x} = (r,\phi)$. Since there is no charge in our annulus of interest $a < r < b$, we can use Laplace's equation in polar coordinates to find:
+\begin{align*}
+\nabla^{2} \Phi &= 0\\
+\frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial \Phi}{\partial r} \right) + \frac{1}{r^{2}} \frac{\partial^{2} \Phi}{\partial \phi^{2}} &= 0
+\end{align*}
+If we then assume $\Phi=R(r)F(\phi)$ for some scalar functions $R,F$, we can use the product rule to see
+\begin{align*}
+\frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r} \left[ R(r)F(\phi) \right] \right) + \frac{1}{r^{2}} \frac{\partial^{2}}{\partial \phi^{2}} \left[ R(r)F(\phi) \right] &= 0\\
+\frac{1}{r} \frac{\partial}{\partial r} \left( r F(\phi) \frac{\partial R}{\partial r}(r) \right) + \frac{R(r)}{r^{2}} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= 0\\
+\frac{1}{r} \left( F(\phi) \frac{\partial R}{\partial r}(r) +  r F(\phi) \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{R(r)}{r^{2}} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= 0\\
+F(\phi) \left( \frac{1}{r} \frac{\partial R}{\partial r}(r) +  \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{R(r)}{r^{2}} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= 0
+\end{align*}
+Then since 
+\[ \nabla^{2}\Phi = 0 \implies (1/\Phi)(\nabla^{2}\Phi) = 0 \]
+This shows
+\[ \frac{1}{R(r)} \left( \frac{1}{r} \frac{\partial R}{\partial r}(r) +  \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{1}{r^{2}F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) = 0 \]
+and multiplying through by $r^{2}$ gives
+\[ \frac{r}{R(r)} \left( \frac{\partial R}{\partial r}(r) + r \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{1}{F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) = 0  \]
+We then have two differential equations that each depend on a different variable, and add to zero. We can call them $\pm\alpha$ and find
+\[ \frac{r}{R(r)} \left( \frac{\partial R}{\partial r}(r) + r \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{1}{F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) = \alpha + (-\alpha) \]
+\begin{align*}
+\frac{r}{R(r)} \left( \frac{\partial R}{\partial r}(r) + r \frac{\partial^{2} R}{\partial r^{2}}(r) \right) &= \alpha
+&
+\frac{-1}{F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= \alpha\\
+\frac{\partial R}{\partial r}(r) + r \frac{\partial^{2} R}{\partial r^{2}}(r) &= \frac{\alpha}{r} R(r)
+&
+\frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= -\alpha F(\phi)\\
+\frac{\partial^{2} R}{\partial r^{2}}(r) &= \frac{-1}{r} \frac{\partial R}{\partial r}(r) + \frac{\alpha}{r^{2}} R(r)
+&
+\frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= -\alpha F(\phi)\\
+\end{align*}
+Here for constants $A$ and $B$, $F$ has solutions
+\[ F(\phi)= Ae^{i\phi\sqrt{\alpha}} + Be^{-i\phi\sqrt{\alpha}} \]
+While we have to separate $R$ into parts where
+\[ S(r) = \frac{\partial R}{\partial r} (r) \implies \frac{\partial S}{\partial r} (r) =  \frac{\partial^{2} R}{\partial r^{2}} (r) \]
+\begin{align*}
+\frac{\partial S}{\partial r}(r) &= \frac{-1}{r} S(r) + \frac{\alpha}{r^{2}} R(r)
+&
+\frac{\partial R}{\partial r} (r) &= S(r)\\
+\end{align*}
+\[
+\begin{bmatrix}
+\frac{\partial S}{\partial r} \\
+\frac{\partial R}{\partial r} \\
+\end{bmatrix}
+(r) = 
+\frac{1}{r^{2}}
+\begin{bmatrix}
+-r	&	\alpha	\\
+r^{2}	&	0	\\
+\end{bmatrix}
+\begin{bmatrix}
+S(r)	\\
+R(r)	\\
+\end{bmatrix}
+\]
+We can find the eigenvalues $\lambda$ with the characteristic polynomial
+\[ \begin{vmatrix}
+-r - \lambda	&	\alpha		\\
+r^{2}			&	-\lambda	\\
+\end{vmatrix} = 0 \]
+\begin{align*}
+\lambda(r + \lambda) - \alpha r^{2} &= 0\\
+\lambda^{2} + \lambda r - \alpha r^{2} &= 0\\
+\end{align*}
+\begin{align*}
+\lambda &= \frac{1}{2}\left( -r \pm \sqrt{r^{2} + 4\alpha r^{2}} \right)\\
+\lambda &= \frac{r}{2}\left( \sqrt{1 + 4\alpha} \mp 1\right)
+\end{align*}
+Then we know
+\begin{align*}
+\begin{bmatrix}
+-r - \frac{r}{2}\left( \sqrt{1 + 4\alpha} \mp 1\right)	&	\alpha		\\
+r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} \mp 1\right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+-\frac{r}{2} \left( 2 + \sqrt{1 + 4\alpha} \mp 1\right)	&	\alpha		\\
+r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} \mp 1\right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+-\frac{r}{2} \left( 2 \mp 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
+r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} \mp 1\right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\end{align*}
+
+\begin{align*}
+\begin{bmatrix}
+-\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
+r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} - 1\right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+&
+\begin{bmatrix}
+-\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
+r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} + 1\right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\end{align*}
+
+In the first case we multiply the first row by 
+$ \frac{2r}{ 1 + \sqrt{1+4\alpha} } $
+and add it to the second:
+\begin{align*}
+\begin{bmatrix}
+-\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
+0													&	\frac{2r\alpha}{ 1 + \sqrt{1+4\alpha} }-\frac{r}{2}\left( \sqrt{1 + 4\alpha} - 1\right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+-\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
+0													&	\frac{2r\alpha \left( \sqrt{1+4\alpha} -1 \right) }{ 1 + 4\alpha - 1 }-\frac{r}{2}\left( \sqrt{1 + 4\alpha} - 1\right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+-\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
+0													&	\frac{r \left( \sqrt{1+4\alpha} -1 \right) }{ 2 }-\frac{r}{2}\left( \sqrt{1 + 4\alpha} - 1\right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+-\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
+0													&	0	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\end{align*}
+Showing the solution is singular:
+\begin{align*}
+-\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right) v_{1} + \alpha v_{2} &= 0\\
+v_{2} &= \frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) v_{1}\\
+\mathbf{v} &= v_{1}
+\begin{bmatrix}
+1\\
+\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)
+\end{bmatrix}
+\end{align*}
+
+In the second case 
+\[
+\begin{bmatrix}
+-\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
+r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} + 1\right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+u_{1}\\
+u_{2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\]
+we can use the singular nature of the nullspace to use
+\begin{align*}
+-\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha}\right) u_{1} + \alpha u_{2} &= 0\\
+u_{2} &= \frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) u_{1}\\
+\mathbf{u} &= u_{1}
+\begin{bmatrix}
+1\\
+\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)
+\end{bmatrix}
+\end{align*}
+Such that
+\begin{align*}
+P = \left[ \mathbf{u} \mathbf{v} \right] &=
+\begin{bmatrix}
+1 & 1 \\
+\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)
+&
+\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)
+\end{bmatrix}
+\\
+P^{-1} &= \frac{1}{|P|}
+\begin{bmatrix}
+\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) & -1 \\
+-\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) & 1
+\end{bmatrix}\\
+&= \frac{1}{ \frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) -\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) }
+\begin{bmatrix}
+\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) & -1 \\
+-\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) & 1
+\end{bmatrix}\\
+&= \frac{1}{ \frac{r}{2\alpha} -\frac{3r}{2\alpha} }
+\begin{bmatrix}
+\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) & -1 \\
+-\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) & 1
+\end{bmatrix}\\
+&= \frac{\alpha}{r}
+\begin{bmatrix}
+\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) & -1 \\
+-\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) & 1
+\end{bmatrix}
+\end{align*}
+Now we compute
+\begin{align*}
+P^{-1}AP &= \frac{\alpha}{r}
+\begin{bmatrix}
+\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) & -1 \\
+-\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) & 1
+\end{bmatrix}
+\begin{bmatrix}
+-r	&	\alpha	\\
+r^{2}	&	0	\\
+\end{bmatrix}
+\begin{bmatrix}
+1 & 1 \\
+\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)
+&
+\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)
+\end{bmatrix}
+\\
+&= \frac{\alpha}{r}
+\begin{bmatrix}
+-\frac{r^{2}}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)-r^{2} 
+&
+\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right) 
+\\
+\frac{r^{2}}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)+r^{2} 
+&
+-\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)
+\end{bmatrix}
+\begin{bmatrix}
+1 & 1 \\
+\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)
+&
+\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)
+\end{bmatrix}
+\\
+&=
+\begin{bmatrix}
+-\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha} + 2\alpha \right) 
+&
+\frac{\alpha}{2} \left( 1 + \sqrt{1 + 4\alpha}\right) 
+\\
+\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha} - 2\alpha \right) 
+&
+-\frac{\alpha}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)
+\end{bmatrix}
+\begin{bmatrix}
+1 & 1 \\
+\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)
+&
+\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)
+\end{bmatrix}
+\end{align*}
+
+
+\end{solution}
+
+\setcounter{problem}{2}
+\begin{problem}\label{problem3.3}
+A thin, flat, conducting, circular disc of radius R is located in the x-y plane with its center at the origin, and is maintained at a fixed potential $V$. With the information that the charge density on a disc at fixed potential is proportional to $\left( R^{2} - \rho^{2} \right)^{-1/2} $, where $\rho$ is the distance out from the center of the disc,
+\begin{enumerate}[(a)]
+\item show that for $r > R$ the potential is
+\[ \Phi(r,\theta,\phi) = \frac{2V}{\pi} \frac{R}{R} \sum_{l=0}^{\infty} \frac{(-1)^{l}}{2l + 1} \left( \frac{R}{r} \right)^{2l} P_{2l}(\cos \theta) \]
+\item find the potential for $r < R$.
+\item What is the capacitence of the disc?
+\end{enumerate}
+\end{problem}
+
+\setcounter{solution}{2}
+\begin{solution}
+content...
+\end{solution}
+
+\setcounter{problem}{5}
+\begin{problem}\label{problem3.6}
+Two point charges $q$ and $-q$ are located on the z axis at $z = +a$ and $z = -a$, respectively.
+\begin{enumerate}[(a)]
+\item Find the electrostatic potential as an expansion in spherical harmonics and powers of $r$ for both $r > a$ and $r < a$.
+\item Keeping the product $qa = p/2$ constant, take the limit of $a \to 0$ and find the potential for $r \ne 0$. This is by definition a dipole along the z axis and its potential.
+\item Suppose now that the dipole of part b is surrounded by a grounded spherical shell of radius $b$ concentric with the origin. By linear superposition find the potential everywhere inside the shell.
+\end{enumerate}
+\end{problem}
+
+\end{document}

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="3in"
+   height="2in"
+   viewBox="0 0 270 180"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="InsetDrawing-TwoConcentricSpheresDividedByAPlane.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4"
+     inkscape:cx="144.61127"
+     inkscape:cy="87.700205"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="in"
+     width="3in"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1058"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4156"
+       spacingx="11.25"
+       units="in"
+       spacingy="11.25"
+       empspacing="4"
+       visible="true"
+       enabled="false" />
+    <inkscape:grid
+       type="axonomgrid"
+       id="grid4158"
+       units="in"
+       empspacing="4"
+       spacingy="11.25" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-872.3622)">
+    <ellipse
+       style="fill:none"
+       id="path3340"
+       cx="82.375"
+       cy="961.11218"
+       rx="38.875"
+       ry="44.25" />
+    <ellipse
+       style="fill:none"
+       id="path3342"
+       cx="57.125"
+       cy="967.36218"
+       rx="1.125"
+       ry="5.75" />
+    <path
+       style="fill:none"
+       id="path3346"
+       sodipodi:type="arc"
+       sodipodi:cx="46.625"
+       sodipodi:cy="945.73718"
+       sodipodi:rx="23.875"
+       sodipodi:ry="23.875"
+       sodipodi:start="0"
+       sodipodi:end="6.2831133"
+       d="M 70.5,945.73718 A 23.875,23.875 0 0 1 46.62543,969.61218 23.875,23.875 0 0 1 22.75,945.73804 23.875,23.875 0 0 1 46.623711,921.86218 23.875,23.875 0 0 1 70.5,945.73546 l -23.875,0.002 z" />
+    <path
+       style="fill:none"
+       id="path3348"
+       sodipodi:type="arc"
+       sodipodi:cx="57.875"
+       sodipodi:cy="942.61218"
+       sodipodi:rx="7.875"
+       sodipodi:ry="1"
+       sodipodi:start="0"
+       sodipodi:end="6.2831155"
+       d="m 65.75,942.61218 a 7.875,1 0 0 1 -7.874863,1 A 7.875,1 0 0 1 50,942.61222 7.875,1 0 0 1 57.874588,941.61218 7.875,1 0 0 1 65.75,942.61211 l -7.875,7e-5 z" />
+    <path
+       style="fill:none"
+       id="path3350"
+       sodipodi:type="arc"
+       sodipodi:cx="102.75"
+       sodipodi:cy="952.86218"
+       sodipodi:rx="26.5"
+       sodipodi:ry="33"
+       sodipodi:start="0"
+       sodipodi:end="6.2831155"
+       d="m 129.25,952.86218 a 26.5,33 0 0 1 -26.49954,33 A 26.5,33 0 0 1 76.25,952.86333 26.5,33 0 0 1 102.74861,919.86218 26.5,33 0 0 1 129.25,952.85988 l -26.5,0.002 z" />
+    <path
+       style="fill:none"
+       id="path3352"
+       sodipodi:type="arc"
+       sodipodi:cx="108.75"
+       sodipodi:cy="975.86218"
+       sodipodi:rx="44.5"
+       sodipodi:ry="44.5"
+       sodipodi:start="0"
+       sodipodi:end="6.2831155"
+       d="M 153.25,975.86218 A 44.5,44.5 0 0 1 108.75078,1020.3622 44.5,44.5 0 0 1 64.25,975.86374 44.5,44.5 0 0 1 108.74767,931.36218 44.5,44.5 0 0 1 153.25,975.85908 l -44.5,0.003 z" />
+  </g>
+</svg>

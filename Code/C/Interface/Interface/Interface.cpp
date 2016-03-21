@@ -2,9 +2,11 @@
 //
 
 #include "stdafx.h"
+#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
-void loadMatrix(char fname[]);
+float * loadMatrix(char *fname,int *size,int *stride);
 
 int main()
 {
@@ -13,26 +15,297 @@ int main()
 	printf("Please enter the filename of the matrix to load:\n");
 	scanf("%s", &filename);
 
-	loadMatrix(filename);
+	int stride, size;
+	float* matrix = loadMatrix(filename,&size,&stride);
+	int rows = size/stride;
+
+	if (matrix != NULL) {
+		for (int i = 0;i < (size/stride); i++) {
+			for (int j = 0; j < stride; j++) {
+				printf("%f ", matrix[(i*stride) + j]);
+			}
+			printf("\n");
+		}
+	}
 
 	return 0;
 }
 
-void loadMatrix(char fname[])
+float * loadMatrix(char *fname, int* sizeHandle, int* strideHandle)
 {
-	FILE *myFile;	// Pointer to the data file
+	FILE *file;	// Variable for handle to the data file
 
-	myFile = fopen(fname, "r");	// Opens the file (Creates a handle)
+	file = fopen(fname, "r");	// Opens the file (Creates the handle)
 
-	if (myFile == NULL) perror("Error opening file.");
+								// If openning the file name gives a NULL handle,
+								// we announce it, and skip parsing the matrix.
+	if (file == NULL) perror("Error opening file (NULL Handle).");
+
+	//#########################################################################
+
+	// If the handle exists, we proceed to interpret it as a csv file.
 	else
 	{
-		char buff[255];	// Creates a buffer to read each line into
+		// Initialize our variables:
 
-		// Read in the file line by line
-		while (fgets(buff, 255, myFile) != NULL) {
+		// Current character in the file.
+		char c;
 
-			printf(buff);
-		}
+		int tokenCounter = 0,	// Counts the current token in the row.
+			charCounter = 0,	// Counts the current character in the token.
+			avgTokenLength = 0;	// Counts the average token length to preallocate memory efficiently.
+
+								// The aray for the set of tokens as converted to floats
+		float* matrixBuffer = (float*)malloc(sizeof(float));
+		int matrixBufferSize = 1;
+
+		// The array for each token as it is read in as a string
+		char* tokenBuffer = (char*)malloc(sizeof(char));
+		int tokenBufferSize = 1;
+
+		// Initialize the flags to mark delimeters as actual characters
+		bool subDelimiterFlag = false,
+			sSubDelimiterFlag = false,
+
+			strideFlag = true;
+
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		// For each character in the file
+		//=====================================================================
+		do
+		{
+			// Get the current character in the file
+			c = getc(file);
+
+			//=================================================================
+			// If there's an error reading the character, 
+			// inform the user and break the loop.
+			if (c == ferror(file))
+			{
+				fprintf(stderr, "Error reading character %d from token %d.\n", charCounter, tokenCounter);
+				break;
+			}
+
+			//-----------------------------------------------------------------
+			// If getc returned EOF,
+			// finish the current token, the current row, and close the file:
+			if (c == EOF)
+			{
+				// If this isn't the first character of a token
+				if (charCounter != 0) {
+					tokenCounter++;		// Increase the token counter.
+
+										// If the new token would overload the matrixBuffer, 
+										// we have to resize the matrixBuffer before we do anything.
+					if (tokenCounter > matrixBufferSize) {
+
+						// Double the size of the matrixBuffer
+						float* temp = (float*)realloc(matrixBuffer, 2 * matrixBufferSize * sizeof(float));
+
+						// If the reassignment worked, copy the temp variable over
+						if (temp) {
+							matrixBuffer = temp;
+							matrixBufferSize *= 2;
+						}
+						// Else there was an error doubling the size: inform the use and break.
+						else {
+							fprintf(stderr, "Error doubling the matrixBuffer at token %d.\n", tokenCounter);
+							break;
+						}
+					}
+
+					// Once we have space, 
+					// read the token as a float, and copy it into the matrixBuffer
+					matrixBuffer[tokenCounter - 1] = strtof(tokenBuffer, NULL);
+				}
+
+				// Now we have to end the array
+
+				tokenCounter++;		// Increase the token counter.
+
+									// If the ending token would overload the matrixBuffer, 
+									// we have to resize the matrixBuffer before we do anything.
+				if (tokenCounter > matrixBufferSize) {
+
+					// Double the size of the matrixBuffer
+					float* temp = (float*)realloc(matrixBuffer, 2 * matrixBufferSize * sizeof(float));
+
+					// If the reassignment worked, copy the temp variable over
+					if (temp) {
+						matrixBuffer = temp;
+						matrixBufferSize *= 2;
+					}
+					// Else there was an error doubling the size: inform the use and break.
+					else {
+						fprintf(stderr, "Error doubling the size of the matrixBuffer at token %d.\n", tokenCounter);
+						break;
+					}
+				}
+
+				matrixBuffer[tokenCounter - 1] = NULL;
+
+				free(tokenBuffer);		// destroy the tokenBuffer,
+				fclose(file);			// close the file
+				*sizeHandle = tokenCounter-1;	// set the size of the resulting matrix
+				return matrixBuffer;	// return the final set of tokens in the matrixBuffer
+			}
+
+			//-----------------------------------------------------------------
+			// If we hit a newline character outside of subdelimiters
+			// We've hit the end of the line:
+			if (c == '\n' && !subDelimiterFlag) {
+
+				// To deal with the end of a line:
+
+				// Increase the token counter.
+				tokenCounter++;
+				// If the stride hasn't been set, do so.
+				if (strideFlag) {
+					*strideHandle = tokenCounter;
+					strideFlag = false;
+				};
+
+				// If the new token would overload the matrixBuffer, 
+				// we have to resize the matrixBuffer before we do anything.
+				if (tokenCounter > matrixBufferSize) {
+
+					// Double the size of the matrixBuffer
+					float* temp = (float*)realloc(matrixBuffer, 2 * matrixBufferSize * sizeof(float));
+
+					// If the reassignment worked, copy the temp variable over
+					if (temp) {
+						matrixBuffer = temp;
+						matrixBufferSize *= 2;
+					}
+					// Else there was an error doubling the size: inform the use and break.
+					else {
+						fprintf(stderr, "Error doubling the size of the matrixBuffer at token %d.\n", tokenCounter);
+						break;
+					}
+				}
+
+				// Once we have space, 
+				// read the token as a float, and copy it into the matrixBuffer
+				matrixBuffer[tokenCounter - 1] = strtof(tokenBuffer, NULL);
+
+				// Clear the token buffer
+				memset(tokenBuffer, NULL, tokenBufferSize);
+				charCounter = 0;
+				continue;
+			}
+
+			//---------------------------------------------------------------------
+			// If we've hit a delimiter outside of subDelimiters,
+			// then we've hit the end of the token (make sure?).
+			if (c == ',' && !subDelimiterFlag) {
+
+				tokenCounter++;		// Increase the tokenCounter.
+
+									// make sure the matrixBuffer can handle another token
+
+									// If the new token would overload the matrixBuffer, 
+									// we have to resize the matrixBuffer before we do anything.
+				if (tokenCounter > matrixBufferSize) {
+
+					// Double the size of the matrixBuffer
+					float* temp = (float*)realloc(matrixBuffer, 2 * matrixBufferSize * sizeof(float));
+
+					// If the reassignment worked, copy the temp variable over
+					if (temp) {
+						matrixBuffer = temp;
+						matrixBufferSize *= 2;
+					}
+					// Else there was an error doubling the size: inform the use and break.
+					else {
+						fprintf(stderr, "Error doubling the size of the matrixBuffer at token %d.\n", tokenCounter);
+						break;
+					}
+				}
+
+				// read the token as a float and copy it into the matrixBuffer
+				matrixBuffer[tokenCounter - 1] = strtof(tokenBuffer, NULL);
+
+				// clear the tokenBuffer, reset the character counter, and restart
+				memset(tokenBuffer, NULL, tokenBufferSize);
+				charCounter = 0;
+				continue;
+			}
+
+			//-----------------------------------------------------------------
+			// If we're at a subDelimiter,
+			if (c == '"') {
+
+				// if it's the first of a set:
+				if (!subDelimiterFlag) {
+
+					// and if we havn't immediately gone through a set of subDelimiters,
+					// turn on the subDelimiterFlag to allow literal commas, and move to the next character.
+					if (!sSubDelimiterFlag) {
+						subDelimiterFlag = true;
+						continue;
+					}
+
+					// else this is a subDelimiter right after another subDelimiter,
+					// we recognize it as an actual character this cycle,
+					// but turn off the flag for allowing literal quotations on the next run.
+					else { sSubDelimiterFlag = false; }
+				}
+
+				// else if we're at the second of a set of subDelimiters;
+				// We reset the subDelimiterFlag,
+				// set the potential flag for a quotation, and restart.
+				else {
+					subDelimiterFlag = false;
+					sSubDelimiterFlag = true;
+					continue;
+				}
+			}
+
+			//-----------------------------------------------------------------
+			// If we are at anything after a second subDelimiter that is not another subDelimiter,
+			// we ignore the potential of literal quotation marks by resetting the flag
+			if (sSubDelimiterFlag && (c != '"')) { sSubDelimiterFlag = false; }
+
+			//=================================================================
+			// If we did not get an error, hit the end of a line, the end of the file, 
+			// or have to deal with delimiters or subDelimiters, then we are at a valid character.
+
+			charCounter++;		// Increase the characterCounter
+
+								// Make sure we can fit another character onto the token
+
+								//If the new character overloads the tokenBuffer, we must resize it
+			if (charCounter > tokenBufferSize) {
+
+				// Double the size of the tokenBuffer
+				char* temp = (char*)realloc(tokenBuffer, 2 * tokenBufferSize * sizeof(char));
+
+				// If the assignment works, then we can copy the temp variable over.
+				if (temp) {
+					tokenBuffer = temp;
+					tokenBufferSize *= 2;
+				}
+				// otherwise there was an error, so we inform the user and break.
+				else {
+					fprintf(stderr, "Error doubling the size of the token buffer for token %d.\n", tokenCounter);
+				}
+
+			}
+
+			// Store the character in the tokenBuffer
+			tokenBuffer[charCounter - 1] = c;
+
+			//=================================================================
+
+		} while (true);
+
+		fprintf(stderr, "Outside of loop.\n");
+
+		fclose(file);
+
+		return NULL;
+
+		//#####################################################################
 	}
 }
