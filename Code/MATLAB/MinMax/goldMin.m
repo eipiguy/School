@@ -1,6 +1,6 @@
-function [x,fx,ea,iter] = goldMinDisp(f,xl,xu,es,maxit,varargin)
-% goldsecDisp: golden section search for minimum
-%   [root,fx,ea,iter] = goldMinDisp(func,x1,xu,es,maxit,p1,p2,...)
+function [x,fx,ea,iter] = goldMin(f,xl,xu,es,maxit,varargin)
+% goldMin: golden section search for minimum
+%   [root,fx,ea,iter] = goldMin(func,x1,xu,es,maxit,p1,p2,...)
 %       uses golden section search to find the minimum of f
 %       within some relative error
 % input:
@@ -19,8 +19,8 @@ function [x,fx,ea,iter] = goldMinDisp(f,xl,xu,es,maxit,varargin)
 if nargin < 3,error('at least 3 input arguments required'),end
 
 % set default desired error and maximum iterations
-if nargin < 4 | isempty(es),es=0.0001;end
-if nargin < 5 | isempty(maxit),maxit=50;end
+if nargin < 4 || isempty(es),es=0.0001;end
+if nargin < 5 || isempty(maxit),maxit=50;end
 
 % initialize the golden ratio
 phi = (1+sqrt(5))/2;
@@ -35,11 +35,6 @@ while(1)
     % find intermediary points
     x1 = xl+d;
     x2 = xu-d;
-    
-    % display the current bounds, intermediates,
-    % and functional values
-    display([xl,xu,x1,x2]);
-    display([f(x1),f(x2)]);
     
     % find which intermediate value is closest to the minimum
     % and revise the upper and lower guesses
@@ -56,9 +51,6 @@ while(1)
     % if we are not at an exact root,
     % compute the current relative error
     if xopt ~= 0,ea = (2-phi)*abs((xu-xl)/xopt)*100;end
-    
-    % display the approximate error
-    display(ea);
         
     % if we've hit the maximum number of iterations,
     % or gotten within our error bounds,

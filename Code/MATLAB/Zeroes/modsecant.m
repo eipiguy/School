@@ -1,7 +1,7 @@
-function [root,ea,iter] = modsecant(func,xr,d,es,maxit,varargin)
+function [root,ea,iter] = modSecant(func,xr,d,es,maxit,varargin)
 % modsecant: modified secant method for root/zero locations
-%   [root,ea,iter] = secant(func,dfunc,xr1,xr2,es,maxit,p1,p2,...):
-%       uses secant method to find the root of func
+%   [root,ea,iter] = modSecant(func,dfunc,xr1,xr2,es,maxit,p1,p2,...):
+%       uses modified secant method to find the root of func
 % input:
 %   func = name of function
 %   dfun = name of derivative of function

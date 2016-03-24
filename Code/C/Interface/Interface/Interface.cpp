@@ -6,39 +6,91 @@
 #include <string.h>
 #include <stdio.h>
 
-float * loadMatrix(char *fname,int *size,int *stride);
+//#############################################################################
+// Declare Structures:
+
+// A list of available commands to display to the user.
+struct commandList {
+	int noCommands;		// Number of available command options
+	char** comNames;	// List of the names of each command
+};
+
+// A rasterized rectangular array 
+// to store a floating point matrix row by row
+struct Matrix {
+	int size,		// The total number of values in the matrix
+		stride;		// The number of values per row of the matrix
+	float* data;	// The values of the matrix stored row by row
+};
+
+// A collection of all the available matrices in memory and their names
+struct matrixList {
+	int noMatrices;				// Number of matrices in memory
+	struct Matrix* matrices;	// The matrices in memory
+	char** names;				// The name of each matrix
+};
+
+//=============================================================================
+// Declare Functions:
+
+
+
+struct Matrix *loadCSV(char* fname);
+struct matrixList 
+
+//#############################################################################
 
 int main()
 {
-	char filename[FILENAME_MAX];	// The string we store filenames in
+	//#########################################################################
+	// Initialize Variables and Memory:
 
+	char filename[FILENAME_MAX];	// The string we store the filename to load
+
+	//=========================================================================
+
+	// Prepare the lists of Matrices in memory and available commands
+
+	// Request the filename to load the csv data from.
 	printf("Please enter the filename of the matrix to load:\n");
 	scanf("%s", &filename);
 
-	int stride, size;
-	float* matrix = loadMatrix(filename,&size,&stride);
-	int rows = size/stride;
+	// Prepare the places in memory to store the float matrix data.
+	int stride,	// The number of tokens per row
+		size;	// The number of total tokens
 
+	// Load the float matrix from the csv file with its dimensions.
+	float* matrix = fCSV(filename,&size,&stride);
+
+	//=========================================================================
+
+	// Print the loaded matrix back to the user.
 	if (matrix != NULL) {
+		// For each row
 		for (int i = 0;i < (size/stride); i++) {
+			// Print each column in the row token by token as floats
 			for (int j = 0; j < stride; j++) {
-				printf("%f ", matrix[(i*stride) + j]);
+				printf("%f	", matrix[(i*stride) + j]);
 			}
+			// End each column with a newlone so that it displays row by row
 			printf("\n");
 		}
 	}
 
 	return 0;
+	//#########################################################################
 }
 
-float * loadMatrix(char *fname, int* sizeHandle, int* strideHandle)
+float* fCSV(char* fname, int* sizeHandle, int* strideHandle)
 {
+	//#########################################################################
+
 	FILE *file;	// Variable for handle to the data file
 
 	file = fopen(fname, "r");	// Opens the file (Creates the handle)
 
-								// If openning the file name gives a NULL handle,
-								// we announce it, and skip parsing the matrix.
+	// If openning the file name gives a NULL handle,
+	// we announce it, and skip parsing the matrix.
 	if (file == NULL) perror("Error opening file (NULL Handle).");
 
 	//#########################################################################
@@ -48,26 +100,25 @@ float * loadMatrix(char *fname, int* sizeHandle, int* strideHandle)
 	{
 		// Initialize our variables:
 
-		// Current character in the file.
-		char c;
+		char c;					// Current character in the file.
 
 		int tokenCounter = 0,	// Counts the current token in the row.
 			charCounter = 0,	// Counts the current character in the token.
 			avgTokenLength = 0;	// Counts the average token length to preallocate memory efficiently.
 
-								// The aray for the set of tokens as converted to floats
+		// The aray for the set of tokens as converted to floats
 		float* matrixBuffer = (float*)malloc(sizeof(float));
-		int matrixBufferSize = 1;
+		int matrixBufferSize = 1;	// The number of tokens that can fit in the current matrixBuffer 
 
 		// The array for each token as it is read in as a string
 		char* tokenBuffer = (char*)malloc(sizeof(char));
-		int tokenBufferSize = 1;
+		int tokenBufferSize = 1;	// The number of characters that can fit in the current tokenBuffer
 
 		// Initialize the flags to mark delimeters as actual characters
 		bool subDelimiterFlag = false,
 			sSubDelimiterFlag = false,
 
-			strideFlag = true;
+			strideFlag = true;	// Initialize the flag that decides when to count the stride
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -96,14 +147,15 @@ float * loadMatrix(char *fname, int* sizeHandle, int* strideHandle)
 				if (charCounter != 0) {
 					tokenCounter++;		// Increase the token counter.
 
-										// If the new token would overload the matrixBuffer, 
-										// we have to resize the matrixBuffer before we do anything.
+					// If the new token would overload the matrixBuffer, 
+					// we have to resize the matrixBuffer before we do anything.
 					if (tokenCounter > matrixBufferSize) {
 
 						// Double the size of the matrixBuffer
 						float* temp = (float*)realloc(matrixBuffer, 2 * matrixBufferSize * sizeof(float));
 
 						// If the reassignment worked, copy the temp variable over
+						// and double the size variable
 						if (temp) {
 							matrixBuffer = temp;
 							matrixBufferSize *= 2;
@@ -124,14 +176,15 @@ float * loadMatrix(char *fname, int* sizeHandle, int* strideHandle)
 
 				tokenCounter++;		// Increase the token counter.
 
-									// If the ending token would overload the matrixBuffer, 
-									// we have to resize the matrixBuffer before we do anything.
+				// If the ending token would overload the matrixBuffer, 
+				// we have to resize the matrixBuffer before we do anything.
 				if (tokenCounter > matrixBufferSize) {
 
 					// Double the size of the matrixBuffer
 					float* temp = (float*)realloc(matrixBuffer, 2 * matrixBufferSize * sizeof(float));
 
 					// If the reassignment worked, copy the temp variable over
+					// and double the size variable
 					if (temp) {
 						matrixBuffer = temp;
 						matrixBufferSize *= 2;
@@ -143,6 +196,7 @@ float * loadMatrix(char *fname, int* sizeHandle, int* strideHandle)
 					}
 				}
 
+				// Set a final NULL character at the end of the array
 				matrixBuffer[tokenCounter - 1] = NULL;
 
 				free(tokenBuffer);		// destroy the tokenBuffer,
@@ -197,21 +251,22 @@ float * loadMatrix(char *fname, int* sizeHandle, int* strideHandle)
 
 			//---------------------------------------------------------------------
 			// If we've hit a delimiter outside of subDelimiters,
-			// then we've hit the end of the token (make sure?).
+			// then we've hit the end of the token.
 			if (c == ',' && !subDelimiterFlag) {
 
 				tokenCounter++;		// Increase the tokenCounter.
 
-									// make sure the matrixBuffer can handle another token
-
-									// If the new token would overload the matrixBuffer, 
-									// we have to resize the matrixBuffer before we do anything.
+				// make sure the matrixBuffer can handle another token
+				
+				// If the new token would overload the matrixBuffer, 
+				// we have to resize the matrixBuffer before we do anything.
 				if (tokenCounter > matrixBufferSize) {
 
 					// Double the size of the matrixBuffer
 					float* temp = (float*)realloc(matrixBuffer, 2 * matrixBufferSize * sizeof(float));
 
 					// If the reassignment worked, copy the temp variable over
+					// and double the size variable
 					if (temp) {
 						matrixBuffer = temp;
 						matrixBufferSize *= 2;
@@ -273,9 +328,9 @@ float * loadMatrix(char *fname, int* sizeHandle, int* strideHandle)
 
 			charCounter++;		// Increase the characterCounter
 
-								// Make sure we can fit another character onto the token
+			// Make sure we can fit another character onto the token
 
-								//If the new character overloads the tokenBuffer, we must resize it
+			//If the new character overloads the tokenBuffer, we must resize it
 			if (charCounter > tokenBufferSize) {
 
 				// Double the size of the tokenBuffer
@@ -290,7 +345,6 @@ float * loadMatrix(char *fname, int* sizeHandle, int* strideHandle)
 				else {
 					fprintf(stderr, "Error doubling the size of the token buffer for token %d.\n", tokenCounter);
 				}
-
 			}
 
 			// Store the character in the tokenBuffer
@@ -300,6 +354,7 @@ float * loadMatrix(char *fname, int* sizeHandle, int* strideHandle)
 
 		} while (true);
 
+		// Throw an error and close the file if we somehow end up outside the loop
 		fprintf(stderr, "Outside of loop.\n");
 
 		fclose(file);

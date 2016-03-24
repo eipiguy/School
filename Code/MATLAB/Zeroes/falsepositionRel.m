@@ -1,6 +1,6 @@
-function [root,fx,ea,iter] = falsepositionRel(func,xl,xu,es,maxit,varargin)
+function [root,fx,ea,iter] = falsePositionRel(func,xl,xu,es,maxit,varargin)
 % false position: root locations within relative error
-%   [root,fx,ea,iter] = falsepositionRel(func,x1,xu,es,maxit,p1,p2,...)
+%   [root,fx,ea,iter] = falsePositionRel(func,x1,xu,es,maxit,p1,p2,...)
 %       uses false position to find a root of func 
 %       within an relative error margin (% of estimate)
 % input:

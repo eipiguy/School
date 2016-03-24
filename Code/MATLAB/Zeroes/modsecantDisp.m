@@ -1,6 +1,6 @@
-function [root,ea,iter] = modsecantDisp(func,xr,d,es,maxit,varargin)
+function [root,ea,iter] = modSecantDisp(func,xr,d,es,maxit,varargin)
 % modsecantDisp: modified secant method for root/zero locations
-%   [root,ea,iter] = secant(func,dfunc,xr1,xr2,es,maxit,p1,p2,...):
+%   [root,ea,iter] = modSecantDisp(func,dfunc,xr1,xr2,es,maxit,p1,p2,...):
 %       uses secant method to find the root of func
 %       and displays steps during process
 % input:

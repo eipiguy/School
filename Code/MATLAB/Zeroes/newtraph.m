@@ -1,6 +1,6 @@
-function [root,ea,iter] = newtraph(func,dfunc,xr,es,maxit,varargin)
+function [root,ea,iter] = newtRaph(func,dfunc,xr,es,maxit,varargin)
 % newtraph: Newton-Raphson root locations
-%   [root,ea,iter] = newtraph(func,dfunc,xr,es,maxit,p1,p2,...):
+%   [root,ea,iter] = newtRaph(func,dfunc,xr,es,maxit,p1,p2,...):
 %       uses Newton-Raphson method to find the root of func
 % input:
 %   func = name of function

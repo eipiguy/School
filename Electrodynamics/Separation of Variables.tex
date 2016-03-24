@@ -1,0 +1,29 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Separation of Variables\\
+In Multiple Coordinates}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+Let $\Phi:\mathbb{R}^{n}\to\mathbb{R}$ be a scalar field, and recall that the Laplacian of $\Phi$ is
+\[ \nabla^{2}\Phi = \nabla \cdot \nabla \Phi = \nabla \cdot \left[ \sum_{k=1}^{n}\frac{\partial}{\partial x_{k}} \left[ \Phi(x_{1},\dots,x_{n}) \right] \mathbf{\hat{x}_{k}} \right] = \sum_{k=1}^{n}\frac{\partial^{2}}{\partial x_{k}^{2}} \left[ \Phi(x_{1},\dots,x_{n}) \right] \]
+
+The crux of the separation of variables technique relies on the assumption that $\Phi$ can be written as the product of $n$ independent scalar functions: $\exists X_{1}(x_{1}),\dots,X_{n}(x_{n}):\mathbb{R}\to\mathbb{R} \text{ st. } \Phi(x_{1},\dots,x_{n}) =  X_{1}(x_{1}) \dots X_{n}(x_{n})$.
+
+Then if we substitute this into the Laplacian we can find
+\begin{align*}
+\nabla^{2}\Phi &= \sum_{k=1}^{n}\frac{\partial^{2}}{\partial x_{k}^{2}} \left[ \Phi(x_{1},\dots,x_{n}) \right] = \sum_{k=1}^{n}\frac{\partial^{2}}{\partial x_{k}^{2}} X_{1}(x_{1}) \dots X_{n}(x_{n})\\
+&= \sum_{k=1}^{n} X_{1}(x_{1}) \dots X_{k-1}(x_{k-1}) X_{k+1}(x_{k+1}) \dots X_{n}(x_{n}) \frac{d^{2}}{dx_{k}^{2}} X_{k}(x_{k})\\
+\frac{\nabla^{2}\Phi }{\Phi} &= \sum_{k=1}^{n} \frac{1}{X_{k}(x_{k})} \frac{d^{2}}{dx_{k}^{2}} X_{k}(x_{k})\\
+\end{align*}
+
+Then each of the components of the sum are functions of an independent variable.
+\end{document}

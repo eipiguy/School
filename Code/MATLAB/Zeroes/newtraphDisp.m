@@ -1,7 +1,8 @@
-function [root,ea,iter] = newtraphDisp(func,dfunc,xr,es,maxit,varargin)
+function [root,ea,iter] = newtRaphDisp(func,dfunc,xr,es,maxit,varargin)
 % newtraphDisp: Newton-Raphson root locations with display
-%   [root,ea,iter] = newtraphDisp(func,dfunc,xr,es,maxit,p1,p2,...):
+%   [root,ea,iter] = newtRaphDisp(func,dfunc,xr,es,maxit,p1,p2,...):
 %       uses Newton-Raphson method to find the root of func
+%       that displays steps as it goes
 % input:
 %   func = name of function
 %   dfun = name of derivative of function
