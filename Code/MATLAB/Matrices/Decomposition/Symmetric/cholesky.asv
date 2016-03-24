@@ -44,10 +44,10 @@ for j=2:n
     U(1,j) = A(1,j)/U(1,1);
 end
 
-for i=2:n
+for i=2:(n-1)
     U(i,i) = sqrt( A(i,i) - (U(1:(i-1),i)'*U(1:(i-1),i)) );
     for j=(i+1):n
-        U(i,j) = sqrt(A(i,j) - (U(1:(i-1),i)'*U(1:(i-1),j)));
+        U(i,j) = A(i,j) - (U(1:(i-1),i)'*U(1:(i-1),j));
         display([i,j]);
         display([U(1:(i-1),i)]);
     end

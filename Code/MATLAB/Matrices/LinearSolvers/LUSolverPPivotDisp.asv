@@ -159,7 +159,7 @@ for i = n-1:-1:1
     X(i,:) = (D(i,:) - U(i,(i+1):n)*X((i+1):n,:))/U(i,i);
 end
 % (n-1) cycles in i,
-%   (nB)(n-i) flops for preparing the previous variables to subtract
+%   (nB)(n-i) flops for multiplying the previous variables
 %   (nB) flops for subtracting them from the intermediate solution
 %   (nB) flops for scaling the results
 % Total Flops: 2(nB)(n-1) + (nB)[ n(n-1)-sum_{1}^{n-1}i ]
