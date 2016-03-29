@@ -35,16 +35,11 @@ Position the origin at the center of the spheres and point the z-axis at the cen
 If we then assume $\Phi=R(r)F(\phi)$ for some scalar functions $R,F$, we can use the product rule to see
 \begin{align*}
 \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r} \left[ R(r)F(\phi) \right] \right) + \frac{1}{r^{2}} \frac{\partial^{2}}{\partial \phi^{2}} \left[ R(r)F(\phi) \right] &= 0\\
-\frac{1}{r} \frac{\partial}{\partial r} \left( r F(\phi) \frac{\partial R}{\partial r}(r) \right) + \frac{R(r)}{r^{2}} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= 0\\
-\frac{1}{r} \left( F(\phi) \frac{\partial R}{\partial r}(r) +  r F(\phi) \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{R(r)}{r^{2}} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= 0\\
-F(\phi) \left( \frac{1}{r} \frac{\partial R}{\partial r}(r) +  \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{R(r)}{r^{2}} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= 0
+\frac{F(\phi)}{r} \frac{\partial}{\partial r} \left( r \frac{\partial R}{\partial r}(r) \right) + \frac{R(r)}{r^{2}} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= 0\\
+\frac{F(\phi)}{r} \left( \frac{\partial R}{\partial r}(r) +  r \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{R(r)}{r^{2}} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= 0\\
 \end{align*}
-Then since 
-\[ \nabla^{2}\Phi = 0 \implies (1/\Phi)(\nabla^{2}\Phi) = 0 \]
-This shows
-\[ \frac{1}{R(r)} \left( \frac{1}{r} \frac{\partial R}{\partial r}(r) +  \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{1}{r^{2}F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) = 0 \]
-and multiplying through by $r^{2}$ gives
-\[ \frac{r}{R(r)} \left( \frac{\partial R}{\partial r}(r) + r \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{1}{F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) = 0  \]
+Then multiplying through by $r^{2}/\Phi = r^{2}RF$ will separate the remaining variables:
+\[ \frac{r}{R(r)} \left( \frac{\partial R}{\partial r}(r) +  r \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{1}{F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) = 0\\ \]
 We then have two differential equations that each depend on a different variable, and add to zero. We can call them $\pm\alpha$ and find
 \[ \frac{r}{R(r)} \left( \frac{\partial R}{\partial r}(r) + r \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{1}{F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) = \alpha + (-\alpha) \]
 \begin{align*}
@@ -60,365 +55,48 @@ We then have two differential equations that each depend on a different variable
 \end{align*}
 Here for constants $A$ and $B$, $F$ has solutions
 \[ F(\phi)= Ae^{i\phi\sqrt{\alpha}} + Be^{-i\phi\sqrt{\alpha}} \]
-While we have to separate $R$ into parts where
-\[ S(r) = \frac{\partial R}{\partial r} (r) \implies \frac{\partial S}{\partial r} (r) =  \frac{\partial^{2} R}{\partial r^{2}} (r) \]
-\begin{align*}
-\frac{\partial S}{\partial r}(r) &= \frac{-1}{r} S(r) + \frac{\alpha}{r^{2}} R(r)
-&
-\frac{\partial R}{\partial r} (r) &= S(r)\\
-\end{align*}
+
+\paragraph{}
+Then we look for solutions for $R(r)$ multiplying through by $r^{2}$
 \[
-\begin{bmatrix}
-\frac{\partial S}{\partial r} \\
-\frac{\partial R}{\partial r} \\
-\end{bmatrix}
-(r) = 
-\frac{1}{r^{2}}
-\begin{bmatrix}
--r	&	\alpha	\\
-r^{2}	&	0	\\
-\end{bmatrix}
-\begin{bmatrix}
-S(r)	\\
-R(r)	\\
-\end{bmatrix}
+0 = r^{2} \frac{\partial^{2} R}{\partial r^{2}}(r) +r \frac{\partial R}{\partial r}(r) -\alpha R(r)\\
 \]
-We can find the eigenvalues $\lambda$ with the characteristic polynomial
-\[ \begin{vmatrix}
--r - \lambda	&	\alpha		\\
-r^{2}			&	-\lambda	\\
-\end{vmatrix} = 0 \]
-\begin{align*}
-\lambda(r + \lambda) - \alpha r^{2} &= 0\\
-\lambda^{2} + \lambda r - \alpha r^{2} &= 0\\
-\end{align*}
-\begin{align*}
-\lambda &= \frac{1}{2}\left( -r \pm \sqrt{r^{2} + 4\alpha r^{2}} \right)\\
-\lambda &= \frac{r}{2}\left( \sqrt{1 + 4\alpha} \mp 1\right)
-\end{align*}
-Then we know
-\begin{align*}
-\begin{bmatrix}
--r - \frac{r}{2}\left( \sqrt{1 + 4\alpha} \mp 1\right)	&	\alpha		\\
-r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} \mp 1\right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\begin{bmatrix}
--\frac{r}{2} \left( 2 + \sqrt{1 + 4\alpha} \mp 1\right)	&	\alpha		\\
-r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} \mp 1\right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\begin{bmatrix}
--\frac{r}{2} \left( 2 \mp 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
-r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} \mp 1\right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\end{align*}
+If we know the form of the solution, we can just substitute the appropriate values. Instead let us make a judicious change of variables to show how a differential polynomial of this type can be reduced.
 
+Take $r=e^{s}$ so that since $r \ge 0$, $s=\ln r$, and for the function $S$, $R(r)=S(\ln r)=S(s)$.
+Then using the product and chain rules:
 \begin{align*}
-\begin{bmatrix}
--\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
-r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} - 1\right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-&
-\begin{bmatrix}
--\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
-r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} + 1\right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
+\frac{\partial s}{\partial r} &= \frac{1}{r}\\
+\frac{\partial R}{\partial r} &= \frac{\partial S}{\partial s}\frac{\partial s}{\partial r} = \frac{1}{r}\frac{\partial S}{\partial s}\\
+\frac{\partial^{2} R}{\partial r^{2}} &= \frac{-1}{r^{2}}\frac{\partial S}{\partial s} + \frac{1}{r}\frac{\partial^{2} S}{\partial s\partial r}	\\
+&= \frac{-1}{r^{2}}\frac{\partial S}{\partial s} + \frac{1}{r}\frac{\partial^{2} S}{\partial s^{2}}\frac{\partial s}{\partial r}\\
+\frac{\partial^{2} R}{\partial r^{2}} &= \frac{-1}{r^{2}}\frac{\partial S}{\partial s} + \frac{1}{r^{2}}\frac{\partial^{2} S}{\partial s^{2}}
 \end{align*}
+Then our equation becomes
+\begin{align*}
+0 &= r^{2} \frac{\partial^{2} R}{\partial r^{2}}(r) +r \frac{\partial R}{\partial r}(r) -\alpha R(r)\\
+0 &= \frac{\partial^{2} S}{\partial s^{2}} -\frac{\partial S}{\partial s} +\frac{\partial S}{\partial s} -\alpha S(s)
+\end{align*}
+\[ \frac{\partial^{2} S}{\partial s^{2}} = \alpha S(s) \]
+which has the general solution
+\[ S(s) = Ce^{s\sqrt{\alpha}} + De^{-s\sqrt{\alpha}} \]
+so that replacing $s=\ln r$ back in gives us:
+\[ R(r) = Cr^{\sqrt{\alpha}} + Dr^{-\sqrt{\alpha}} \]
 
-In the first case we multiply the first row by 
-$ \frac{2r}{ 1 + \sqrt{1+4\alpha} } $
-and add it to the second:
-\begin{align*}
-\begin{bmatrix}
--\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
-0													&	\frac{2r\alpha}{ 1 + \sqrt{1+4\alpha} }-\frac{r}{2}\left( \sqrt{1 + 4\alpha} - 1\right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\begin{bmatrix}
--\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
-0													&	\frac{2r\alpha \left( \sqrt{1+4\alpha} -1 \right) }{ 1 + 4\alpha - 1 }-\frac{r}{2}\left( \sqrt{1 + 4\alpha} - 1\right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\begin{bmatrix}
--\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
-0													&	\frac{r \left( \sqrt{1+4\alpha} -1 \right) }{ 2 }-\frac{r}{2}\left( \sqrt{1 + 4\alpha} - 1\right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\begin{bmatrix}
--\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
-0													&	0	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\end{align*}
-Showing the solution is singular:
-\begin{align*}
--\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right) v_{1} + \alpha v_{2} &= 0\\
-v_{2} &= \frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) v_{1}\\
-\mathbf{v} &= v_{1}
-\begin{bmatrix}
-1\\
-\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)
-\end{bmatrix}
-\end{align*}
+\paragraph{}
+All together then we have the general solution for the potential in polar coordinates:
+\[ \Phi(r,\phi) = R(r)F(\phi) = \left( Cr^{\sqrt{\alpha}} + Dr^{-\sqrt{\alpha}} \right) \left( Ae^{i\phi\sqrt{\alpha}} + Be^{-i\phi\sqrt{\alpha}} \right) \]
+and we can start applying boundary conditions.
 
-In the second case 
-\[
-\begin{bmatrix}
--\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha}\right)	&	\alpha		\\
-r^{2}														&	-\frac{r}{2}\left( \sqrt{1 + 4\alpha} + 1\right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-u_{1}\\
-u_{2}
-\end{bmatrix}
-=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\]
-we can use the singular nature of the nullspace to use
+To start with we know that if we move very far away from the spheres, then the potential must drop off: 
+\[\lim_{r\to\infty} \Phi(r,\phi) = 0\]
+This means that $C=0$, and we can collapse our constant $D$ into the $A$ and $B$ terms, and abusing notation by renaming them appropriately.
+\[ \Phi(r,\phi) = r^{-\sqrt{\alpha}} \left( Ae^{i\phi\sqrt{\alpha}} + Be^{-i\phi\sqrt{\alpha}} \right) = A(re^{-i\phi})^{-\sqrt{\alpha}} + Be^{-i\phi\sqrt{\alpha}} \]
+Now we can use our fixed potentials at the given radii to find
 \begin{align*}
--\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha}\right) u_{1} + \alpha u_{2} &= 0\\
-u_{2} &= \frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) u_{1}\\
-\mathbf{u} &= u_{1}
-\begin{bmatrix}
-1\\
-\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)
-\end{bmatrix}
+\Phi(a,0) &= V = a^{-\sqrt{\alpha}} \left( A + B \right)\\
+\Phi(b,\pi) &= V =b^{-\sqrt{\alpha}} \left( Ae^{i\pi\sqrt{\alpha}} + Be^{-i\pi\sqrt{\alpha}} \right)\\
 \end{align*}
-Such that
-\begin{align*}
-P = \left[ \mathbf{u} \mathbf{v} \right] &=
-\begin{bmatrix}
-1 & 1 \\
-\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)
-&
-\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)
-\end{bmatrix}
-\\
-P^{-1} &= \frac{1}{|P|}
-\begin{bmatrix}
-\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) & -1 \\
--\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) & 1
-\end{bmatrix}\\
-&= \frac{1}{ \frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) -\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) }
-\begin{bmatrix}
-\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) & -1 \\
--\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) & 1
-\end{bmatrix}\\
-&= \frac{1}{ \frac{r}{2\alpha} -\frac{3r}{2\alpha} }
-\begin{bmatrix}
-\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) & -1 \\
--\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) & 1
-\end{bmatrix}\\
-&= \frac{\alpha}{r}
-\begin{bmatrix}
-\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) & -1 \\
--\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) & 1
-\end{bmatrix}
-\end{align*}
-Now we compute
-\begin{align*}
-P^{-1}AP &= \frac{\alpha}{r}
-\begin{bmatrix}
-\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right) & -1 \\
--\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right) & 1
-\end{bmatrix}
-\begin{bmatrix}
--r	&	\alpha	\\
-r^{2}	&	0	\\
-\end{bmatrix}
-\begin{bmatrix}
-1 & 1 \\
-\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)
-&
-\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)
-\end{bmatrix}
-\\
-&= \frac{\alpha}{r}
-\begin{bmatrix}
--\frac{r^{2}}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)-r^{2} 
-&
-\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right) 
-\\
-\frac{r^{2}}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)+r^{2} 
-&
--\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)
-\end{bmatrix}
-\begin{bmatrix}
-1 & 1 \\
-\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)
-&
-\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)
-\end{bmatrix}
-\\
-&=
-\begin{bmatrix}
--\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha} + 2\alpha \right) 
-&
-\frac{\alpha}{2} \left( 1 + \sqrt{1 + 4\alpha}\right) 
-\\
-\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha} - 2\alpha \right) 
-&
--\frac{\alpha}{2} \left( 1 + \sqrt{1 + 4\alpha}\right)
-\end{bmatrix}
-\begin{bmatrix}
-1 & 1 \\
-\frac{r}{2\alpha} \left( 3 + \sqrt{1 + 4\alpha}\right)
-&
-\frac{r}{2\alpha} \left( 1 + \sqrt{1 + 4\alpha}\right)
-\end{bmatrix}
-\\
-&= 
-\left[
-\begin{matrix}
-\frac{r}{4} \left( 3 + \sqrt{1 + 4\alpha}\right)\left( 1 + \sqrt{1 + 4\alpha}\right) - \frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha} + 2\alpha \right)
-\\
-\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha} - 2\alpha \right) - \frac{r}{4} \left( 3 + \sqrt{1 + 4\alpha}\right)\left( 1 + \sqrt{1 + 4\alpha}\right)
-\end{matrix}
-\right.\\
-&\left.
-\begin{matrix}
-\frac{r}{4} \left( 1 + \sqrt{1 + 4\alpha}\right)^{2} - \frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha} + 2\alpha \right)\\
-\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha} - 2\alpha \right) - \frac{r}{4} \left( 1 + \sqrt{1 + 4\alpha}\right)^{2}
-\end{matrix}
-\right]\\
-&= 
-\begin{bmatrix}
-\frac{r}{4} \left( 1 + \sqrt{1 + 4\alpha}\right) \left[ \left( 3 + \sqrt{1 + 4\alpha}\right) - 2 \right] - \alpha r
-&
-\frac{r}{4} \left( 1 + \sqrt{1 + 4\alpha}\right) \left[ \left( 1 + \sqrt{1 + 4\alpha}\right) - 2 \right] - \alpha r
-\\
-\frac{r}{4} \left( 3 + \sqrt{1 + 4\alpha} \right) \left[ 2 - \left( 1 + \sqrt{1 + 4\alpha}\right) \right] - \alpha r 
-&
-\frac{r}{2} \left( 3 + \sqrt{1 + 4\alpha} \right) - \alpha r - \frac{r}{4} \left( 1 + \sqrt{1 + 4\alpha}\right)^{2}
-\end{bmatrix}\\
-&= 
-\begin{bmatrix}
-\frac{r}{4} \left( 1 + \sqrt{1 + 4\alpha}\right)^{2} - \alpha r
-&
-\frac{r}{4} \left( 1 + \sqrt{1 + 4\alpha}\right) \left( \sqrt{1 + 4\alpha} - 1 \right) - \alpha r
-\\
-\frac{r}{4} \left( 3 + \sqrt{1 + 4\alpha} \right) \left( 1 - \sqrt{1 + 4\alpha}\right) - \alpha r 
-&
-\frac{r}{4} \left[ 2\left( 3 + \sqrt{1 + 4\alpha} \right) - \left( 1 + \sqrt{1 + 4\alpha}\right)^{2} \right] - \alpha r
-\end{bmatrix}\\
-&= 
-\begin{bmatrix}
-\frac{r}{4} \left( 1 + 2\sqrt{1 + 4\alpha} + 1 + 4\alpha \right) - \alpha r
-&
-\frac{r}{4} \left( 1 + 4\alpha - 1 \right) - \alpha r
-\\
-\frac{r}{4} \left( 3 - 2\sqrt{1 + 4\alpha} - 1 - 4\alpha \right) - \alpha r 
-&
-\frac{r}{4} \left[ \left( 6 + 2\sqrt{1 + 4\alpha} \right) - \left( 1 + 2\sqrt{1 + 4\alpha} + 1 + 4\alpha \right) \right] - \alpha r
-\end{bmatrix}\\
-&= 
-\begin{bmatrix}
-\frac{r}{4} \left( 2 + 2\sqrt{1 + 4\alpha} + 4\alpha \right) - \alpha r
-&
-\frac{r}{4} \left( 4\alpha \right) - \alpha r
-\\
-\frac{r}{4} \left( 2 - 2\sqrt{1 + 4\alpha} - 4\alpha \right) - \alpha r 
-&
-\frac{r}{4} \left[ \left( 4 - 4\alpha \right) \right] - \alpha r
-\end{bmatrix}\\
-&= 
-\begin{bmatrix}
-\frac{r}{2} \left( 1 + \sqrt{1 + 4\alpha} \right)
-&
-0
-\\
-\frac{r}{2} \left( 1 - \sqrt{1 + 4\alpha} - 4\alpha \right) 
-&
-r \left( 1 - 2\alpha \right)
-\end{bmatrix}
-\end{align*}
-
 
 \end{solution}
 

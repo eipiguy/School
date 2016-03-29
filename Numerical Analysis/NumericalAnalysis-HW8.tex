@@ -1,0 +1,79 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{arydshln}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Opening
+\title{Numerical Analysis HW8\\
+Ch12 - 3,9 (pg300)\\
+Ch13 - 1,3 (pg317)\\}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{solution}{Solution}[problem]
+
+\lstset{basicstyle=\ttfamily,
+		language=Matlab,
+		keywordstyle=\color{blue},
+		commentstyle=\color{dkgreen},
+		stringstyle=\color{mauve},
+		identifierstyle=\bf
+		}
+
+\setcounter{problem}{2}
+\begin{problem}
+Use the Gauss-Seidel method to solve the following system until the percent relative error falls below $\epsilon_{r}= \%$\\
+\[
+\begin{matrix}
+10x_{1}	&+2x_{2}	&-x_{3}	&=	27\\
+-3x_{1}	&-6x_{2}	&+2x_{3}	&=	-61.5\\
+x_{1}	&+x_{2}	&+5x_{3}	&=	-21.5
+\end{matrix}
+\]
+\end{problem}
+
+\setcounter{problem}{8}
+\begin{problem}
+Determine the solutions of the simultaneous nonlinear equations:\\
+\[ 
+\begin{matrix}
+x^{2} = 5-y^{2}\\
+x^{2} = y+1
+\end{matrix}
+\]
+\begin{enumerate}[(a)]
+\item Graphically.
+\item Successive substitution using initial guesses of $x=y=1.5$
+\item Newton-Raphson using initial guesses of $x=y=1.5$
+\end{enumerate}
+\end{problem}
+
+\setcounter{problem}{0}
+\begin{problem}
+Repeat example 13.1, but for three masses with the $m\text{'s}=40\text{ kg}$ and the $k\text{'s}=240\text{ N/m}$. Produce a plot like Fig. 13.4 to identify the principle modes of vibration.
+\end{problem}
+
+\setcounter{problem}{2}
+\begin{problem}
+Use the power method to determine the lowest eigenvalue and corresponding eigenvector for the system
+\[
+\begin{bmatrix}
+2-\lambda	&	8			&	10			\\
+8			&	4-\lambda	&	5			\\
+10			&	5			&	7-\lambda
+\end{bmatrix}
+\]
+\end{problem}
+
+\end{document}

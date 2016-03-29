@@ -25,7 +25,7 @@ function [ X, P, L, U ] = LUSolverPPivotDisp( A, B )
 %   ====
 %   Main Algorithm:
 %       ----
-%       Forward Elimination: (2/3)n^3 +(1/6)n^2 -(5/6)n
+%       Forward Elimination: (2/3)n^3 -(5/6)n^2 +(1/6)n
 %           ****
 %           Partial Pivoting:
 %           ****
@@ -88,12 +88,12 @@ for k = 1:(n-1)
         factor = A(i,k)/A(k,k);
         
         % set the leading term (that normally is eliminated)
-        % instead to the factor used to eliminate it
+        % instead to its corresponding factor to store until needed
         A(i,k)=factor;
         
         % multiply the factor through the pivot row
         % and subtract the result from the current elimination row
-        A(i,k+1:n) = A(i,(k+1):n) - factor*A(k,(k+1):n);
+        A(i,(k+1):n) = A(i,(k+1):n) - factor*A(k,(k+1):n);
     end
     % (n-k) cycles in i,
     %   1 flop per for finding elimination row factor, 
@@ -106,7 +106,7 @@ for k = 1:(n-1)
 end
 % (n-1) cycles in k
 % Total Flops: sum_{k=1}^{n-1} (n-k)[2(n-k)+1] = 
-% = n(n-1)(4n+5)/6 = (2/3)n^3 +(1/6)n^2 -(5/6)n
+% = n(n-1)(4n-1)/6 = (2/3)n^3 -(5/6)n^2 +(1/6)n
 
 
 %--------------------------------------------------------------------------

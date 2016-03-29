@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.23)  22 MAR 2016 18:16
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.23)  28 MAR 2016 23:26
 entering extended mode
 **Electrodynamics-HW4.tex
 (C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW4.tex
@@ -186,27 +186,17 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \c@solution=\count107
  [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-Overfull \hbox (123.836pt too wide) in paragraph at lines 174--174
-[] 
- []
-
-[3]
-Overfull \hbox (94.95131pt too wide) in paragraph at lines 420--420
-[] 
- []
-
-[4] [5] [6]
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] [4]
 (C:\Users\Neal\Documents\GitHub\School\Electrodynamics\Electrodynamics-HW4.aux)
  ) 
 Here is how much of TeX's memory you used:
  2129 strings out of 493921
  26305 string characters out of 3147285
- 102407 words of memory out of 3000000
+ 86407 words of memory out of 3000000
  5419 multiletter control sequences out of 15000+200000
  11815 words of font info for 46 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,16n,24p,435b,258s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,10n,24p,435b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
@@ -214,13 +204,12 @@ eX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/f
 onts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
 1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
 amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on Electrodynamics-HW4.pdf (6 pages, 155927 bytes).
+cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.p
+fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/P
+rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on Electrodynamics-HW4.pdf (4 pages, 138988 bytes).
 PDF statistics:
- 69 PDF objects out of 1000 (max. 8388607)
+ 59 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
