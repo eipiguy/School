@@ -106,7 +106,7 @@ float* fCSV(char* fname, int* sizeHandle, int* strideHandle)
 			charCounter = 0,	// Counts the current character in the token.
 			avgTokenLength = 0;	// Counts the average token length to preallocate memory efficiently.
 
-		// The aray for the set of tokens as converted to floats
+		// The array for the set of tokens as converted to floats
 		float* matrixBuffer = (float*)malloc(sizeof(float));
 		int matrixBufferSize = 1;	// The number of tokens that can fit in the current matrixBuffer 
 

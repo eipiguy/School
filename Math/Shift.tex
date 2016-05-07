@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{arydshln}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\title{Recurrence in the Left Shift}
+\author{Neal Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\lstset{basicstyle=\ttfamily,
+		language=Matlab,
+		keywordstyle=\color{blue},
+		commentstyle=\color{dkgreen},
+		stringstyle=\color{mauve},
+		identifierstyle=\bf,
+		numbers=left,
+		numberstyle=\color{gray}
+		}
+		
+		
+\section{Notation}
+
+\paragraph{}
+Consider some arbitrary system $\mathcal{A}^{\mathbb{Z}}$ with a dynamic $T:\mathcal{A}\to\mathcal{A}$ that causes $\mathcal{A}$ to take on a finite number of states $\mathcal{A}={a_{0},\cdots,a_{n}}$. We call these states our \underline{alphabet}, and say the dynamic represents ``motion" of the system from one state to another under this dynamic: $T(a^{\{k\}})=a^{\{k+1\}}$.
+
+\begin{definition}{Alphabet of a system $\mathcal{A}^{\mathbb{Z}}$\\\\}
+Let $\mathcal{A}^{\mathbb{Z}}$ have a range $\mathcal{A}$ that takes on finitely many states. We then call the collection of these states the system's \underline{alphabet}.
+\end{definition}
+
+\paragraph{}
+Thus if we know the state of the system at some point $k\in\mathbb{Z},a^{\{k\}}\in\mathcal{A}$, we can mark prior and subsequent applications of the dynamic in a sequence $a \in \mathcal{A}^{\mathbb{Z}}$
+\[ a = \{ \cdots,a^{k-1},a^{k},a^{k+1},\cdots \} \]
+I call this the \underline{state sequence} of $a$ at $k$.
+
+\begin{definition}{\underline{State Sequence} of an element in a dynamic system at some point\\}
+content...
+\end{definition}
+
+\end{document}

@@ -1,0 +1,16 @@
+# Interface definition for thorn readCSV
+ #
+$Header$
+implements: readCSV
+
+[<acess>:]
+
+<data_type> <group_name>[[<number>]]
+[TYPE=<group_type>] [DIM=<dim>] [TIMELEVELS=<num>] [SIZE=<size_in_each_direction>] [DISTRIB=<distibution_type>] [GHOSTSIZE=<ghostsize>] [STAGGER=<stagger_specification>] [TAGS=<string>] ["<group_description>"]
+[{
+	[
+	<variable_name>[,]<variable_name>
+	<variable_name>
+	]
+}	["<group_description>"]
+]

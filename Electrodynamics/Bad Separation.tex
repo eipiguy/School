@@ -1,0 +1,441 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+
+
+\begin{document}
+
+\paragraph{}
+While we have to separate $R$ into parts where
+\[ S(r) = \frac{\partial R}{\partial r} (r) \implies \frac{\partial S}{\partial r} (r) =  \frac{\partial^{2} R}{\partial r^{2}} (r) \]
+\begin{align*}
+\frac{\partial S}{\partial r}(r) &= \frac{-1}{r} S(r) + \frac{\alpha}{r^{2}} R(r)
+&
+\frac{\partial R}{\partial r} (r) &= S(r)\\
+\end{align*}
+\[
+\boxed{\begin{bmatrix}
+(\partial S/\partial r) \\
+(\partial R/\partial r) \\
+\end{bmatrix}
+(r) = 
+\frac{1}{r^{2}}
+\begin{bmatrix}
+-r	&	\alpha	\\
+r^{2}	&	0	\\
+\end{bmatrix}
+\begin{bmatrix}
+S(r)	\\
+R(r)	\\
+\end{bmatrix}}
+\]
+We can find the eigenvalues $\lambda$ with the characteristic polynomial
+\[ |A-\lambda I| = \begin{vmatrix}
+-r - \lambda	&	\alpha		\\
+r^{2}			&	-\lambda	\\
+\end{vmatrix} = 0 \]
+\begin{align*}
+\lambda(r + \lambda) - \alpha r^{2} &= 0\\
+\lambda^{2} + \lambda r - \alpha r^{2} &= 0\\
+\end{align*}
+\begin{align*}
+\lambda &= \frac{1}{2}\left( -r \pm \sqrt{r^{2} + 4\alpha r^{2}} \right)\\
+\lambda &= \boxed{\frac{-r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right)}
+\end{align*}
+Then substituting this back into our original equation we find
+\begin{align*}
+\begin{bmatrix}
+-r + \frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
+r^{2}														&	\frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+\frac{-r}{2}\left( 1 \pm \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
+r^{2}												&	\frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right)	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+\frac{-r}{2}\left( 1 \pm \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
+0												&	\frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right) - \frac{2\alpha r}{\left( 1 \pm \sqrt{1 + 4\alpha} \right)}	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+\frac{-r}{2}\left( 1 \pm \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
+0	&	\frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right) + \frac{2\alpha r \left( 1 \mp \sqrt{1 + 4\alpha} \right) }{\left( 1 - (1 + 4\alpha) \right)}	\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+\frac{-r}{2}\left( 1 \pm \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
+0	&	\frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right) - \frac{r}{2} \left( 1 \mp \sqrt{1 + 4\alpha} \right)\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\\
+\begin{bmatrix}
+\frac{-r}{2}\left( 1 \pm \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
+0	&		0\\
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\
+v_{2}
+\end{bmatrix}
+&=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\end{align*}
+Showing the system is singular as expected, and we can trust our eigenvalue computations a little more.
+
+\paragraph{}
+We then use one of the equations to find our eigenvector lines. Using the second one with a little algebra gives
+\[ -2rv_{1} = \left( 1 \mp \sqrt{1 + 4\alpha} \right) v_{2} \]
+where if we pick an arbitrary values of $v_{2}$ to simplify the math, $v_{2}=-2r$ will make $v_{1} = \left( 1 \mp \sqrt{1 + 4\alpha} \right)$
+the matrix of eigenvectors:
+\[ P = 
+\boxed{\begin{bmatrix}
+\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+-2r										&	-2r	
+\end{bmatrix}}
+ \]
+Then 
+\begin{align*}
+P^{-1} &= 
+\begin{bmatrix}
+a&b\\
+c&d
+\end{bmatrix}^{-1}
+=
+\frac{1}{|P|}
+\begin{bmatrix}
+d	&	-b\\
+-c	&	a
+\end{bmatrix}\\
+P^{-1} &= \frac{1}{|P|}
+\begin{bmatrix}
+-2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+\end{bmatrix}
+\\
+P^{-1} &= \frac{1}{\left| -2r\left( 1 - \sqrt{1 + 4\alpha} \right) +2r\left( 1 + \sqrt{1 + 4\alpha} \right) \right|}
+\begin{bmatrix}
+-2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+\end{bmatrix}
+\\
+P^{-1} &= \frac{1}{\left| 4r\sqrt{1 + 4\alpha} \right|}
+\begin{bmatrix}
+-2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+\end{bmatrix}
+\end{align*}
+and since $r$ is always positive, and we always take the positive root unless specified otherwise, we can just write
+\[ P^{-1} = \boxed{\frac{1}{ 4r\sqrt{1 + 4\alpha} }
+\begin{bmatrix}
+-2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+\end{bmatrix}} \]
+So double check
+\begin{align*}
+P^{-1}AP &=
+\frac{1}{ 4r\sqrt{1 + 4\alpha} }
+\begin{bmatrix}
+-2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+\end{bmatrix}
+\begin{bmatrix}
+-r		&	\alpha	\\
+r^{2}	&	0	\\
+\end{bmatrix}
+\begin{bmatrix}
+\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+-2r										&	-2r	
+\end{bmatrix}
+\\
+&=
+\frac{1}{ 4r\sqrt{1 + 4\alpha} }
+\begin{bmatrix}
+2r^{2}-r^{2}\left( 1 + \sqrt{1 + 4\alpha} \right) & -2\alpha r	\\
+-2r^{2}+r^{2}\left( 1 - \sqrt{1 + 4\alpha} \right)	& 2\alpha r
+\end{bmatrix}
+\begin{bmatrix}
+\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+-2r										&	-2r	
+\end{bmatrix}
+\\
+&=
+\frac{1}{ 4r\sqrt{1 + 4\alpha} }
+\begin{bmatrix}
+r^{2}\left( 1 - \sqrt{1 + 4\alpha} \right) & -2\alpha r	\\
+-r^{2}\left( 1 + \sqrt{1 + 4\alpha} \right)	& 2\alpha r
+\end{bmatrix}
+\begin{bmatrix}
+\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+-2r										&	-2r	
+\end{bmatrix}
+\\
+&=
+\frac{1}{ 4r\sqrt{1 + 4\alpha} }
+\begin{bmatrix}
+r^{2}\left( 1 - \sqrt{1 + 4\alpha} \right)^{2} +4\alpha r^{2}	&	-4\alpha r +4\alpha r	\\
+4\alpha r^{2}-4\alpha r^{2}	& -r^{2}\left( 1 + \sqrt{1 + 4\alpha} \right)^{2} -4\alpha r^{2}
+\end{bmatrix}
+\\
+&=
+\frac{r}{ 4\sqrt{1 + 4\alpha} }
+\begin{bmatrix}
+1 - 2\sqrt{1 + 4\alpha} +(1+4\alpha) +4\alpha	&	0	\\
+0	& -\left( 1 + 2\sqrt{1 + 4\alpha} +(1+4\alpha)\right) -4\alpha
+\end{bmatrix}
+\\
+&=
+\frac{r}{ 4\sqrt{1 + 4\alpha} }
+\begin{bmatrix}
+2 +8\alpha -2\sqrt{1 + 4\alpha}	&	0	\\
+0	& -\left( 2 +8\alpha +2\sqrt{1 + 4\alpha}\right)
+\end{bmatrix}
+\\
+&=
+\frac{r}{ 2\sqrt{1 + 4\alpha} }
+\begin{bmatrix}
+(1 +4\alpha) -\sqrt{1 + 4\alpha}	&	0	\\
+0	& -\left( (1 +4\alpha) +\sqrt{1 + 4\alpha}\right)
+\end{bmatrix}
+\\
+&=
+\frac{r}{ 2 }
+\begin{bmatrix}
+\sqrt{1 + 4\alpha} -1	&	0	\\
+0	& -\left( \sqrt{1 + 4\alpha} +1 \right)
+\end{bmatrix}
+\\
+P^{-1}AP &=
+\begin{bmatrix}
+\frac{r}{2}(-1 +\sqrt{1 + 4\alpha})	&	0	\\
+0	& \frac{r}{2}(-1 -\sqrt{1 + 4\alpha})
+\end{bmatrix}
+= \text{diag}\left(\lambda_{1},\lambda_{2}\right)
+\end{align*}
+So our $P$ matrices can be used as expected to uncouple the system, and we can trust more in our eigenvector computations.
+
+\paragraph{}
+Then if we start with the system $\dot{\mathbf{x}} = cA\mathbf{x}$ and use the change of variables $\mathbf{y}=P\mathbf{x}$ such that $\mathbf{x}=P^{-1}\mathbf{y}$ 
+\[ \dot{\mathbf{y}} = P\dot{\mathbf{x}} = PcA\mathbf{x} = cPAP^{-1}\mathbf{y} = c\text{ diag}\{ \lambda_{1},\lambda_{2} \} \mathbf{y} \]
+which gives a diagonal matrix with the solution
+\[ \mathbf{y}(r) = e^{cPAP^{-1}(r)}\mathbf{y}(0) = \text{diag}\{ e^{c\lambda_{1}(r)}, e^{c\lambda_{2}(r)} \}\mathbf{y}(0)\\ \]
+and then since $\mathbf{y}=P\mathbf{x}$ and 
+\[ 
+P = 
+\begin{bmatrix}
+\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+-2r										&	-2r	
+\end{bmatrix},
+P^{-1} = \frac{1}{ 4r\sqrt{1 + 4\alpha} }
+\begin{bmatrix}
+-2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+\end{bmatrix}
+\]
+\begin{align*}
+P\mathbf{x}(r) &= \text{diag}\{ e^{c\lambda_{1}(r)}, e^{c\lambda_{2}(r)} \}P\mathbf{x}(0)\\
+\mathbf{x}(r) &= e^{c}P^{-1}\text{diag}\{ e^{\lambda_{1}(r)}, e^{c\lambda_{2}(r)} \}P\mathbf{x}(0)
+\end{align*}
+\begin{multline*}
+\begin{bmatrix}
+S(r)\\
+R(r)
+\end{bmatrix}
+= \frac{e^{1/r^{2}}}{ 4r\sqrt{1 + 4\alpha} }\\
+\begin{bmatrix}
+-2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+\end{bmatrix}
+\begin{bmatrix}
+e^{r^{2}(-1 +\sqrt{1 + 4\alpha})/2}	&	0	\\
+0	& e^{-r^{2}(1+\sqrt{1 + 4\alpha})/2}
+\end{bmatrix}
+\begin{bmatrix}
+\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+-2r										&	-2r	
+\end{bmatrix}
+\begin{bmatrix}
+S(0)\\
+R(0)
+\end{bmatrix}
+\end{multline*}
+
+
+\begin{multline*}
+\begin{bmatrix}
+S(r)\\
+R(r)
+\end{bmatrix}
+= \frac{e^{1/r^{2}}}{ 4r\sqrt{1 + 4\alpha} }\\
+\begin{bmatrix}
+-2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+\end{bmatrix}
+\begin{bmatrix}
+e^{-r^{2}/2}e^{r^{2}\sqrt{1 + 4\alpha}/2}	&	0	\\
+0	& e^{-r^{2}/2}e^{-r^{2}\sqrt{1 + 4\alpha}/2}
+\end{bmatrix}
+\begin{bmatrix}
+\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+-2r										&	-2r	
+\end{bmatrix}
+\begin{bmatrix}
+S(0)\\
+R(0)
+\end{bmatrix}
+\end{multline*}
+
+
+\begin{multline*}
+\begin{bmatrix}
+S(r)\\
+R(r)
+\end{bmatrix}
+= \frac{e^{1/r^{2}}e^{-r^{2}/2}}{ 4r\sqrt{1 + 4\alpha} }\\
+\begin{bmatrix}
+-2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+\end{bmatrix}
+\begin{bmatrix}
+e^{r^{2}\sqrt{1 + 4\alpha}/2}	&	0	\\
+0	& e^{-r^{2}\sqrt{1 + 4\alpha}/2}
+\end{bmatrix}
+\begin{bmatrix}
+\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+-2r										&	-2r	
+\end{bmatrix}
+\begin{bmatrix}
+S(0)\\
+R(0)
+\end{bmatrix}
+\end{multline*}
+
+\begin{multline*}
+\begin{bmatrix}
+S(r)\\
+R(r)
+\end{bmatrix}
+= \frac{e^{r^{-2}-r^{2}/2}}{ 4r\sqrt{1 + 4\alpha} }\\
+\begin{bmatrix}
+-2re^{r^{2}\sqrt{1 + 4\alpha}/2}	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	\\
+2re^{r^{2}\sqrt{1 + 4\alpha}/2}	&	\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	
+\end{bmatrix}
+\begin{bmatrix}
+\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
+-2r										&	-2r	
+\end{bmatrix}
+\begin{bmatrix}
+S(0)\\
+R(0)
+\end{bmatrix}
+\end{multline*}
+
+\begin{multline*}
+\begin{bmatrix}
+S(r)\\
+R(r)
+\end{bmatrix}
+= \frac{e^{r^{-2}-r^{2}/2}}{ 4r\sqrt{1 + 4\alpha} }\\
+\left[
+\begin{matrix}
+-2r\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +2r\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	\\
+2r\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} -2r\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	
+\end{matrix}
+\right.
+\\
+\left.
+\begin{matrix}
+-2r\left( 1 + \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +2r\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	\\
+2r\left( 1 + \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} -2r\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	
+\end{matrix}
+\right]
+\begin{bmatrix}
+S(0)\\
+R(0)
+\end{bmatrix}
+\end{multline*}
+
+\begin{multline*}
+\begin{bmatrix}
+S(r)\\
+R(r)
+\end{bmatrix}
+= \frac{e^{r^{-2}-r^{2}/2}}{ 2\sqrt{1 + 4\alpha} }\\
+\left[
+\begin{matrix}
+-\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	\\
+\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} -\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	
+\end{matrix}
+\right.
+\\
+\left.
+\begin{matrix}
+-\left( 1 + \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	\\
+\left( 1 + \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} -\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	
+\end{matrix}
+\right]
+\begin{bmatrix}
+S(0)\\
+R(0)
+\end{bmatrix}
+\end{multline*}
+Now we attempt to solve this system of equations using Gaussian elimination. Take the first pivot coefficient to be
+\[
+\frac{\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} -\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}}{-\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}}
+\]
+such that the second column of the first row is scaled to
+\[
+\frac{ 4\alpha e^{r^{2}\sqrt{1+4\alpha}} -8\alpha +4\alpha e^{-r^{2}\sqrt{1+4\alpha}} }{ -\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2} }
+\]
+
+\end{document}

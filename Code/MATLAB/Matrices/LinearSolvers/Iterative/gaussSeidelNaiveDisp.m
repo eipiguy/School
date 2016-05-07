@@ -84,8 +84,9 @@ while(1)
     % incrememnt the iteration counter
     iter = iter+1;
     
-    display(iter);
-    display(x);  % display the current iteration and estimate
+    display(iter);  % display the current iteration
+    display(x);     % display the current approximation
+    display(ea);    % display the current relative error
     
     % and break if we're within our tolerances
     if max(ea)<=es || iter >= maxit, break, end

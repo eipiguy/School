@@ -1,21 +1,67 @@
-\documentclass{article}
+%###############################################################################
+% Packages and Format Definitions
+\documentclass{article}	% This document is formatted as an article
 
-\usepackage{amsmath,amsfonts,amssymb,amsthm}
-\usepackage{enumerate}
-\usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}	% American Mathematical Society formatting
+\usepackage{enumerate}							% Format items and labels in lists
+\usepackage{arydshln}							% Use dashed or dotted lines in arrays
+\usepackage{listings,color}						% Insert code segments and define custom colors
+\usepackage{graphicx}							% Insert external graphics into the document
 
+\definecolor{dkgreen}{rgb}{0,0.6,0}		% Dark Green rather than the stock neon green
+\definecolor{gray}{rgb}{0.5,0.5,0.5}	% Gray for comments and things to be made less visible
+\definecolor{mauve}{rgb}{0.58,0,0.82}	% Mauve is like a muted magenta; stock magenta is too bright
 
-% Opening
-\title{Solving Poisson's Equation\\
-Using Separation of Variables\\
-In Multiple Coordinates}
+%###############################################################################
+% Opening Information:
+
+\title{ Field Arithmetic\\
+and
+Solving Laplace's Equation\\
+Using Separation of Variables
+}
 \author{Neal D. Nesbitt}
+
+%###############################################################################
+% Initialization:
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
 
 \begin{document}
 \maketitle
 
-\section{Cartesian Coordinates}
-Let $\Phi:\mathbb{R}^{n}\to\mathbb{R}$ be a scalar field, and recall that the Laplacian of $\Phi$ is
+%===============================================================================
+% Main Document:
+
+\section{Vector Fields Operations}
+
+\begin{definition}{Scalar Field}
+content...
+\end{definition}
+
+\begin{definition}{Vector Field}
+content...
+\end{definition}
+
+\begin{definition}{The Gradient of a Scalar Field}
+Let $n\in\mathbb{N}$ and $Psi: D\subset\mathbb{R}^{n} \to R\subset\mathbb{R}$ be a scalar field on $D$.
+\end{definition}
+
+\begin{definition}{The Divergence of a Vector Field}
+content...
+\end{definition}
+
+\begin{definition}{ The \underline{Laplacian} of a Scalar Field\\\\}
+If $\Psi:\mathbb{R}^{n}\to\mathbb{R}$ is a scalar field, then $\forall (x_{1},\cdots,x_{n})\in\mathbb{R}$ the \underline{Laplacian of $\Psi$} at $(x_{1},\cdots,x_{n})$ is:
+\begin{multline}
+\nabla^{2}\Psi(x_{1},\cdots,x_{n}) = \nabla \cdot \nabla \Psi(x_{1},\cdots,x_{n}) \\
+= \nabla \cdot \left[ \sum_{k=1}^{n}\frac{\partial}{\partial x_{k}} \left[ \Psi(x_{1},\dots,x_{n}) \right] \mathbf{\hat{x}}_{k} \right] = \sum_{k=1}^{n}\frac{\partial^{2}}{\partial x_{k}^{2}} \left[ \Psi(x_{1},\dots,x_{n}) \right]
+\end{multline}
+\end{definition}
+
+\section{Cartesian Coordinates - $\mathbf{x}=(x_{1},\cdots,x_{n})$}
+Let $\Phi:\mathbb{R}^{n}\to\mathbb{R}$ be a scalar field, and recall the Laplacian of $\Phi$:
 \[ \nabla^{2}\Phi = \nabla \cdot \nabla \Phi = \nabla \cdot \left[ \sum_{k=1}^{n}\frac{\partial}{\partial x_{k}} \left[ \Phi(x_{1},\dots,x_{n}) \right] \mathbf{\hat{x}_{k}} \right] = \sum_{k=1}^{n}\frac{\partial^{2}}{\partial x_{k}^{2}} \left[ \Phi(x_{1},\dots,x_{n}) \right] \]
 
 The crux of the separation of variables technique relies on the assumption that $\Phi$ can be written as the product of $n$ independent scalar functions: $\exists X_{1}(x_{1}),\dots,X_{n}(x_{n}):\mathbb{R}\to\mathbb{R} \text{ st. } \Phi(x_{1},\dots,x_{n}) =  X_{1}(x_{1}) \dots X_{n}(x_{n})$.
@@ -37,8 +83,8 @@ X_{k}(x_{k}) &= A_{k}e^{+x_{k}\sqrt{\alpha_{k}}} + B_{k}e^{-x_{k}\sqrt{\alpha_{k
 \Phi(x_{1},\cdots,x_{n}) &= \prod_{k=1}^{n} \left( A_{k}e^{+x_{k}\sqrt{\alpha_{k}}} + B_{k}e^{-x_{k}\sqrt{\alpha_{k}}} \right)
 \end{align*}
 
-\section{Polar}
-If we have azimuthal symmetry, and we can just consider the problem in polar coordinates about any longitudinal plane $\mathbf{x} = (r,\phi)$. Since there is no charge in our annulus of interest $a < r < b$, we can use Laplace's equation in polar coordinates to find:
+\section{Polar Coordinates - $\mathbf{x}=(r\cos\phi,r\sin\phi)$}
+Consider Laplace's equation now in polar coordinates about the x-y plane $\mathbf{x} = (r\cos\phi,r\sin\phi)$ such that we have $\Phi(\mathbf{x})=\Phi(r\cos\phi,r\sin\phi)=\Phi_{p}(r,\phi)=\Phi_{p}(\mathbf{x_{p}})$. Then Laplace's equation in polar coordinates becomes:
 \begin{align*}
 \nabla^{2} \Phi &= 0\\
 \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial \Phi}{\partial r} \right) + \frac{1}{r^{2}} \frac{\partial^{2} \Phi}{\partial \phi^{2}} &= 0
@@ -51,18 +97,18 @@ If we then assume $\Phi=R(r)F(\phi)$ for some scalar functions $R,F$, we can use
 \end{align*}
 Then multiplying through by $r^{2}/\Phi = r^{2}RF$ will separate the remaining variables:
 \[ \frac{r}{R(r)} \left( \frac{\partial R}{\partial r}(r) +  r \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{1}{F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) = 0\\ \]
-We then have two differential equations that each depend on a different variable, and add to zero. We can call them $\pm\alpha$ and find
+We then have two differential equations that each depend on a different variable, and add to zero. We can call the constants $\pm\alpha$ and then solve each component of the sum as a separate ordinary differential equations:
 \[ \frac{r}{R(r)} \left( \frac{\partial R}{\partial r}(r) + r \frac{\partial^{2} R}{\partial r^{2}}(r) \right) + \frac{1}{F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) = \alpha + (-\alpha) \]
 \begin{align*}
-\frac{r}{R(r)} \left( \frac{\partial R}{\partial r}(r) + r \frac{\partial^{2} R}{\partial r^{2}}(r) \right) &= \alpha
+\frac{r}{R(r)} \left( \frac{dR}{dr}(r) + r \frac{d^{2} R}{dr^{2}}(r) \right) &= \alpha
 &
-\frac{-1}{F(\phi)} \frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= \alpha\\
-\frac{\partial R}{\partial r}(r) + r \frac{\partial^{2} R}{\partial r^{2}}(r) &= \frac{\alpha}{r} R(r)
+\frac{-1}{F(\phi)} \frac{d^{2} F}{d\phi^{2}}(\phi) &= \alpha\\
+\frac{dR}{dr}(r) + r \frac{d^{2} R}{dr^{2}}(r) &= \frac{\alpha}{r} R(r)
 &
-\frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= -\alpha F(\phi)\\
-\frac{\partial^{2} R}{\partial r^{2}}(r) &= \frac{-1}{r} \frac{\partial R}{\partial r}(r) + \frac{\alpha}{r^{2}} R(r)
+\frac{d^{2} F}{d\phi^{2}}(\phi) &= -\alpha F(\phi)\\
+\frac{d^{2} R}{d r^{2}}(r) &= \frac{-1}{r} \frac{d R}{d r}(r) + \frac{\alpha}{r^{2}} R(r)
 &
-\frac{\partial^{2} F}{\partial \phi^{2}}(\phi) &= -\alpha F(\phi)\\
+\frac{d^{2} F}{d \phi^{2}}(\phi) &= -\alpha F(\phi)\\
 \end{align*}
 Here for constants $A$ and $B$, $F$ has solutions
 \[ F(\phi)= Ae^{i\phi\sqrt{\alpha}} + Be^{-i\phi\sqrt{\alpha}} \]
@@ -70,439 +116,351 @@ Here for constants $A$ and $B$, $F$ has solutions
 \paragraph{}
 Then we look for solutions for $R(r)$ multiplying through by $r^{2}$
 \begin{align*}
-\frac{\partial^{2} R}{\partial r^{2}}(r) &= \frac{-1}{r} \frac{\partial R}{\partial r}(r) + \frac{\alpha}{r^{2}} R(r)\\
- r^{2}\frac{\partial^{2} R}{\partial r^{2}}(r) +r \frac{\partial R}{\partial r}(r) &= \alpha R(r)\\
+\frac{d^{2} R}{dr^{2}}(r) &= \frac{-1}{r} \frac{dR}{dr}(r) + \frac{\alpha}{r^{2}} R(r)\\
+0 &= r^{2}\frac{d^{2} R}{dr^{2}}(r) +r \frac{dR}{dr}(r) -\alpha R(r)\\
+\end{align*}
+This form of differential polynomial is called an Euler differential equation and can be solved if we consider some $z$ such that $r=e^{z}\implies z=\ln r$. With this transformation of variables we will have a different equation, call it $Z(z)=Z(\ln r)=R(r)$ where we can then reduce our equation.
+\begin{align*}
+0 &= r^{2}\frac{d^{2} R}{dr^{2}}(r) +r \frac{dR}{dr}(r) -\alpha R(r)\\
+0 &= r^{2}\frac{d^{2} Z}{dr^{2}}(\ln r) +r \frac{dZ}{dr}(\ln r) -\alpha Z(\ln r)\\
+0 &= r^{2}\frac{d}{dr}\left( \frac{1}{r} \frac{dZ}{dz}(\ln r) \right) +\frac{dZ}{dz}(z) -\alpha Z(z)\\
+0 &= r^{2}\left( \frac{-1}{r^{2}} \frac{dZ}{dz}(z) +\frac{1}{r^{2}} \frac{d{2} Z}{dz^{2}}(z) \right) +\frac{dZ}{dz}(z) -\alpha Z(z)\\
+0 &= \frac{d^{2} Z}{dz^{2}}(z) -\alpha Z(z)\\
+\frac{d^{2} Z}{dz^{2}}(z) &= \alpha Z(z)\\
 \end{align*}
 
-While we have to separate $R$ into parts where
-\[ S(r) = \frac{\partial R}{\partial r} (r) \implies \frac{\partial S}{\partial r} (r) =  \frac{\partial^{2} R}{\partial r^{2}} (r) \]
+This is like the equation we had before and it gives us the solution
+\[ Z(z) = \sum_{n} \mathcal{C}_{n}e^{\pm z\sqrt{\alpha}} = Ce^{z\sqrt{\alpha}} + De^{-z\sqrt{\alpha}} \]
+so transforming back into $R$
 \begin{align*}
-\frac{\partial S}{\partial r}(r) &= \frac{-1}{r} S(r) + \frac{\alpha}{r^{2}} R(r)
-&
-\frac{\partial R}{\partial r} (r) &= S(r)\\
+R(r) &= Ce^{\ln r\sqrt{\alpha}} + De^{-\ln r\sqrt{\alpha}}\\
+R(r) &= Cr^{\sqrt{\alpha}} + Dr^{-\sqrt{\alpha}}
 \end{align*}
-\[
-\boxed{\begin{bmatrix}
-(\partial S/\partial r) \\
-(\partial R/\partial r) \\
-\end{bmatrix}
-(r) = 
-\frac{1}{r^{2}}
-\begin{bmatrix}
--r	&	\alpha	\\
-r^{2}	&	0	\\
-\end{bmatrix}
-\begin{bmatrix}
-S(r)	\\
-R(r)	\\
-\end{bmatrix}}
-\]
-We can find the eigenvalues $\lambda$ with the characteristic polynomial
-\[ |A-\lambda I| = \begin{vmatrix}
--r - \lambda	&	\alpha		\\
-r^{2}			&	-\lambda	\\
-\end{vmatrix} = 0 \]
-\begin{align*}
-\lambda(r + \lambda) - \alpha r^{2} &= 0\\
-\lambda^{2} + \lambda r - \alpha r^{2} &= 0\\
-\end{align*}
-\begin{align*}
-\lambda &= \frac{1}{2}\left( -r \pm \sqrt{r^{2} + 4\alpha r^{2}} \right)\\
-\lambda &= \boxed{\frac{-r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right)}
-\end{align*}
-Then substituting this back into our original equation we find
-\begin{align*}
-\begin{bmatrix}
--r + \frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
-r^{2}														&	\frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\begin{bmatrix}
-\frac{-r}{2}\left( 1 \pm \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
-r^{2}												&	\frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right)	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\begin{bmatrix}
-\frac{-r}{2}\left( 1 \pm \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
-0												&	\frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right) - \frac{2\alpha r}{\left( 1 \pm \sqrt{1 + 4\alpha} \right)}	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\begin{bmatrix}
-\frac{-r}{2}\left( 1 \pm \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
-0	&	\frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right) + \frac{2\alpha r \left( 1 \mp \sqrt{1 + 4\alpha} \right) }{\left( 1 - (1 + 4\alpha) \right)}	\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\begin{bmatrix}
-\frac{-r}{2}\left( 1 \pm \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
-0	&	\frac{r}{2}\left( 1 \mp \sqrt{1 + 4\alpha} \right) - \frac{r}{2} \left( 1 \mp \sqrt{1 + 4\alpha} \right)\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\\
-\begin{bmatrix}
-\frac{-r}{2}\left( 1 \pm \sqrt{1 + 4\alpha} \right)	&	\alpha		\\
-0	&		0\\
-\end{bmatrix}
-\begin{bmatrix}
-v_{1}\\
-v_{2}
-\end{bmatrix}
-&=
-\begin{bmatrix}
-0\\
-0
-\end{bmatrix}
-\end{align*}
-Showing the system is singular as expected, and we can trust our eigenvalue computations a little more.
 
-\paragraph{}
-We then use one of the equations to find our eigenvector lines. Using the second one with a little algebra gives
-\[ -2rv_{1} = \left( 1 \mp \sqrt{1 + 4\alpha} \right) v_{2} \]
-where if we pick an arbitrary values of $v_{2}$ to simplify the math, $v_{2}=-2r$ will make $v_{1} = \left( 1 \mp \sqrt{1 + 4\alpha} \right)$
-the matrix of eigenvectors:
-\[ P = 
-\boxed{\begin{bmatrix}
-\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
--2r										&	-2r	
-\end{bmatrix}}
- \]
-Then 
+Which gives us our final form:
+\[ \Phi (r,\phi) = R(r)F(\phi) = \left( Cr^{\sqrt{\alpha}} + Dr^{-r\sqrt{\alpha}} \right) \left( Ae^{i\phi\sqrt{\alpha}} + Be^{-i\phi\sqrt{\alpha}} \right) \]
+
+\section{Cylindrical - $\mathbf{x}=(\rho\cos\phi,\rho\sin\phi,z)$}
+
+
+\section{Spherical - $\mathbf{x}=(r\sin\theta\cos\phi,r\sin\theta\sin\phi,r\cos\theta)$}
+Now let us consider Laplace's equation in spherical coordinates
+\[ \frac{1}{r^{2}} \frac{\partial}{\partial r}(r^{2}\frac{d\Phi}{dr}) +\frac{1}{r^{2}\sin\theta} \frac{\partial}{\partial\theta}\left( \sin\theta \frac{\partial\Phi}{\partial\theta} \right) +\frac{1}{r^{2}\sin^{2}\theta} \frac{\partial^{2}\Phi}{\partial\phi^{2}} = 0 \]
+Assume that we can represent
+\[ \Phi(r,\phi,\theta)=R(r)F(\phi)T(\theta) \]
+Substitute this into the equation, and begin the separation:
 \begin{align*}
-P^{-1} &= 
+\frac{1}{r^{2}} \frac{\partial^{2}}{\partial r^{2}}(r^{2}R(r)F(\phi)T(\theta)) +\frac{1}{r^{2}\sin\theta} \frac{\partial}{\partial\theta}\left( \sin\theta \frac{\partial}{\partial\theta}R(r)F(\phi)T(\theta) \right) +\frac{1}{r^{2}\sin^{2}\theta} \frac{\partial^{2}}{\partial\phi^{2}}R(r)F(\phi)T(\theta) &= 0\\
+\frac{F(\phi)T(\theta)}{r^{2}} \frac{\partial^{2}}{\partial r^{2}}(r^{2}R(r)) +\frac{R(r)F(\phi)}{r^{2}\sin\theta} \frac{\partial}{\partial\theta}\left( \sin\theta \frac{\partial}{\partial\theta}T(\theta) \right) +\frac{R(r)T(\theta)}{r^{2}\sin^{2}\theta} \frac{\partial^{2}}{\partial\phi^{2}}F(\phi) &= 0\\
+\end{align*}
+Then multiply through by 
+$
+\frac{r^{2}\sin^{2}\theta}{R(r)F(\phi)T(\theta)}
+$
+to 
+\begin{align*}
+\frac{\sin^{2}\theta}{R(r)} \frac{\partial^{2}}{\partial r^{2}}(r^{2}R(r)) +\frac{\sin\theta}{P(\theta)} \frac{\partial}{\partial\theta}\left( \sin\theta \frac{\partial}{\partial\theta}P(\theta) \right) +\frac{1}{Q(\phi)} \frac{\partial^{2}}{\partial\phi^{2}}Q(\phi) &= 0\\
+\end{align*}
+We then have $\phi$ isolated in a single term of the sum. It must be a constant, or else we change the value of one side of the sum without altering the other side. This would create a contradiction, so we call
+\begin{align*}
+\frac{1}{F(\phi)} \frac{\partial^{2}}{\partial\phi^{2}}F(\phi) &= M\\
+\frac{\partial^{2}}{\partial\phi^{2}}F(\phi) &= MF(\phi)\\
+F(\phi)&= Ae^{\phi\sqrt{M}} +Be^{-\phi\sqrt{M}}\\
+\end{align*}
+and notice that since we are working in spherical coordinates, $\forall k\in\mathbb{Z}$ and $\forall \phi\in\mathbb{R}$, $\phi + 2k\pi = \phi$. Thus 
+\begin{align*}
+Ae^{(\phi+2k\pi)\sqrt{M}} +Be^{-(\phi+2k\pi)\sqrt{M}} &= Ae^{\phi\sqrt{M}} +Be^{-\phi\sqrt{M}}\\
+Ae^{(\phi+2k\pi)\sqrt{M}} -Ae^{\phi\sqrt{M}} &= Be^{-\phi\sqrt{M}} -Be^{-(\phi+2k\pi)\sqrt{M}}\\
+Ae^{\phi\sqrt{M}} \left( e^{2k\pi\sqrt{M}} -1\right) &= Be^{-\phi\sqrt{M}} \left( 1 -e^{-2k\pi\sqrt{M}} \right)\\
+Ae^{\phi\sqrt{M}} \left( 1 -e^{-2k\pi\sqrt{M}}\right) e^{2k\pi\sqrt{M}} &= Be^{-\phi\sqrt{M}} \left( 1 -e^{-2k\pi\sqrt{M}} \right)\\
+Ae^{\phi\sqrt{M}} e^{2k\pi\sqrt{M}} &= Be^{-\phi\sqrt{M}}\\
+e^{2\phi\sqrt{M}} e^{2k\pi\sqrt{M}} &= B/A\\
+e^{(\phi+k\pi)2\sqrt{M}} &= B/A\\
+\end{align*}
+
+
+
+\begin{align*}
+\frac{\sin^{2}\theta}{R(r)} \frac{\partial^{2}}{\partial r^{2}}(r^{2}R(r)) +\frac{\sin\theta}{P(\theta)} \frac{\partial}{\partial\theta}\left( \sin\theta \frac{\partial}{\partial\theta}P(\theta) \right) -m^{2} &= 0\\
+\frac{1}{R(r)} \frac{\partial^{2}}{\partial r^{2}}(r^{2}R(r)) +\frac{1}{P(\theta)\sin\theta} \frac{\partial}{\partial\theta}\left( \sin\theta \frac{\partial}{\partial\theta}P(\theta) \right) -\frac{m^{2}}{\sin^{2}\theta} &= 0\\
+\end{align*}
+
+We then have the radial component $R(r)$ isolated, so again, to keep the sum constant, we can set the radial part to a constant and solve for it separately:
+\begin{align*}
+\frac{1}{R(r)} \frac{d^{2}}{dr^{2}}(r^{2}R(r)) &= L\\
+\frac{1}{R(r)} \frac{d}{dr}\left(2rR(r)+r^{2}\frac{dR}{dr}(r)\right) &= L\\
+\frac{1}{R(r)} \left( 2R(r) +2r\frac{dR}{dr}(r) +2r\frac{dR}{dr}(r) +r^{2}\frac{d^{2}R}{dr^{2}}(r) \right) &= L\\
+\frac{1}{R(r)} \left( R(r) +4r\frac{dR}{dr}(r) +r^{2}\frac{d^{2}R}{dr^{2}}(r) \right) &= L\\
+4r\frac{dR}{dr}(r) +r^{2}\frac{d^{2}R}{dr^{2}}(r) &= (L-1)R(r)\\
+\end{align*}
+
+This is a Euler differential equation that can again be solved by changing into exponential variables: $r=e^{z} \iff z=\ln r$
+\[ R(r) = R(e^{z}) = Z(\ln r) = Z(z)\]
+\begin{align*}
+4r\frac{dZ}{dr}(z) +r^{2}\frac{d^{2}Z}{dr^{2}}(z) &= (L-1)Z(z)\\
+4r\frac{dZ}{dz}\frac{dz}{dr}(z) +r^{2}\frac{d}{dr}\left( \frac{dZ}{dz}\frac{dz}{dr}(z) \right) &= (L-1)Z(z)\\
+4\frac{dZ}{dz}(z) +r^{2}\frac{d}{dr}\left( \frac{1}{r}\frac{dZ}{dz}(z) \right) &= (L-1)Z(z)\\
+4\frac{dZ}{dz}(z) +r^{2}\left( \frac{-1}{r^{2}}\frac{dZ}{dz}(z) +\frac{1}{r}\frac{dZ}{dz}\frac{dz}{dr}(z) \right) &= (L-1)Z(z)\\
+4\frac{dZ}{dz}(z) +r^{2}\left( \frac{-1}{r^{2}}\frac{dZ}{dz}(z) +\frac{1}{r^{2}}\frac{dZ}{dz}(z) \right) &= (L-1)Z(z)\\
+\frac{d^{2}Z}{dz^{2}}(z) &= -3\frac{dZ}{dz}(z) +(L-1)Z(z)\\
+\end{align*}
+So now take
+\begin{align*}
+\mathbf{Z}(z) &= 
 \begin{bmatrix}
-a&b\\
-c&d
-\end{bmatrix}^{-1}
+Z_{1}\\
+Z_{2}
+\end{bmatrix}
+(z)
 =
-\frac{1}{|P|}
 \begin{bmatrix}
-d	&	-b\\
--c	&	a
-\end{bmatrix}\\
-P^{-1} &= \frac{1}{|P|}
-\begin{bmatrix}
--2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
-2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+dZ/dz\\
+Z
 \end{bmatrix}
-\\
-P^{-1} &= \frac{1}{\left| -2r\left( 1 - \sqrt{1 + 4\alpha} \right) +2r\left( 1 + \sqrt{1 + 4\alpha} \right) \right|}
+(z)
+&\implies
+\dot{\mathbf{Z}}(z) &=
 \begin{bmatrix}
--2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
-2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+d^{2}Z/dz^{2}\\
+dZ/dz
 \end{bmatrix}
-\\
-P^{-1} &= \frac{1}{\left| 4r\sqrt{1 + 4\alpha} \right|}
+(z)
+=
 \begin{bmatrix}
--2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
-2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+d^{2}Z/dz^{2}\\
+Z_{1}
 \end{bmatrix}
+(z)
 \end{align*}
-and since $r$ is always positive, and we always take the positive root unless specified otherwise, we can just write
-\[ P^{-1} = \boxed{\frac{1}{ 4r\sqrt{1 + 4\alpha} }
-\begin{bmatrix}
--2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
-2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
-\end{bmatrix}} \]
-So double check
+Then $dZ_{2}/dz = Z_{2}$ and
 \begin{align*}
-P^{-1}AP &=
-\frac{1}{ 4r\sqrt{1 + 4\alpha} }
+\dot{\mathbf{Z}}(z) &=
 \begin{bmatrix}
--2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
-2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+-3	&	(L-1)	\\
+1	&	0
 \end{bmatrix}
-\begin{bmatrix}
--r		&	\alpha	\\
-r^{2}	&	0	\\
-\end{bmatrix}
-\begin{bmatrix}
-\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
--2r										&	-2r	
-\end{bmatrix}
-\\
-&=
-\frac{1}{ 4r\sqrt{1 + 4\alpha} }
-\begin{bmatrix}
-2r^{2}-r^{2}\left( 1 + \sqrt{1 + 4\alpha} \right) & -2\alpha r	\\
--2r^{2}+r^{2}\left( 1 - \sqrt{1 + 4\alpha} \right)	& 2\alpha r
-\end{bmatrix}
-\begin{bmatrix}
-\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
--2r										&	-2r	
-\end{bmatrix}
-\\
-&=
-\frac{1}{ 4r\sqrt{1 + 4\alpha} }
-\begin{bmatrix}
-r^{2}\left( 1 - \sqrt{1 + 4\alpha} \right) & -2\alpha r	\\
--r^{2}\left( 1 + \sqrt{1 + 4\alpha} \right)	& 2\alpha r
-\end{bmatrix}
-\begin{bmatrix}
-\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
--2r										&	-2r	
-\end{bmatrix}
-\\
-&=
-\frac{1}{ 4r\sqrt{1 + 4\alpha} }
-\begin{bmatrix}
-r^{2}\left( 1 - \sqrt{1 + 4\alpha} \right)^{2} +4\alpha r^{2}	&	-4\alpha r +4\alpha r	\\
-4\alpha r^{2}-4\alpha r^{2}	& -r^{2}\left( 1 + \sqrt{1 + 4\alpha} \right)^{2} -4\alpha r^{2}
-\end{bmatrix}
-\\
-&=
-\frac{r}{ 4\sqrt{1 + 4\alpha} }
-\begin{bmatrix}
-1 - 2\sqrt{1 + 4\alpha} +(1+4\alpha) +4\alpha	&	0	\\
-0	& -\left( 1 + 2\sqrt{1 + 4\alpha} +(1+4\alpha)\right) -4\alpha
-\end{bmatrix}
-\\
-&=
-\frac{r}{ 4\sqrt{1 + 4\alpha} }
-\begin{bmatrix}
-2 +8\alpha -2\sqrt{1 + 4\alpha}	&	0	\\
-0	& -\left( 2 +8\alpha +2\sqrt{1 + 4\alpha}\right)
-\end{bmatrix}
-\\
-&=
-\frac{r}{ 2\sqrt{1 + 4\alpha} }
-\begin{bmatrix}
-(1 +4\alpha) -\sqrt{1 + 4\alpha}	&	0	\\
-0	& -\left( (1 +4\alpha) +\sqrt{1 + 4\alpha}\right)
-\end{bmatrix}
-\\
-&=
-\frac{r}{ 2 }
-\begin{bmatrix}
-\sqrt{1 + 4\alpha} -1	&	0	\\
-0	& -\left( \sqrt{1 + 4\alpha} +1 \right)
-\end{bmatrix}
-\\
-P^{-1}AP &=
-\begin{bmatrix}
-\frac{r}{2}(-1 +\sqrt{1 + 4\alpha})	&	0	\\
-0	& \frac{r}{2}(-1 -\sqrt{1 + 4\alpha})
-\end{bmatrix}
-= \text{diag}\left(\lambda_{1},\lambda_{2}\right)
+\mathbf{Z}(z)
 \end{align*}
-So our $P$ matrices can be used as expected to uncouple the system, and we can trust more in our eigenvector computations.
+
+Let us now find the eigenvalues of this matrix by finding the characteristic polynomial:
+\begin{align*}
+\begin{vmatrix}
+-3-\lambda	&	(L-1)	\\
+1			&	-\lambda
+\end{vmatrix}
+= \lambda(\lambda+3)-(L-1) &= 0\\
+\lambda^{2} +2\lambda +3 +(1-L) &= 0\\
+\lambda^{2} +2\lambda -(2+L) &= 0
+\end{align*}
+
+We can make this a perfect square to simplify the math by choosing $l$ such that $L=l(l+1)$ and then
+\[\lambda^{2} +2\lambda -(L+2) = 0\\\]
+\begin{align*}
+\lambda &= \frac{-2 \pm \sqrt{4 +4(L+2)}}{2}\\
+&= \frac{-2 \pm 2\sqrt{1 +(L+2)}}{2}\\
+&= -1 \pm \sqrt{L+3}\\
+&= -1 \pm \sqrt{l(l+1)+3}\\
+&= -1 \pm \sqrt{l^{2}+l+3}\\
+\end{align*}
+
+
+If we take $A$ to be this matrix of coefficients, this can be solved using eigenvalue decomposition where $\lambda_{1},\lambda_{2}$ are the eigenvalues of $A$, and $\mathbf{v}_{1},\mathbf{v}_{2}$ are the corresponding eigenvectors. Then if we take $P=[\mathbf{v}_{1},\mathbf{v}_{2}]$, we can do one more change of variables to find a separable solution:
+\begin{align*}
+\dot{\mathbf{Z}}(z) &= A \mathbf{Z}(z)\\
+\mathbf{Y}(z) &= P^{-1}\mathbf{Z}(z)	& \implies	\mathbf{Z}(z) &= P\mathbf{Y}(z)\\
+\dot{\mathbf{Y}}(z) &= P^{-1}\dot{\mathbf{Z}}(z) = P^{-1}A \mathbf{Z}(z) = P^{-1}AP \mathbf{Y}(z)
+\end{align*}
 
 \paragraph{}
-Then if we start with the system $\dot{\mathbf{x}} = cA\mathbf{x}$ and use the change of variables $\mathbf{y}=P\mathbf{x}$ such that $\mathbf{x}=P^{-1}\mathbf{y}$ 
-\[ \dot{\mathbf{y}} = P\dot{\mathbf{x}} = PcA\mathbf{x} = cPAP^{-1}\mathbf{y} = c\text{ diag}\{ \lambda_{1},\lambda_{2} \} \mathbf{y} \]
-which gives a diagonal matrix with the solution
-\[ \mathbf{y}(r) = e^{cPAP^{-1}(r)}\mathbf{y}(0) = \text{diag}\{ e^{c\lambda_{1}(r)}, e^{c\lambda_{2}(r)} \}\mathbf{y}(0)\\ \]
-and then since $\mathbf{y}=P\mathbf{x}$ and 
-\[ 
-P = 
-\begin{bmatrix}
-\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
--2r										&	-2r	
-\end{bmatrix},
-P^{-1} = \frac{1}{ 4r\sqrt{1 + 4\alpha} }
-\begin{bmatrix}
--2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
-2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
-\end{bmatrix}
+So finding the eigenvalues of $A$ gives the characteristic polynomial
+\[ 0 =
+\begin{vmatrix}
+-2-\lambda	&	(l-1)	\\
+1			&	-\lambda
+\end{vmatrix}
+= \lambda(2+\lambda) - (l-1) = \lambda^{2} +2\lambda +(1-l)
 \]
+So that 
+\[ \lambda = \frac{-2 \pm \sqrt{4-4(1-l)}}{2} = \frac{-2 \pm 2\sqrt{1-1+l}}{2} = -1 \pm \sqrt{l} \]
+where substituting this into the second row gives
+\[ v_{1} +(1\mp\sqrt{l})v_{2} = 0 \]
+so that if we take our free variable to be $-v_{2}$
 \begin{align*}
-P\mathbf{x}(r) &= \text{diag}\{ e^{c\lambda_{1}(r)}, e^{c\lambda_{2}(r)} \}P\mathbf{x}(0)\\
-\mathbf{x}(r) &= e^{c}P^{-1}\text{diag}\{ e^{\lambda_{1}(r)}, e^{c\lambda_{2}(r)} \}P\mathbf{x}(0)
+P^{-1} &= \frac{1}{2\sqrt{l}}
+\begin{bmatrix}
+-1	&	-(1+\sqrt{l})	\\
+1	&	(1-\sqrt{l})
+\end{bmatrix},
+&
+P &= 
+\begin{bmatrix}
+(1-\sqrt{l})	&	(1+\sqrt{l})	\\
+-1				&	-1
+\end{bmatrix}
 \end{align*}
-\begin{multline*}
-\begin{bmatrix}
-S(r)\\
-R(r)
-\end{bmatrix}
-= \frac{e^{1/r^{2}}}{ 4r\sqrt{1 + 4\alpha} }\\
-\begin{bmatrix}
--2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
-2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
-\end{bmatrix}
-\begin{bmatrix}
-e^{r^{2}(-1 +\sqrt{1 + 4\alpha})/2}	&	0	\\
-0	& e^{-r^{2}(1+\sqrt{1 + 4\alpha})/2}
-\end{bmatrix}
-\begin{bmatrix}
-\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
--2r										&	-2r	
-\end{bmatrix}
-\begin{bmatrix}
-S(0)\\
-R(0)
-\end{bmatrix}
-\end{multline*}
 
-
-\begin{multline*}
+\begin{align*}
+P^{-1}AP &= 
+\frac{1}{2\sqrt{l}}
 \begin{bmatrix}
-S(r)\\
-R(r)
-\end{bmatrix}
-= \frac{e^{1/r^{2}}}{ 4r\sqrt{1 + 4\alpha} }\\
-\begin{bmatrix}
--2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
-2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
+-1	&	-(1+\sqrt{l})	\\
+1	&	(1-\sqrt{l})
 \end{bmatrix}
 \begin{bmatrix}
-e^{-r^{2}/2}e^{r^{2}\sqrt{1 + 4\alpha}/2}	&	0	\\
-0	& e^{-r^{2}/2}e^{-r^{2}\sqrt{1 + 4\alpha}/2}
+-2		&	(l-1)	\\
+1		&	0
 \end{bmatrix}
 \begin{bmatrix}
-\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
--2r										&	-2r	
+(1-\sqrt{l})	&	(1+\sqrt{l})	\\
+-1				&	-1
 \end{bmatrix}
-\begin{bmatrix}
-S(0)\\
-R(0)
-\end{bmatrix}
-\end{multline*}
-
-
-\begin{multline*}
-\begin{bmatrix}
-S(r)\\
-R(r)
-\end{bmatrix}
-= \frac{e^{1/r^{2}}e^{-r^{2}/2}}{ 4r\sqrt{1 + 4\alpha} }\\
-\begin{bmatrix}
--2r	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
-2r	&	\left( 1 - \sqrt{1 + 4\alpha} \right)	
-\end{bmatrix}
-\begin{bmatrix}
-e^{r^{2}\sqrt{1 + 4\alpha}/2}	&	0	\\
-0	& e^{-r^{2}\sqrt{1 + 4\alpha}/2}
-\end{bmatrix}
-\begin{bmatrix}
-\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
--2r										&	-2r	
-\end{bmatrix}
-\begin{bmatrix}
-S(0)\\
-R(0)
-\end{bmatrix}
-\end{multline*}
-
-\begin{multline*}
-\begin{bmatrix}
-S(r)\\
-R(r)
-\end{bmatrix}
-= \frac{e^{r^{-2}-r^{2}/2}}{ 4r\sqrt{1 + 4\alpha} }\\
-\begin{bmatrix}
--2re^{r^{2}\sqrt{1 + 4\alpha}/2}	&	-\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	\\
-2re^{r^{2}\sqrt{1 + 4\alpha}/2}	&	\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	
-\end{bmatrix}
-\begin{bmatrix}
-\left( 1 - \sqrt{1 + 4\alpha} \right)	&	\left( 1 + \sqrt{1 + 4\alpha} \right)	\\
--2r										&	-2r	
-\end{bmatrix}
-\begin{bmatrix}
-S(0)\\
-R(0)
-\end{bmatrix}
-\end{multline*}
-
-\begin{multline*}
-\begin{bmatrix}
-S(r)\\
-R(r)
-\end{bmatrix}
-= \frac{e^{r^{-2}-r^{2}/2}}{ 4r\sqrt{1 + 4\alpha} }\\
-\left[
-\begin{matrix}
--2r\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +2r\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	\\
-2r\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} -2r\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	
-\end{matrix}
-\right.
 \\
-\left.
-\begin{matrix}
--2r\left( 1 + \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +2r\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	\\
-2r\left( 1 + \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} -2r\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	
-\end{matrix}
-\right]
+&= 
+\frac{1}{2\sqrt{l}}
 \begin{bmatrix}
-S(0)\\
-R(0)
+2-(1+\sqrt{l})	&	-(l-1)	\\
+-2+(1-\sqrt{l})	&	(l-1)
 \end{bmatrix}
-\end{multline*}
-
+\begin{bmatrix}
+(1-\sqrt{l})	&	(1+\sqrt{l})	\\
+-1				&	-1
+\end{bmatrix}
+\\
+&= 
+\frac{1}{2\sqrt{l}}
+\begin{bmatrix}
+1-\sqrt{l}	&	-(l-1)	\\
+-(1+\sqrt{l})	&	(l-1)
+\end{bmatrix}
+\begin{bmatrix}
+(1-\sqrt{l})	&	(1+\sqrt{l})	\\
+-1				&	-1
+\end{bmatrix}
+\\
+&= 
+\frac{1}{2\sqrt{l}}
+\begin{bmatrix}
+(1-\sqrt{l})^{2}+(l-1)	&	0	\\
+0						&	-(1+\sqrt{l})^{2}-(l-1)
+\end{bmatrix}
+\\
+&= 
+\frac{1}{2\sqrt{l}}
+\begin{bmatrix}
+2(-\sqrt{l}+l)	&	0	\\
+0						&	-2(l+\sqrt{l})
+\end{bmatrix}
+\\
+&= 
+\begin{bmatrix}
+-1+\sqrt{l}	&	0	\\
+0						&	-1-\sqrt{l}
+\end{bmatrix}
+\\
+\end{align*}
+Then since 
+\[ \dot{\mathbf{Y}}(z) = P^{-1}AP \mathbf{Y}(z) = \begin{bmatrix}
+-1+\sqrt{l}	&	0	\\
+0			&	-1-\sqrt{l}
+\end{bmatrix} 
+\mathbf{Y}(z)
+\]
+We can solve the now separable equation and back substitute for our original variables:
+\begin{align*}
+\mathbf{Y}(z) &=
+\begin{bmatrix}
+e^{-z(1-\sqrt{l})}	&	0	\\
+0					&	e^{-z(1+\sqrt{l})}
+\end{bmatrix}
+\mathbf{Y}(0)
+\\
+P^{-1}\mathbf{Z}(z) &=
+\begin{bmatrix}
+e^{-z(1-\sqrt{l})}	&	0	\\
+0					&	e^{-z(1+\sqrt{l})}
+\end{bmatrix}
+P^{-1}\mathbf{Z}(0)
+\\
+\mathbf{Z}(z) &= P
+\begin{bmatrix}
+e^{-z(1-\sqrt{l})}	&	0	\\
+0					&	e^{-z(1+\sqrt{l})}
+\end{bmatrix}
+P^{-1}\mathbf{Z}(0)
+\\
+\mathbf{Z}(z) &=
+\frac{1}{2\sqrt{l}}
+\begin{bmatrix}
+(1-\sqrt{l})	&	(1+\sqrt{l})	\\
+-1				&	-1
+\end{bmatrix}
+\begin{bmatrix}
+e^{-z(1-\sqrt{l})}	&	0	\\
+0						&	e^{-z(1+\sqrt{l})}
+\end{bmatrix}
+\begin{bmatrix}
+-1	&	-(1+\sqrt{l})	\\
+1	&	(1-\sqrt{l})
+\end{bmatrix}
+\mathbf{Z}(0)
+\\
+\mathbf{Z}(z) &=
+\frac{1}{2\sqrt{l}}
+\begin{bmatrix}
+(1-\sqrt{l})	&	(1+\sqrt{l})	\\
+-1				&	-1
+\end{bmatrix}
+\begin{bmatrix}
+-e^{-z(1-\sqrt{l})}	&	-(1+\sqrt{l})e^{-z(1-\sqrt{l})}	\\
+e^{-z(1+\sqrt{l})}	&	(1-\sqrt{l})e^{-z(1+\sqrt{l})}
+\end{bmatrix}
+\mathbf{Z}(0)
+\\
+\mathbf{Z}(z)
+&=
+\frac{1}{2\sqrt{l}}
+\begin{bmatrix}
+(1+\sqrt{l})e^{-z(1+\sqrt{l})} -(1-\sqrt{l})e^{-z(1-\sqrt{l})}	&	(1-l)\left( e^{-z(1+\sqrt{l})} -e^{-z(1-\sqrt{l})} \right)	\\
+e^{-z(1-\sqrt{l})} -e^{-z(1+\sqrt{l})}							&	(1+\sqrt{l})e^{-z(1-\sqrt{l})} -(1-\sqrt{l})e^{-z(1+\sqrt{l})}
+\end{bmatrix}
+\mathbf{Z}(0)
+\end{align*}
+So that as defined
 \begin{multline*}
 \begin{bmatrix}
-S(r)\\
-R(r)
+dZ/dz\\
+Z
 \end{bmatrix}
-= \frac{e^{r^{-2}-r^{2}/2}}{ 2\sqrt{1 + 4\alpha} }\\
-\left[
-\begin{matrix}
--\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	\\
-\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} -\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	
-\end{matrix}
-\right.
-\\
-\left.
-\begin{matrix}
--\left( 1 + \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	\\
-\left( 1 + \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} -\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}	
-\end{matrix}
-\right]
+(z)
+= \\
+\frac{1}{2\sqrt{l}}
 \begin{bmatrix}
-S(0)\\
-R(0)
+(1+\sqrt{l})e^{-z(1+\sqrt{l})} -(1-\sqrt{l})e^{-z(1-\sqrt{l})}	&	(1-l)\left( e^{-z(1+\sqrt{l})} -e^{-z(1-\sqrt{l})} \right)	\\
+e^{-z(1-\sqrt{l})} -e^{-z(1+\sqrt{l})}							&	(1+\sqrt{l})e^{-z(1-\sqrt{l})} -(1-\sqrt{l})e^{-z(1+\sqrt{l})}
 \end{bmatrix}
+\begin{bmatrix}
+dZ/dz\\
+Z
+\end{bmatrix}
+(0) 
 \end{multline*}
-Now we attempt to solve this system of equations using Gaussian elimination. Take the first pivot coefficient to be
-\[
-\frac{\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} -\left( 1 - \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}}{-\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2}}
-\]
-such that the second column of the first row is scaled to
-\[
-\frac{ 4\alpha e^{r^{2}\sqrt{1+4\alpha}} -8\alpha +4\alpha e^{-r^{2}\sqrt{1+4\alpha}} }{ -\left( 1 - \sqrt{1 + 4\alpha} \right)e^{r^{2}\sqrt{1 + 4\alpha}/2} +\left( 1 + \sqrt{1 + 4\alpha} \right)e^{-r^{2}\sqrt{1 + 4\alpha}/2} }
-\]
+and thus if we call $C=Z(0),D=(dZ/dz)(0)$ and 
+\begin{align*}
+Z(z) &= \frac{1}{2\sqrt{l}}\left[D\left(e^{z(\sqrt{l}-1)} -e^{-z(\sqrt{l}+1)}\right) +C\left((\sqrt{l}+1)e^{z(\sqrt{l}-1)} +(\sqrt{l}-1)e^{-z(\sqrt{l}+1)}\right)\right]\\
+Z(z) &= \frac{1}{2\sqrt{l}}\left[\left((\sqrt{l}+1)C+D \right)e^{z(\sqrt{l}-1)} +\left((\sqrt{l}-1)C-D \right)e^{-z(\sqrt{l}+1)} \right]\\
+Z(z) &= \frac{1}{2\sqrt{l}}\left[ \left[ C\sqrt{l}e^{z(\sqrt{l}-1)} +C\sqrt{l}e^{-z(\sqrt{l}+1)}\right] +(C+D)\left[e^{z(\sqrt{l}-1)} -e^{-z(\sqrt{l}+1)}\right] \right]\\
+Z(z) &= \frac{C}{2}\left[ e^{z(\sqrt{l}-1)} +e^{-z(\sqrt{l}+1)}\right] +\left(\frac{C+D}{2\sqrt{l}}\right)\left[e^{z(\sqrt{l}-1)} -e^{-z(\sqrt{l}+1)}\right] \\
+\end{align*}
+We didn't need to separate this far though. If we absorb and rename the constants $C,D$ we can get rid of the leading term and substitute back in for $R$ to find
+\[ Z(z) = \frac{1}{2\sqrt{l}}\left[\left((\sqrt{l}+1)C+D \right)e^{z(\sqrt{l}-1)} +\left((\sqrt{l}-1)C-D \right)e^{-z(\sqrt{l}+1)} \right]\\ \]
+\[ R(r) = Cr^{(\sqrt{l}-1)} +Dr^{-(\sqrt{l}+1)} \]
 
-
+\paragraph{}
+We now substitute back in to our original separation and solve for the last variable
+\begin{align*}
+\frac{1}{R(r)} \frac{\partial^{2}}{\partial r^{2}}(r^{2}R(r)) +\frac{1}{P(\theta)\sin\theta} \frac{\partial}{\partial\theta}\left( \sin\theta \frac{\partial}{\partial\theta}P(\theta) \right) -\frac{m}{\sin^{2}\theta} &= 0\\
+\frac{1}{P(\theta)\sin\theta} \frac{\partial}{\partial\theta}\left( \sin\theta \frac{\partial}{\partial\theta}P(\theta) \right) +l -\frac{m}{\sin^{2}\theta} &= 0\\
+\end{align*}
 
 \end{document}
+%###############################################################################
