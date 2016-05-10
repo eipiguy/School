@@ -22,18 +22,27 @@ Main Code:
 	++++
 	Read and Format Character by Character:
 		====
-		getChar Check:
-		====
 		EOF Procedure:
+			~~~~
+			Min/Max Check:
+			~~~~
 			~~~~
 			Update Grid:
 			~~~~
 		----
 		Newline Procedure:
+			~~~~
+			Min/Max Check:
+			~~~~
 		----
 		Delimiter Procedure:
+			~~~~
+			Min/Max Check:
+			~~~~
 		----
 		Subdelimiter Procedure:
+		----
+		Sub-Flag Reset:
 		====
 		New Character Procedure:
 	++++
@@ -91,6 +100,7 @@ void readCSV(CCTK_ARGUMENTS)
 		// Minumum, maximum, and spacing values for each coordinate.
 		float* localMin = (float*)malloc(6*sizeof(float));
 		float* localMax = (float*)malloc(6*sizeof(float));
+		float* localDelta = (float*)malloc(6*sizeof(float));
 		int lSize = 6;
 
 		// The array for each set of tokens as converted to floats.
@@ -122,8 +132,6 @@ void readCSV(CCTK_ARGUMENTS)
 			// Update the current character in the file.
 			c = getc(file);
 
-// getChar Check: =============================================================
-
 			// If there's an error reading the character, 
 			// inform the user and break the loop.
 			if (c == ferror(file))
@@ -144,7 +152,7 @@ void readCSV(CCTK_ARGUMENTS)
 
 					// If the new token would overload the matrixBuffer, 
 					// we have to resize the matrixBuffer before anything else.
-					if (tokenCounter +1 > matrixBufferSize) {
+					if (tokenCounter + 1 > matrixBufferSize) {
 
 						// Double the size of the matrixBuffer.
 						float* temp = (float*)realloc(matrixBuffer,
@@ -161,9 +169,9 @@ void readCSV(CCTK_ARGUMENTS)
 						// inform the use and break.
 						else {
 							CCTK_VWarn(CCTK_WARN_ABORT,
-								__LINE__, __FILE__,CCTK_THORNSTRING,
+								__LINE__, __FILE__, CCTK_THORNSTRING,
 								"Error doubling matrixBuffer at token %d.\n",
-								tokenCounter+1);
+								tokenCounter + 1);
 							break;
 						}
 					}
@@ -172,48 +180,7 @@ void readCSV(CCTK_ARGUMENTS)
 					// read the token as a float, 
 					// and copy it into the matrixBuffer.
 					matrixBuffer[tokenCounter] = strtof(tokenBuffer, NULL);
-
-					// If the token is smaller/larger than the local Min/Max,
-					// update the Min/Max according to column number
-					if (strideFlag) {
-						if (localMin[tokenCounter]
-								> matrixBuffer[tokenCounter]) {
-							localMin[tokenCounter]
-								= matrixBuffer[tokenCounter];
-							CCTK_VInfo(CCTK_THORNSTRING,
-								"localMin '%d' is now '%f'",
-								tokenCounter - 1, localMin[tokenCounter]);
-						}
-						if (localMax[tokenCounter]
-								< matrixBuffer[tokenCounter]) {
-							localMax[tokenCounter]
-								= matrixBuffer[tokenCounter];
-							CCTK_VInfo(CCTK_THORNSTRING,
-								"localMax '%d' is now '%f'",
-								tokenCounter, localMax[tokenCounter]);
-						}
-					}else {
-						if (localMin[tokenCounter % columns]
-								> matrixBuffer[tokenCounter]) {
-							localMin[tokenCounter% columns]
-								= matrixBuffer[tokenCounter];
-							CCTK_VInfo(CCTK_THORNSTRING,
-								"localMin '%d' is now '%f'",
-								tokenCounter% columns,
-								localMin[tokenCounter% columns]);
-						}
-
-						if (localMax[tokenCounter % columns]
-								< matrixBuffer[tokenCounter]) {
-							localMax[tokenCounter % columns]
-								= matrixBuffer[tokenCounter];
-							CCTK_VInfo(CCTK_THORNSTRING,
-								"localMax '%d' is now '%f'",
-								tokenCounter % columns,
-								localMax[tokenCounter% columns]);
-						}
-					}
-				}
+				}					
 
 				tokenCounter++;		// Increase the token counter.
 
@@ -242,10 +209,51 @@ void readCSV(CCTK_ARGUMENTS)
 							"Error resizing localMax.\n");
 						break;
 					}
+					float* temp3 =
+						(float*)realloc(localDelta, columns*sizeof(float));
+					if (temp3) { localDelta = temp3; }
+					else {
+						CCTK_VWarn(CCTK_WARN_ABORT,
+							__LINE__, __FILE__, CCTK_THORNSTRING,
+							"Error resizing localDelta.\n");
+						break;
+					}
+
+// Min/Max Check: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+					// If the token is smaller/larger than the local Min/Max,
+					// update the Min/Max according to column number
+
+					// The first row is used for the initial values
+					localMin[columns - 1] = matrixBuffer[columns - 1];
+					localMax[columns - 1] = matrixBuffer[columns - 1];
+
 				}
+				else {
+					if (localMin[columns - 1]
+								> matrixBuffer[columns - 1]) {
+						localMin[columns - 1]
+							= matrixBuffer[columns - 1];
+					}
+
+					if (localMax[columns - 1]
+						< matrixBuffer[columns - 1]) {
+						localMax[columns - 1]
+							= matrixBuffer[columns - 1];
+					}
+				}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 				// Set the number of rows of data
 				rows = tokenCounter / columns;
+
+				// Display final results for Min/Max of each column
+				for (int i = 0; i < columns; i++) {
+					CCTK_VInfo(CCTK_THORNSTRING,
+						"Column(%d): Min = %f, Max = %f\n",
+						i, localMin[i], localMax[i]);
+				}
 
 // Update Grid: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				
@@ -324,17 +332,12 @@ void readCSV(CCTK_ARGUMENTS)
 						break;
 					}
 
-					// Assign them their first values
-					localMin[columns-1]
-						= matrixBuffer[columns - 1];
-					CCTK_VInfo(CCTK_THORNSTRING,
-						"localMin '%d' is now '%f'",
-						columns - 1, localMin[columns - 1]);
-					localMax[columns - 1]
-						= matrixBuffer[columns - 1];
-					CCTK_VInfo(CCTK_THORNSTRING,
-						"localMax '%d' is now '%f'",
-						columns - 1, localMax[columns - 1]);
+// Min/Max Check: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+					// Assign them their initial values
+					// for the first row of data.
+					localMin[columns-1]	= matrixBuffer[columns - 1];
+					localMax[columns - 1] = matrixBuffer[columns - 1];
 
 				}else {
 					if (((tokenCounter+1)%columns) != 0) {
@@ -347,19 +350,15 @@ void readCSV(CCTK_ARGUMENTS)
 							> matrixBuffer[tokenCounter]) {
 						localMin[columns - 1]
 							= matrixBuffer[tokenCounter];
-						CCTK_VInfo(CCTK_THORNSTRING,
-							"localMin '%d' is now '%f'",
-							columns - 1, localMin[columns-1]);
 					}
 					if (localMax[columns - 1]
 						< matrixBuffer[tokenCounter]) {
 						localMax[columns - 1]
 							= matrixBuffer[tokenCounter];
-						CCTK_VInfo(CCTK_THORNSTRING,
-							"localMax '%d' is now '%f'",
-							columns - 1, localMax[columns-1]);
 					}
 				}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 				tokenCounter++;		// Increase the token counter.
 
@@ -403,8 +402,11 @@ void readCSV(CCTK_ARGUMENTS)
 				// Read the token as a float and copy it into the matrixBuffer.
 				matrixBuffer[tokenCounter] = strtof(tokenBuffer, NULL);
 
+// Min/Max Check: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 				// If the token is smaller/larger than the local Min/Max,
 				// update the Min/Max according to column number.
+
 				// The first row is auto assigned as starting values.
 				if (strideFlag) {
 
@@ -436,34 +438,24 @@ void readCSV(CCTK_ARGUMENTS)
 						}
 					}
 
-					localMin[tokenCounter]
-						= matrixBuffer[tokenCounter];
-					CCTK_VInfo(CCTK_THORNSTRING,
-						"localMin '%d' is now '%f'",
-						tokenCounter, localMin[tokenCounter]);
-					localMax[tokenCounter]
-						= matrixBuffer[tokenCounter];
-					CCTK_VInfo(CCTK_THORNSTRING,
-						"localMax '%d' is now '%f'",
-						tokenCounter, localMax[tokenCounter]);
+					// Assign the first row of values for localMin/Max
+					localMin[tokenCounter] = matrixBuffer[tokenCounter];
+					localMax[tokenCounter] = matrixBuffer[tokenCounter];
+
 				}else {
 					if (localMin[tokenCounter%columns]
 							> matrixBuffer[tokenCounter]) {
 						localMin[tokenCounter%columns]
 							= matrixBuffer[tokenCounter];
-						CCTK_VInfo(CCTK_THORNSTRING,
-							"localMin '%d' is now '%f'",
-							tokenCounter%columns, localMin[tokenCounter%columns]);
 					}
 					if (localMax[tokenCounter%columns]
 							< matrixBuffer[tokenCounter]) {
 						localMax[tokenCounter%columns]
 							= matrixBuffer[tokenCounter];
-						CCTK_VInfo(CCTK_THORNSTRING,
-							"localMax '%d' is now '%f'",
-							tokenCounter%columns, localMax[tokenCounter%columns]);
 					}
 				}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 				tokenCounter++;		// Increase the tokenCounter.
 
@@ -509,7 +501,7 @@ void readCSV(CCTK_ARGUMENTS)
 				}
 			}
 
-// Flag Reset: ----------------------------------------------------------------
+// Sub-Flag Reset: ------------------------------------------------------------
 
 			// If we are at anything after a second subDelimiter
 			// that is not another subDelimiter,
