@@ -1,0 +1,3 @@
+# An example parameter file for thorn readCSV
+ActiveThorns = "readCSV"
+readCSV::filePath = "/home/nesbitt/csvFiles/Doubling.csv"

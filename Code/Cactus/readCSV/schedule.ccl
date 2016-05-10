@@ -1,7 +1,6 @@
 # Schedule definitions for thorn readCSV
- #
-$Header$
-schedule HelloWorld at CCTK_EVOL
+
+schedule readCSV at CCTK_INITIAL
 {
 	LANG: C
-} "read CSV file"
+} "read initial CSV file"

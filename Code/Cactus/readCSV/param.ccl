@@ -1,3 +1,7 @@
 # Parameter definitions for thorn readCSV
- #
-$Header$
+
+private:
+STRING filePath "path of csv file to load"
+{
+	"" ::"path of file can be any string for now"
+} "/home/nesbitt/csvFiles/Magic.csv"
