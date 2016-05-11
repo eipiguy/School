@@ -1,14 +1,31 @@
 /* readCSV ********************************************************************
 
-	Opens the specified csv file and parses the result 
-	character by character into rows of float values.
+	Opens the specified csv file and parses the result character by character
+	as rows of float values with column components.
 
 parameter input:
 	string filePath = directory path of the csv file
 output:
 
 ******************************************************************************/
-/* Pseudocode *****************************************************************
+/* mergeSort ******************************************************************
+
+	A recursive sorting algorithm that splits an array into halves
+	and then reconstructs them. This algorithm is destructive; that is
+	it sorts the array passed to it directly rather than returning a
+	separate one.
+
+input:
+	a = array to sort
+	b = a working buffer of the same size needed for storage
+	pa = integer array to be sorted with "a" for tracking permutations
+	pb = a working buffer for sorting pa along side a
+	i = inclusive (zero index) starting place for sort
+	f = exclusive number of elements from each array to sort (last index+1)
+output:
+
+******************************************************************************/
+/* readCSV Pseudocode *********************************************************
 ####
 Initialization:
 	====
@@ -26,9 +43,11 @@ Main Code:
 			~~~~
 			Min/Max Check:
 			~~~~
+			Sort & Delta Check:
 			~~~~
-			Update Grid:
+			Display Stats:
 			~~~~
+			Cleanup:
 		----
 		Newline Procedure:
 			~~~~
@@ -48,6 +67,19 @@ Main Code:
 	++++
 ####
 ******************************************************************************/
+/* mergeSort Pseudocode *******************************************************
+####
+Main Code:
+	====
+	Terminating Case:
+	====
+	Non-Terminating Case:
+	====
+	Reconstruction:
+####
+******************************************************************************/
+
+/* readCSV *******************************************************************/
 // Initialization: ############################################################
 
 #include "cctk.h"
@@ -91,8 +123,6 @@ void readCSV(CCTK_ARGUMENTS)
 
 		int tokenCounter = 0,	// Counts the current token in the row.
 			charCounter = 0,	// Counts the current character in the token.
-			avgTokenLength = 0,	// Counts the average token length to 
-								// preallocate memory efficiently.
 			columns=0,			// Counts the number of columns, or components,
 								// which should be constant for all the data.
 			rows=0;				// Counts the number of entries in the matrix.
@@ -180,9 +210,7 @@ void readCSV(CCTK_ARGUMENTS)
 					// read the token as a float, 
 					// and copy it into the matrixBuffer.
 					matrixBuffer[tokenCounter] = strtof(tokenBuffer, NULL);
-				}					
-
-				tokenCounter++;		// Increase the token counter.
+				}
 
 				// If the stride hasn't been set, do so.
 				if (strideFlag) {
@@ -222,47 +250,113 @@ void readCSV(CCTK_ARGUMENTS)
 // Min/Max Check: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 					// If the token is smaller/larger than the local Min/Max,
-					// update the Min/Max according to column number
+					// update the Min/Max according to column number.
 
-					// The first row is used for the initial values
+					// The first row is used for the initial values.
 					localMin[columns - 1] = matrixBuffer[columns - 1];
 					localMax[columns - 1] = matrixBuffer[columns - 1];
 
 				}
 				else {
+					// Check if the value is the new minimum for the column.
 					if (localMin[columns - 1]
 								> matrixBuffer[columns - 1]) {
 						localMin[columns - 1]
 							= matrixBuffer[columns - 1];
 					}
-
-					if (localMax[columns - 1]
+					// Check if the value is the new maximum for the column.
+					else if (localMax[columns - 1]
 						< matrixBuffer[columns - 1]) {
 						localMax[columns - 1]
 							= matrixBuffer[columns - 1];
 					}
 				}
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-				// Set the number of rows of data
+				// Set the number of rows of data.
 				rows = tokenCounter / columns;
 
-				// Display final results for Min/Max of each column
-				for (int i = 0; i < columns; i++) {
-					CCTK_VInfo(CCTK_THORNSTRING,
-						"Column(%d): Min = %f, Max = %f\n",
-						i, localMin[i], localMax[i]);
+// Sort & Delta Check:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+				
+				// We need transpose integer arrays to track the permutations
+				// of each column individually and serve as output space.
+				int* seq = (int*)malloc(rows*sizeof(int));
+				int* perm = (int*)malloc(rows*sizeof(int));
+				
+				for (int i = 0; i < rows; i++) {
+					// The extra row of the array is the indexing sequence
+					// used as a baseline for the sorting algorithm.
+					seq[i] = i;
 				}
 
-// Update Grid: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				
-				// set up the spacing between each coordinate
-				// to be half the minimum distance between each 
-				// of the points' coordinates
-	
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+				// Also we need float arrays to store each column to be sorted.
+				float* col = (float*)malloc(rows*sizeof(float));
+				float* sorted = (float*)malloc(rows*sizeof(float));
 
+				// Copy each column into a working array and sort.
+				for (int j = (columns-1); j >= 0; j--) {
+
+					for (int i = 0; i < rows; i++) {
+						col[i] = matrixBuffer[(columns*i) + j];
+					}
+
+					mergeSort(col, sorted, seq, perm, 0, rows);
+					
+					// After each column is sorted, 
+					// resort the entire matrixBuffer column by column
+					// using the resulting permutation.
+					for (int j2 = 0; j2 < columns; j2++) {
+
+						// Copy each column into the working matrix
+						for (int i = 0; i < rows; i++) {
+							sorted[i] = matrixBuffer[(columns*i) + j2];
+						}
+
+						// Search for the smallest difference 
+						localDelta[j] = col[1] - col[0];
+						for (int i = 1; i < rows; i++) {
+							if (localDelta[j] > col[i] - col[i - 1]) {
+								localDelta[j] = col[i] - col[i - 1];
+							}
+						}
+
+						// Replace the entry with the permuted one
+						for (int i = 0; i < rows; i++) {
+							matrixBuffer[(columns*i) + j2] = sorted[seq[i]];
+							seq[i] = i;
+						}
+					}
+				}
+
+// Diplay Stats: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+				// Display final results of sort for first & last columns.
+				
+				CCTK_INFO("First & Last Column:\n");
+				for (int i = 0; i < rows; i++) {
+					CCTK_VInfo(CCTK_THORNSTRING,
+						"Row %d: %f, %f",
+						i+1,matrixBuffer[(columns*i)], matrixBuffer[(columns*i) + columns - 1]);
+				}
+
+				// Display number of rows and columns.
+				CCTK_VInfo(CCTK_THORNSTRING,
+					"%d Rows, %d Columns\n", rows, columns);
+
+				// Display final results for Min/Max of each column.
+				for (int i = 0; i < columns; i++) {
+					CCTK_VInfo(CCTK_THORNSTRING,
+						"Column %d: Min = %f, Max = %f, minDelta = %f\n",
+						i+1, localMin[i], localMax[i],localDelta[i]);
+				}
+
+// Cleanup: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+				free(sorted);			// Destroy the sorting arrays.
+				free(col);
+				free(perm);
+				free(localMin);			// Destroy the local Stats
+				free(localMax);	
+				free(localDelta);
 				free(tokenBuffer);		// Destroy the tokenBuffer,
 				free(matrixBuffer);		// the row buffer,
 				fclose(file);			// and close the file.
@@ -333,24 +427,27 @@ void readCSV(CCTK_ARGUMENTS)
 
 // Min/Max Check: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-					// Assign them their initial values
-					// for the first row of data.
+					// The first row is used for the initial values.
 					localMin[columns-1]	= matrixBuffer[columns - 1];
 					localMax[columns - 1] = matrixBuffer[columns - 1];
 
 				}else {
+					// Check to make sure each row has
+					// the same length as the first one (constant #columns).
 					if (((tokenCounter+1)%columns) != 0) {
 						CCTK_VWarn(CCTK_WARN_ALERT, __LINE__, __FILE__,
 							CCTK_THORNSTRING,
 							"Stride mismatch in line '%d'.\n",
 							(tokenCounter+1)/ columns);
 					}
+					// Check if the value is the new minimum for the column.
 					if (localMin[columns - 1]
 							> matrixBuffer[tokenCounter]) {
 						localMin[columns - 1]
 							= matrixBuffer[tokenCounter];
 					}
-					if (localMax[columns - 1]
+					// Check if the value is the new maximum for the column.
+					else if (localMax[columns - 1]
 						< matrixBuffer[tokenCounter]) {
 						localMax[columns - 1]
 							= matrixBuffer[tokenCounter];
@@ -437,17 +534,19 @@ void readCSV(CCTK_ARGUMENTS)
 						}
 					}
 
-					// Assign the first row of values for localMin/Max
+					// The first row is used for the initial values.
 					localMin[tokenCounter] = matrixBuffer[tokenCounter];
 					localMax[tokenCounter] = matrixBuffer[tokenCounter];
 
 				}else {
+					// Check if the value is the new minimum for the column.
 					if (localMin[tokenCounter%columns]
 							> matrixBuffer[tokenCounter]) {
 						localMin[tokenCounter%columns]
 							= matrixBuffer[tokenCounter];
 					}
-					if (localMax[tokenCounter%columns]
+					// Check if the value is the new maximum for the column.
+					else if (localMax[tokenCounter%columns]
 							< matrixBuffer[tokenCounter]) {
 						localMax[tokenCounter%columns]
 							= matrixBuffer[tokenCounter];
@@ -551,4 +650,49 @@ void readCSV(CCTK_ARGUMENTS)
 
 }
 
+//#############################################################################
+
+/* mergeSort *****************************************************************/
+// Main Code: #################################################################
+
+void mergeSort(float* a, float* b, int* pa,int* pb,int i,int f) {
+	
+// Terminating Case: ==========================================================
+
+	// If the matrix is one element long, then return.
+	if ((f - i) < 2) { return; }
+
+// Non-Terminating Case: ======================================================
+
+	// If the matrix is longer than one element,
+	// call it in two segments from the middle recursively.
+	int m = (i + f) / 2;
+	mergeSort(a, b, pa, pb, i, m);	// First half
+	mergeSort(a, b, pa, pb, m, f);	// Second half
+
+// Reconstruction: ============================================================
+	
+	// Once the pieces are broken up
+	// then we repiece them back together in sections
+	int it = i, mt = m;
+	
+	// Run through the output matrix and populate it 
+	// with the smallest of each section's leading elements in order.
+	for (int j = i; j < f; j++) {
+		if (it < m && (mt >= f || a[it] < a[mt])) {
+			b[j] = a[it];
+			pb[j] = pa[it];
+			it = it++;
+		}
+		else {
+			b[j] = a[mt];
+			pb[j] = pa[mt];
+			mt = mt++;
+		}
+	}
+	for (int j = i; j < f; j++) {
+		a[j] = b[j];
+		pa[j] = pb[j];
+	}
+}
 //#############################################################################
