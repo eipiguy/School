@@ -258,10 +258,9 @@ void readCSV(CCTK_ARGUMENTS)
 // Update Grid: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				
 				// set up the spacing between each coordinate
-				// to be the difference of the distances
-				// between the coordinate of the points
-				// and each boundary for the local grid
-				
+				// to be half the minimum distance between each 
+				// of the points' coordinates
+	
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 				free(tokenBuffer);		// Destroy the tokenBuffer,

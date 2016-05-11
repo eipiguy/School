@@ -1,9 +1,15 @@
 Cactus Code Thorn readCSV
+
 Author(s)    : Neal Nesbitt <NesbittN6830@uhcl.edu>
+
 Maintainer(s): Neal Nesbitt <NesbittN6830@uhcl.edu>
+
 Licence      : Reference Your Sources
+
 --------------------------------------------------------------------------
+
 
 1. Purpose
 
-not documented
+
+Read a comma separated value file containing the location of scalar or vector quantities into a grid function.
