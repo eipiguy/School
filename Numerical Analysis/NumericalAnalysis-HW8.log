@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.23)  30 MAR 2016 22:23
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.5.9)  14 JUN 2016 01:14
 entering extended mode
 **NumericalAnalysis-HW8.tex
 
@@ -297,8 +297,8 @@ Overfull \hbox (43.33371pt too wide) in paragraph at lines 424--424
 8.aux") ) 
 Here is how much of TeX's memory you used:
  3599 strings out of 493921
- 47904 string characters out of 3147285
- 161556 words of memory out of 3000000
+ 47904 string characters out of 3147286
+ 161555 words of memory out of 3000000
  6864 multiletter control sequences out of 15000+200000
  11210 words of font info for 44 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -313,7 +313,7 @@ ublic/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
 fonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
 
-Output written on NumericalAnalysis-HW8.pdf (5 pages, 141246 bytes).
+Output written on NumericalAnalysis-HW8.pdf (5 pages, 140923 bytes).
 PDF statistics:
  59 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

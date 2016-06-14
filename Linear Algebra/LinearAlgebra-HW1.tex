@@ -1,0 +1,314 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Linear Algebra HW1\\
+Exercises 1, 9, 12, 18, 61, 70, 87, 104, 117}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{solution}{Solution}[problem]
+\renewcommand{\thesolution}{\theproblem}
+
+\begin{problem}
+Let $F$ be a field and let $G = F \times F$. Define operations of addition and multiplication on $G$ by setting $(a,b) + (c,d) = (a+b,c+d)$ and $(a,b)\cdot (c,d) = (ac,bd)$. Do these operations define the structure of a field on $G$?
+\end{problem}
+
+\begin{solution}
+These operations do not define a field on $G$.
+\begin{proof}
+Let $F$ and $(G,+,\cdot)$ be defined as above. Then for any $[a \ne 0] \in F$, $\left[(a,0) \ne (0,0)\right] \in G$ has no inverse in $G$, since $0$ has no inverse in $F$, and multiplication in $G$ is done component-wise.\\
+\\
+Thus $(G,+,\cdot)$ does not have inverses for every non-identity element, and is not a field.
+\end{proof}
+\end{solution}
+
+\setcounter{problem}{8}
+\begin{problem}
+Let $F$ be a field and define a new operation $\star$ on $F$ by setting $a \star b = a + b + ab$. When is $(F, +, \star)$ a field?
+\end{problem}
+
+\begin{solution}
+Let $(F, +, \star)$ be defined as above, and notice the following:
+
+\paragraph{Inverses}
+Check the form of the inverse of any $a \in F$
+\begin{align*}
+a \star a^{-1} &= u \\
+a + a^{-1} + aa^{-1} &= 0 \\
+(1+a)a^{-1} &= -a \\
+a^{-1} &= \frac{-a}{1+a}
+\end{align*}
+This inverse solution is only valid for $a \ne -1$, and thus $F$ is cannot be a field since there is a non-identity element (namely $-1$) without an inverse.
+
+\paragraph{Distributivity}
+Moreover we can see that $\star$ does not distribute across addition for any $a,b,c \in F$:
+\begin{align*}
+a \star (b+c) &= \boxed{a + b + c + ab + ac} \\
+(a \star b) + (a \star c) &= (a + b + ab) + (a + c + ac) \\
+&= \boxed{2a + b + c + ab + ac}
+\end{align*}
+meaning that $a=1$ is the only element that distributes.
+\end{solution}
+
+\setcounter{problem}{11}
+\begin{problem}
+Let $F$ be a field. Show that the function $a \mapsto a^{-1}$ is a permutation of $F \backslash \{0_{F}\}$
+\end{problem}
+
+\begin{solution}
+\begin{proof}
+Let the notation be as above. A permutation is a function that is bijective and closed. Since every non-identity element has an inverse, then $F \backslash \{0_{F}\}$ will be closed under the inverse function.
+
+So it remains to verify bijectivity. Since every non-identity element in $F$ has an inverse, then the function must be surjective (onto) in $F \backslash \{0_{F}\}$, and since no two elements have the same inverse (inverses are unique), then the function is injective (one-to-one) in $F \backslash \{0_{F}\}$ as well. This shows together that the inverse function is bijective and, with closure, a permutation on $F \backslash \{0_{F}\}$.
+\end{proof}
+\end{solution}
+
+\setcounter{problem}{17}
+\begin{problem}
+Show that for all $z \in \mathbb{C}$, $|z+1| \le |z+1|^{2} + |z|$.
+\end{problem}
+
+\begin{solution}
+\begin{proof}
+Let $z \in \mathbb{C}$. Then by the triangle inequality and the fact that $0\le |z|$:
+\begin{align*}
+1 = |1 + z - z| &\le |z+1| + |z| \\
+\left( |z+1| - |z| \right) &\le \left( |z+1| + |z| \right) \left( |z+1| - |z| \right) \\
+|z+1| - |z| &\le |z+1|^{2} - |z|^{2} \\
+|z+1| + |z|^{2} &\le |z+1|^{2} + |z| \\
+|z+1| &\le |z+1|^{2} + |z| \\
+\end{align*}
+\end{proof}
+\end{solution}
+
+\setcounter{problem}{60}
+\begin{problem}
+Let $V$ be a non-trivial vector space over $\mathbb{R}$. For each $v \in V$ and each complex number $a + bi$, let us define $(a+bi)v = av$. Does $V$, together with this new scalar multiplication, form a vector space over $\mathbb{C}$.
+\end{problem}
+
+\begin{solution}
+The construction above does not form a vector space over $\mathbb{C}$.
+\begin{proof}
+Let the notation be as above, and let $(a+bi),(c+di) \in \mathbb{C}$ and $v \in V$. Then if we check the associativity of vector multiplication we find:
+\begin{align*}
+\left[(a+bi)(c+di)\right]v &= \left( (ac-bd) + (ad+bc)i \right)v = (ac-bd)v\\
+(a+bi)\left[(c+di)\right]v &= (a+bi)[cv] = acv
+\end{align*}
+which means that only real numbers associate with scalar multiplication, and this construction does not form a vector space over $\mathbb{C}$.
+\end{proof}
+\end{solution}
+
+\setcounter{problem}{69}
+\begin{problem}
+Show that $\mathbb{Z}$ is not a vector space over any field.
+\end{problem}
+
+\begin{solution}
+\begin{proof}
+Let $F$ be a field, and assume by way of contradiction that $\mathbb{Z}$ forms a vector space over $F$.
+
+Then if we pick $a \in F$ such that $a1>1$ (without loss of generality since $[a1<1]\to [1<a^{-1}1]$).
+Since $\forall a\in F$, $1_{F}=a^{-1}a$, $0=a0$, and $1 = 1_{F}1$, then
+\begin{align*}
+a1 &> 1_{F}1 > 0	\\
+a1 &> a^{-1}a1 > a0	\\
+1 &> a^{-1}1 > 0
+\end{align*}
+but there is no integer between zero and one. Therefore $a^{-1}1 \notin \mathbb{Z}$ and is thus not in the vector space, contradicting the need for closure under scalar multiplication. Since $F$ was arbitrary, $\mathbb{Z}$ cannot form a vector space over any $F$.
+\end{proof}
+\end{solution}
+
+\setcounter{problem}{86}
+\begin{problem}
+Let $F$ be a field, and let $V=F^{F}$, which is a vector space over $F$.
+
+\paragraph{}
+Let $W$ be the set of all functions $f\in V$ such that $f(1)=f(-1)$. Is $W$ a subspace of $V$?
+\end{problem}
+
+\begin{solution}
+Let the notation be as above. $W$ is a subspace of $V$. To check its validity we verify its closure under addition and scalar multiplication for all $v,w \in W$ and $a \in F$.
+
+\paragraph{Addition}
+Since $v(1)=v(-1)$ and $w(1)=w(-1)$, then $(v+w)(1)=v(1)+w(1)=v(-1)+w(-1)=(v+w)(-1)$, showing $W$ is closed under vector addition.
+
+\paragraph{Scalar Multiplication}
+Since $v(1)=v(-1)$, then $av(1)=av(-1)$, showing $W$ is closed under scalar multiplication, and is thus a vector space as constructed above.
+\end{solution}
+
+\setcounter{problem}{103}
+\begin{problem}
+Find subspaces $W$ and $Y$ of $\mathbb{R}^{3}$ having the property that $W\cup Y$ is not a subspace of $\mathbb{R}^{3}$.
+\end{problem}
+
+\begin{solution}
+Let $W\subset\mathbb{R}^{3}$ be the x-y plane, and let $W\subset\mathbb{R}^{3}$ be the x-z plane. Then both are subspaces individually since they are equivalent to $\mathbb{R}^{2}$, but if we take a non-identity vector from each, their sum will not be in either one of the planes.
+\end{solution}
+
+\setcounter{problem}{116}
+\begin{problem}
+Define $\cdot$ on $\mathbb{R}^{2}$ such that for any $\begin{bmatrix}
+a \\
+b
+\end{bmatrix},
+\begin{bmatrix}
+c \\
+d
+\end{bmatrix}
+\in \mathbb{R}^{2}$
+\[
+\begin{bmatrix}
+a \\
+b
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+c \\
+d
+\end{bmatrix}
+=
+\begin{bmatrix}
+2ac-bd	\\
+ad + bc
+\end{bmatrix}
+\]
+
+Show this definition of vector multiplication makes $\mathbb{R}^{2}$ an $\mathbb{R}$-algebra.
+\end{problem}
+
+\begin{solution}
+Let the notation be as given. Then to verify the $\mathbb{R}$-algebra we must check that the vector multiplication distributes across vector addition, and that it associates with scalar multiplication.
+
+So let $u=(u_{1},u_{2}),v=(v_{1},v_{2}),w=(w_{1},w_{2}) \in \mathbb{R}^{2}$ and $a \in \mathbb{R}$.
+
+\paragraph{Distributivity}
+\begin{align*}
+u\cdot(v+w) &=
+\begin{bmatrix}
+u_{1}	\\
+u_{2}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+v_{1}+w_{1}	\\
+v_{2}+w_{2}
+\end{bmatrix}
+\\
+&=
+\begin{bmatrix}
+2u_{1}(v_{1}+w_{1}) - u_{2}(v_{2}+w_{2})	\\
+u_{1}(v_{2}+w_{2}) + u_{2}(v_{1}+w_{1})
+\end{bmatrix}
+\\
+&=
+\begin{bmatrix}
+2u_{1}v_{1} - u_{2}v_{2}	\\
+u_{1}v_{2} + u_{2}v_{2}
+\end{bmatrix}
++
+\begin{bmatrix}
+2u_{1}w_{1} - u_{2}w_{2}	\\
+u_{1}w_{2} + u_{2}w_{1}
+\end{bmatrix}
+\\
+&=
+\left(
+\begin{bmatrix}
+u_{1}	\\
+u_{2}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+v_{1}	\\
+v_{2}
+\end{bmatrix}
+\right)
++
+\left(
+\begin{bmatrix}
+u_{1}	\\
+u_{2}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+w_{1}	\\
+w_{2}
+\end{bmatrix}
+\right)
+\\
+&= (u\cdot v)+(u\cdot w)
+\end{align*}
+
+And since 
+\[ 
+\begin{bmatrix}
+u_{1}	\\
+u_{2}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+v_{1}	\\
+v_{2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+2u_{1}v_{1} - u_{2}v_{2}	\\
+u_{1}v_{2} + u_{2}v_{1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+2v_{1}u_{1} - v_{2}u_{2}	\\
+v_{1}u_{2} + v_{2}u_{1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+v_{1}	\\
+v_{2}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+u_{1}	\\
+u_{2}
+\end{bmatrix}
+\]
+Then vector multiplication is commutative, and vector multiplication distributes over vector addition from the left or the right:
+\begin{align*}
+u\cdot(v+w) &= (u\cdot v) + (u\cdot w)	\\
+(v+w)\cdot u &= (v\cdot u) + (w\cdot u)
+\end{align*}
+
+\paragraph{Associativity}
+\begin{align*}
+a(u\cdot v) &= a
+\begin{bmatrix}
+2u_{1}v_{1} - u_{2}v_{2}	\\
+u_{1}v_{2} + u_{2}v_{1}
+\end{bmatrix}
+\\
+&= 
+\begin{bmatrix}
+a(2u_{1}v_{1} - u_{2}v_{2})	\\
+a(u_{1}v_{2} + u_{2}v_{1})
+\end{bmatrix}
+\\
+&= a
+\begin{bmatrix}
+2au_{1}v_{1} - au_{2}v_{2}	\\
+au_{1}v_{2} + au_{2}v_{1}
+\end{bmatrix}
+\\
+&= (au)\cdot v
+\end{align*}
+And thus vector multiplication associates properly, and with the distribution property above this verifies $\mathbb{R}^{2}$ as an $\mathbb{R}$-algebra.
+\end{solution}
+
+\end{document}
