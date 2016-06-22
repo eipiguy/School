@@ -39,24 +39,21 @@ Let $F$ be a field and define a new operation $\star$ on $F$ by setting $a \star
 \begin{solution}
 Let $(F, +, \star)$ be defined as above, and notice the following:
 
-\paragraph{Inverses}
-Check the form of the inverse of any $a \in F$
-\begin{align*}
-a \star a^{-1} &= u \\
-a + a^{-1} + aa^{-1} &= 0 \\
-(1+a)a^{-1} &= -a \\
-a^{-1} &= \frac{-a}{1+a}
-\end{align*}
-This inverse solution is only valid for $a \ne -1$, and thus $F$ is cannot be a field since there is a non-identity element (namely $-1$) without an inverse.
-
 \paragraph{Distributivity}
-Moreover we can see that $\star$ does not distribute across addition for any $a,b,c \in F$:
+$\star$ does not distribute across addition for any $a,b,c \in F$.
 \begin{align*}
 a \star (b+c) &= \boxed{a + b + c + ab + ac} \\
 (a \star b) + (a \star c) &= (a + b + ab) + (a + c + ac) \\
-&= \boxed{2a + b + c + ab + ac}
+&= \boxed{2a + b + c + ab + ac}\\
 \end{align*}
-meaning that $a=1$ is the only element that distributes.
+Meaning that $a=0$ is the only element that distributes:
+\begin{align*}
+a \star (b+c) &= (a \star b) + (a \star c) \\
+a + b + c + ab + ac &= 2a + b + c + ab + ac \\
+a &= 2a \\
+0 &= a
+\end{align*}
+Thus $F$ is only a field in the trivial case where $F=\{0\}$.
 \end{solution}
 
 \setcounter{problem}{11}
@@ -79,7 +76,18 @@ Show that for all $z \in \mathbb{C}$, $|z+1| \le |z+1|^{2} + |z|$.
 
 \begin{solution}
 \begin{proof}
-Let $z \in \mathbb{C}$. Then by the triangle inequality and the fact that $0\le |z|$:
+Let $z \in \mathbb{C}$. Note that for any $w\in\mathbb{C}$, $0\le |w|$. Consider the following cases: 
+
+\paragraph{}
+If $|z+1|\le |z|$, then 
+\begin{align*}
+|z+1| - |z| &\le 0 \le |z+1|^{2} \\
+|z+1| &\le |z+1|^{2} + |z|
+\end{align*}
+and we are finished.
+
+\paragraph{}
+So instead assume that $|z+1| > |z|$, so that $|z+1| - |z| > 0$. Then by the triangle inequality,
 \begin{align*}
 1 = |1 + z - z| &\le |z+1| + |z| \\
 \left( |z+1| - |z| \right) &\le \left( |z+1| + |z| \right) \left( |z+1| - |z| \right) \\
@@ -87,12 +95,13 @@ Let $z \in \mathbb{C}$. Then by the triangle inequality and the fact that $0\le 
 |z+1| + |z|^{2} &\le |z+1|^{2} + |z| \\
 |z+1| &\le |z+1|^{2} + |z| \\
 \end{align*}
+and again we have reached our desired result.
 \end{proof}
 \end{solution}
 
 \setcounter{problem}{60}
 \begin{problem}
-Let $V$ be a non-trivial vector space over $\mathbb{R}$. For each $v \in V$ and each complex number $a + bi$, let us define $(a+bi)v = av$. Does $V$, together with this new scalar multiplication, form a vector space over $\mathbb{C}$.
+Let $V$ be a non-trivial vector space over $\mathbb{R}$. For each $v \in V$ and each complex number $a + bi$, let us define $(a+bi)v = av$. Does $V$, together with this new scalar multiplication, form a vector space over $\mathbb{C}$?
 \end{problem}
 
 \begin{solution}
@@ -151,7 +160,7 @@ Find subspaces $W$ and $Y$ of $\mathbb{R}^{3}$ having the property that $W\cup Y
 \end{problem}
 
 \begin{solution}
-Let $W\subset\mathbb{R}^{3}$ be the x-y plane, and let $W\subset\mathbb{R}^{3}$ be the x-z plane. Then both are subspaces individually since they are equivalent to $\mathbb{R}^{2}$, but if we take a non-identity vector from each, their sum will not be in either one of the planes.
+Let $W\subset\mathbb{R}^{3}$ be the x-y plane, and let $W\subset\mathbb{R}^{3}$ be the x-z plane. Then both are subspaces individually since they are equivalent to $\mathbb{R}^{2}$, but if we take a non-identity vector from each, their sum will not be in either one of the planes. For example $(1,1,0) + (0,1,1) = (1,2,1)$ which is not on either of the planes.
 \end{solution}
 
 \setcounter{problem}{116}

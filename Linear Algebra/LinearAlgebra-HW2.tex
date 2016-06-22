@@ -1,0 +1,671 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Linear Algebra HW2\\
+Exercises 169, 185, 187, 202, 205, 214, 232, 234}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}[section]
+\newtheorem{solution}{Solution}[problem]
+\renewcommand{\thesolution}{\theproblem}
+
+\setcounter{section}{5}
+\setcounter{problem}{168}
+\begin{problem}
+Let $F$ be a field of characteristic different from 2 and let $V$ be  a vector space over $F$ containing a linearly independent subset $\{ v_{1}, v_{2}, v_{3} \}$. Show that the set $\{ v_{1}+v_{2}, v_{2}+v_{3}, v_{1}+v_{3} \}$ is also linearly independent.
+\end{problem}
+
+\begin{solution}
+\begin{proof}
+Let our notation be as above, and assume by way of contradiction that $\{ v_{1}+v_{2}, v_{2}+v_{3}, v_{1}+v_{3} \}$ is not linearly independent. Then it is linearly dependent, and there are some $a_{1},a_{2},a_{3} \in F$ such that $a_{1} \ne 0, a_{2} \ne 0, a_{3} \ne 0$ and:
+\[ a_{1}( v_{1}+v_{2} ) +a_{2}( v_{2}+v_{3} ) +a_{3}( v_{1}+v_{3} ) = 0 \]
+
+\paragraph{}
+Now distribute the scalars over the vectors and use commutativity to reorder them. If we recollect the vectors as instead distributed over the scalars, we find:
+\begin{align*} 
+a_{1}( v_{1}+v_{2} ) +a_{2}( v_{2}+v_{3} ) +a_{3}( v_{1}+v_{3} ) &= 0 \\
+a_{1}v_{1} +a_{1}v_{2} +a_{2}v_{2} +a_{2}v_{3} +a_{3}v_{1} +a_{3}v_{3} &= 0 \\
+a_{1}v_{1} +a_{3}v_{1} +a_{1}v_{2} +a_{2}v_{2} +a_{2}v_{3} +a_{3}v_{3} &= 0 \\
+( a_{1}+a_{3} )v_{1} +( a_{1}+a_{2} )v_{2} +( a_{2}+a_{3} )v_{3} &= 0 \\
+\end{align*}
+
+\paragraph{}
+Since we know $F$ is not of characteristic two, and each $a$ is non-zero, then $a_{1}+a_{3} \ne 0, a_{1}+a_{2} \ne 0, a_{2}+a_{3} \ne 0$ also, showing $\{ v_{1}, v_{2}, v_{3} \}$ must be linearly dependent.
+
+\paragraph{}
+This contradicts our assumption that $\{ v_{1}, v_{2}, v_{3} \}$ is linearly independent. So our assumption that $\{ v_{1}+v_{2}, v_{2}+v_{3}, v_{1}+v_{3} \}$ is linearly dependent must be wrong, and it must instead be linearly independent as desired.
+\end{proof}
+\end{solution}
+
+\setcounter{problem}{184}
+\begin{problem}
+Let $\{ v_{1}, \cdots, v_{n} \}$ be a basis for a vector space $V$ over a field $F$. Is the set $\{ v_{1}+v_{2}, v_{2}+v_{3}, \cdots, v_{n-1}+v_{n}, v_{n}+v_{1} \}$ necessarily also a basis for $V$ over $F$?
+\end{problem}
+
+\begin{solution}
+No, this is not always the case.
+
+\begin{proof}
+Take $F$ to be a field of characteristic 2, and let $\{ v_{1}, \cdots, v_{n} \}$ be a basis for a vector space $V$ over $F$. Then take $a \in F$ such that $a\ne 0$. Since every basis is linearly independent,
+\[ \sum_{i=1}^{n} av_{i} \ne 0 \]
+Now notice how this vector added to itself is a linear combination of $\{ v_{1}+v_{2}, v_{2}+v_{3}, \cdots, v_{n-1}+v_{n}, v_{n}+v_{1} \}$.
+\begin{align*}
+\sum_{i=1}^{n} av_{i} + \sum_{i=1}^{n} av_{i} &= a\left( \sum_{i=1}^{n} v_{i} +\sum_{i=1}^{n} v_{i} \right)\\
+&=  a\left( v_{1} +\sum_{i=2}^{n} v_{i} +\sum_{i=1}^{n-1} v_{i} +v_{n} \right)\\
+&= a\left( v_{1} +\sum_{i=1}^{n-1} v_{i+1} +\sum_{i=1}^{n-1} v_{i} +v_{n} \right)\\
+&= a\left( v_{1} +\sum_{i=1}^{n-1} ( v_{i+1} +v_{i} ) +v_{n} \right)\\
+&= a\left( \sum_{i=1}^{n-1} ( v_{i} +v_{i+1} ) +(v_{1}+v_{n}) \right)\\
+\sum_{i=1}^{n} av_{i} + \sum_{i=1}^{n} av_{i} &= \sum_{i=1}^{n-1} a( v_{i} +v_{i+1} ) +a(v_{1}+v_{n})
+\end{align*}
+
+\paragraph{}
+But since $F$ is of characteristic 2, 
+\[ \sum_{i=1}^{n} av_{i} + \sum_{i=1}^{n} av_{i} = (a+a)\sum_{i=1}^{n} v_{i} = a(1+1)\sum_{i=1}^{n} v_{i} = 0 \sum_{i=1}^{n} v_{i} = 0\]
+Then we must also have that
+\[  \sum_{i=1}^{n-1} a( v_{i} +v_{i+1} ) +a(v_{1}+v_{n}) = 0 \]
+showing $\{ v_{1}+v_{2}, v_{2}+v_{3}, \cdots, v_{n-1}+v_{n}, v_{n}+v_{1} \}$ is not linearly independent, and therefore cannot be a basis. This shows that not every set of the given type constitutes a basis of the original vector space.
+\end{proof}
+\end{solution}
+
+\setcounter{problem}{186}
+\begin{problem}
+For which values of $a \in \mathbb{R}$ is the set
+\[
+\left\{
+\begin{bmatrix}
+a	&	2a	\\
+2	&	3a
+\end{bmatrix}
+,
+\begin{bmatrix}
+1	&	2	\\
+2a	&	3
+\end{bmatrix}
+,
+\begin{bmatrix}
+1	&	2a	\\
+a+1	&	a+2
+\end{bmatrix}
+,
+\begin{bmatrix}
+1	&	a+1	\\
+2	&	2a+1
+\end{bmatrix}
+\right\}
+\]
+a basis for $\mathcal{M}_{2\times 2}\left( \mathbb{R} \right)$ as a vector space over $\mathbb{R}$?
+\end{problem}
+
+\begin{solution}
+Let the notation be as above.
+
+\paragraph{}
+A basis is a linearly independent set that spans the space. Since $\mathcal{M}_{2\times 2}\left( \mathbb{R} \right)$ as a vector space over $\mathbb{R}$ has dimension 4, then if the given set is linearly independent it will be a subspace with the same dimension (since the set has 4 elements), and therefore must span the whole space.
+
+\paragraph{}
+So let us consider the conditions on $a$ for which the set is linearly dependent and take the complement.
+
+\paragraph{}
+If the set is linearly dependent, there exist $c_{1},c_{2},c_{3},c_{4} \in \mathbb{R}$ such that $c_{1}\ne 0,c_{2}\ne 0,c_{3}\ne 0,c_{4}\ne 0$. Then 
+\begin{align*}
+c_{1}
+\begin{bmatrix}
+a	&	2a	\\
+2	&	3a
+\end{bmatrix}
++c_{2}
+\begin{bmatrix}
+1	&	2	\\
+2a	&	3
+\end{bmatrix}
++c_{3}
+\begin{bmatrix}
+1	&	2a	\\
+a+1	&	a+2
+\end{bmatrix}
++c_{4}
+\begin{bmatrix}
+1	&	a+1	\\
+2	&	2a+1
+\end{bmatrix}
+&= 0 \\
+c_{1}
+\left(
+a
+\begin{bmatrix}
+1	&	2	\\
+0	&	3
+\end{bmatrix}
++
+\begin{bmatrix}
+0	&	0	\\
+2	&	0
+\end{bmatrix}
+\right)&\\
++c_{2}
+\left(
+a
+\begin{bmatrix}
+0	&	0	\\
+2	&	0
+\end{bmatrix}
++
+\begin{bmatrix}
+1	&	2	\\
+0	&	3
+\end{bmatrix}
+\right)&\\
++c_{3}
+\left(
+a
+\begin{bmatrix}
+0	&	2	\\
+1	&	1
+\end{bmatrix}
++
+\begin{bmatrix}
+1	&	0	\\
+1	&	2
+\end{bmatrix}
+\right)&\\
++c_{4}
+\left(
+a
+\begin{bmatrix}
+0	&	1	\\
+0	&	2
+\end{bmatrix}
++
+\begin{bmatrix}
+1	&	1	\\
+2	&	1
+\end{bmatrix}
+\right) &= 0
+\end{align*}
+
+\begin{multline*}
+a
+\left(
+c_{1}
+\begin{bmatrix}
+1	&	2	\\
+0	&	3
+\end{bmatrix}
++c_{2}
+\begin{bmatrix}
+0	&	0	\\
+2	&	0
+\end{bmatrix}
++c_{3}
+\begin{bmatrix}
+0	&	2	\\
+1	&	1
+\end{bmatrix}
++c_{4}
+\begin{bmatrix}
+0	&	1	\\
+0	&	2
+\end{bmatrix}
+\right)
+=\\
+-
+\left(
+c_{1}
+\begin{bmatrix}
+0	&	0	\\
+2	&	0
+\end{bmatrix}
++c_{2}
+\begin{bmatrix}
+1	&	2	\\
+0	&	3
+\end{bmatrix}
++c_{3}
+\begin{bmatrix}
+1	&	0	\\
+1	&	2
+\end{bmatrix}
++c_{4}
+\begin{bmatrix}
+1	&	1	\\
+2	&	1
+\end{bmatrix}
+\right)
+\end{multline*}
+
+\[
+a \left[
+\begin{array}{c@{} c@{} c@{} c@{}}
+\begin{bmatrix}
+1	&	2	\\
+0	&	3
+\end{bmatrix}
+&
+\begin{bmatrix}
+0	&	0	\\
+2	&	0
+\end{bmatrix}
+&
+\begin{bmatrix}
+0	&	2	\\
+1	&	1
+\end{bmatrix}
+&
+\begin{bmatrix}
+0	&	1	\\
+0	&	2
+\end{bmatrix}
+\end{array}
+\right]
+\begin{bmatrix}
+c_{1}	\\
+c_{2}	\\
+c_{3}	\\
+c_{4}
+\end{bmatrix}
+=\\
+-
+\left[
+\begin{array}{c@{} c@{} c@{} c@{}}
+\begin{bmatrix}
+0	&	0	\\
+2	&	0
+\end{bmatrix}
+&
+\begin{bmatrix}
+1	&	2	\\
+0	&	3
+\end{bmatrix}
+&
+\begin{bmatrix}
+1	&	0	\\
+1	&	2
+\end{bmatrix}
+&
+\begin{bmatrix}
+1	&	1	\\
+2	&	1
+\end{bmatrix}
+\end{array}
+\right]
+\begin{bmatrix}
+c_{1}	\\
+c_{2}	\\
+c_{3}	\\
+c_{4}
+\end{bmatrix}
+\]
+\[
+a \left[
+\begin{array}{c@{} c@{} c@{} c@{}}
+\begin{bmatrix}
+1	&	2	\\
+0	&	3
+\end{bmatrix}
+&
+\begin{bmatrix}
+0	&	0	\\
+2	&	0
+\end{bmatrix}
+&
+\begin{bmatrix}
+0	&	2	\\
+1	&	1
+\end{bmatrix}
+&
+\begin{bmatrix}
+0	&	1	\\
+0	&	2
+\end{bmatrix}
+\end{array}
+\right]
+=\\
+-
+\left[
+\begin{array}{c@{} c@{} c@{} c@{}}
+\begin{bmatrix}
+0	&	0	\\
+2	&	0
+\end{bmatrix}
+&
+\begin{bmatrix}
+1	&	2	\\
+0	&	3
+\end{bmatrix}
+&
+\begin{bmatrix}
+1	&	0	\\
+1	&	2
+\end{bmatrix}
+&
+\begin{bmatrix}
+1	&	1	\\
+2	&	1
+\end{bmatrix}
+\end{array}
+\right]
+\]\\
+but since
+\begin{align*}
+\begin{bmatrix}
+a	&	2a	\\
+0	&	3a
+\end{bmatrix}
+&= \begin{bmatrix}
+0	&	0	\\
+-2	&	0
+\end{bmatrix}\\
+\begin{bmatrix}
+0	&	0	\\
+2a	&	0
+\end{bmatrix}
+&=
+\begin{bmatrix}
+-1	&	-2	\\
+0	&	-3
+\end{bmatrix}\\
+\begin{bmatrix}
+0	&	2a	\\
+a	&	a
+\end{bmatrix}
+&= \begin{bmatrix}
+-1	&	0	\\
+-1	&	-2
+\end{bmatrix}\\
+\begin{bmatrix}
+0	&	a	\\
+0	&	2a
+\end{bmatrix}
+&= \begin{bmatrix}
+-1	&	-1	\\
+-2	&	-1
+\end{bmatrix}
+\end{align*}
+each have no solution for $a \in \mathbb{R}$, (since $0\ne -2, 0\ne -1$, etc \dots) then the row vectors will never be equal, and the set must always be linearly independent. So since it also spans the entire space, it is thus a basis for $\mathcal{M}_{2\times 2}\left( \mathbb{R} \right)$ as a vector space over $\mathbb{R}$, for any $a\in\mathbb{R}$.
+\end{solution}
+
+\setcounter{problem}{201}
+\begin{problem}\label{p202}
+Let $V$ be a vector space of finite dimension $n$ over a field $F$, and let $W$ be a subspace of $V$ of dimension $n-1$. If $U$ is a subspace not contained in $W$, show that $\dim(W\cap U) = \dim(U)-1$.
+\end{problem}
+
+\begin{solution}\begin{proof}
+Let our notation be as above. Since we know that 
+\begin{align*}
+\dim(W\cap U) + \dim(W\cup U)&= \dim(W) +\dim(U)\\
+\dim(V) &= n\\
+\dim(W) &= n-1
+\end{align*}
+
+\paragraph{}
+And since $U\not\subset W\subset V$ and $U\subset V$ implies $\dim(V)\ge\dim(U),\dim(V)\ge\dim(W)$, then $\dim(V) = n \ge \dim(W\cup U) > \dim(W)=n-1$, 
+implying that $\dim(V) = n = \dim(W\cup U)$ since dimensions only take on integer values.
+
+\paragraph{}
+Thus we can substitute our findings into our initial equation to find:
+\begin{align*}
+\dim(W\cap U) &= \dim(W) +\dim(U) -\dim(W\cup U)\\
+\dim(W\cap U) &= (n-1) +\dim(U) -n = \dim(U)-1\\
+\end{align*}
+\end{proof}
+\end{solution}
+
+\setcounter{problem}{204}
+\begin{problem}
+Let \[W = \mathbb{R}
+\left\{
+\begin{bmatrix}
+2\\
+1\\
+3\\
+1
+\end{bmatrix},
+\begin{bmatrix}
+1\\
+2\\
+0\\
+1
+\end{bmatrix},
+\begin{bmatrix}
+-1\\
+1\\
+-3\\
+0
+\end{bmatrix}
+\right\} \subseteq \mathbb{R}
+\]
+Determine the dimension of $W$ and find a basis for it.
+\end{problem}
+
+\begin{solution}
+Let our notation be as above. Since 
+\[
+\begin{bmatrix}
+-1\\
+1\\
+-3\\
+0
+\end{bmatrix}
+=
+\begin{bmatrix}
+1\\
+2\\
+0\\
+1
+\end{bmatrix}
+-
+\begin{bmatrix}
+2\\
+1\\
+3\\
+1
+\end{bmatrix}
+\]
+and for any $a\in \mathbb{R}$
+\[
+a
+\begin{bmatrix}
+1\\
+2\\
+0\\
+1
+\end{bmatrix}
+\ne
+\begin{bmatrix}
+2\\
+1\\
+3\\
+1
+\end{bmatrix}
+\]
+then the set 
+\[
+W \supset V=
+\left\{
+\begin{bmatrix}
+1\\
+2\\
+0\\
+1
+\end{bmatrix}
+,
+\begin{bmatrix}
+2\\
+1\\
+3\\
+1
+\end{bmatrix}
+\right\}
+\]
+is linearly independent, but $W$ is not. Thus $\dim(W) = \dim(V) = 2$ and $V$ serves as a basis for the space.
+\end{solution}
+
+\setcounter{problem}{213}
+\begin{problem}
+Let $V$ be a vector space of finite dimension $n$ over a field $F$ and let $W$ and $Y$ be distinct subspaces of $V$, each of dimension $n-1$. What is $\dim(W\cap Y)$?
+\end{problem}
+
+\begin{solution}
+Let our notation be as above. Since $W$ and $Y$ are distinct, $W\ne Y$, then $\dim(W\cup Y) = n$ since $\dim(V)=n\ge\dim(W\cup Y)>\dim(W)=n-1$, and dimensions only take on integer values.
+
+\paragraph{}
+Then since 
+\begin{align*}
+\dim(W\cap Y) + \dim(W\cup Y) &= \dim(W) + \dim(Y)\\
+\dim(W\cap Y) + n &= 2n-2\\
+\dim(W\cap Y) &= n-2\\
+\end{align*}
+we have found our solution.
+\end{solution}
+
+\setcounter{problem}{231}
+\begin{problem}
+Let $V$ be a vector space over a field $F$ and let $D$ be a finite minimal linearly dependent subset of $V$. Find $\dim(FD)$.
+\end{problem}
+
+\begin{solution}
+Let our notation be as above. Then since $D$ minimal linearly dependent, that means that removing any one element makes it linearly independent, and thus the dimension of $D$ is one less than the number of elements it contains.
+
+\paragraph{}
+So since linear combinations of a field over some subset of vectors in a space produces a subspace,
+$\dim(V)\ge\dim(FD)$ and $\dim(FD) = |D| -1$.
+\end{solution}
+
+\setcounter{section}{6}
+\setcounter{problem}{233}
+\begin{problem}
+Let $\alpha:\mathbb{R}\to\mathbb{R}$ be a linear transformation satisfying $\alpha\left(\begin{bmatrix}
+1\\0\\1
+\end{bmatrix}\right)=\begin{bmatrix}
+-1\\3\\4
+\end{bmatrix}$, $\alpha\left(\begin{bmatrix}
+1\\-1\\1
+\end{bmatrix}\right)=\begin{bmatrix}
+0\\1\\0
+\end{bmatrix}$, and $\alpha\left(\begin{bmatrix}
+1\\2\\-1
+\end{bmatrix}\right)=\begin{bmatrix}
+3\\1\\4
+\end{bmatrix}$. What is $\alpha\left( \begin{bmatrix} 1\\0\\0 \end{bmatrix} \right)$?
+\end{problem}
+
+\begin{solution}
+Since
+\[ 
+\begin{bmatrix}
+1\\
+0\\
+0
+\end{bmatrix}
+=
+\frac{1}{2}
+\left(
+\begin{bmatrix}
+1\\
+2\\
+-1
+\end{bmatrix}
++2
+\begin{bmatrix}
+1\\
+-1\\
+1
+\end{bmatrix}
+-
+\begin{bmatrix}
+1\\
+0\\
+1
+\end{bmatrix}
+\right)
+\]
+then
+\begin{align*}
+\alpha 
+\left(\begin{bmatrix}
+1\\
+0\\
+0
+\end{bmatrix}\right)
+&=
+\frac{1}{2}
+\alpha
+\left(
+\begin{bmatrix}
+1\\
+2\\
+-1
+\end{bmatrix}
++2
+\begin{bmatrix}
+1\\
+-1\\
+1
+\end{bmatrix}
+-
+\begin{bmatrix}
+1\\
+0\\
+1
+\end{bmatrix}
+\right)\\
+&= \frac{1}{2}
+\alpha
+\left(
+\begin{bmatrix}
+1\\
+2\\
+-1
+\end{bmatrix}
+\right)
++\alpha\left(
+\begin{bmatrix}
+1\\
+-1\\
+1
+\end{bmatrix}
+\right)
+-\frac{1}{2}\alpha\left(
+\begin{bmatrix}
+1\\
+0\\
+1
+\end{bmatrix}
+\right)\\
+&= \frac{1}{2}
+\begin{bmatrix}
+3\\
+1\\
+4
+\end{bmatrix}
++
+\begin{bmatrix}
+0\\
+1\\
+0
+\end{bmatrix}
+-\frac{1}{2}
+\begin{bmatrix}
+-1\\
+3\\
+4
+\end{bmatrix}\\
+&=
+\begin{bmatrix}
+2\\
+0\\
+0
+\end{bmatrix}
+\end{align*}
+\end{solution}
+
+\end{document}
