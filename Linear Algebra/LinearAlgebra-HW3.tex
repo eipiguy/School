@@ -1,0 +1,49 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Linear Algebra HW3\\
+Exercises 262, 269, 277, 320, 321, 379, 385, 387, 421, 431}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}[section]
+\newtheorem{solution}{Solution}[problem]
+\renewcommand{\thesolution}{\theproblem}
+
+\setcounter{section}{6}
+\setcounter{problem}{261}
+\begin{problem}
+Let $V$ and $W$ be vector spaces over a field $F$. Let $\alpha \in \text{Hom}(V,W)$ and $\beta \in \text{Hom}(W,V)$ satisfy the condition that $\alpha\beta\alpha = \alpha$. If $w \in \text{im}(\alpha)$, show that $\alpha^{-1}(w) = \{ \beta(w) +v -\beta\alpha(v) \vert v \in V \}$
+\end{problem}
+
+\begin{solution}
+Let our notation be as above, $w \in \text{im}(\alpha)$, and recall that $\alpha^{-1}(w) = \{ v \in V \vert \alpha(v) = w \}$.
+
+\paragraph{}
+Assume $x \in \{ \beta(w) +v -\beta\alpha(v) \vert v \in V \}$ and notice that $\{ \beta(w) +v -\beta\alpha(v) \vert v \in V \} \subset V$. Then there is some $v \in V$ such that $x = \beta(w) +v -\beta\alpha(v)$. Since $w\in\text{im}(\alpha)$ there is also some $v\prime \in V$ such that $\alpha(v\prime) = w$. Then by applying $\alpha$, using its linearity, and its listed property we find
+
+\begin{align*}
+\alpha(x) &= \alpha(\beta(w) +v -\beta\alpha(v))\\
+\alpha(x) &= \alpha(\beta\alpha(v\prime) +v -\beta\alpha(v))\\
+\alpha(x) &= \alpha\beta\alpha(v\prime) +\alpha(v) -\alpha\beta\alpha(v)\\
+\alpha(x) &= \alpha(v\prime) +\alpha(v) -\alpha(v)\\
+\alpha(x) &= \alpha(v\prime)\\
+\alpha(x) -\alpha(v\prime) &= 0\\
+\alpha(x -v\prime) &= 0
+\end{align*}
+showing that $x -v\prime$ is in the kernel of $\alpha$. Then by Proposition 6.6 on pg 96, and the fact that $v\prime \in \alpha^{-1}(w)$, we have that $(x -v\prime) +v\prime = x \in \alpha^{-1}(w)$
+
+\paragraph{}
+Now assume instead that $y \in \alpha^{-1}(w) = \{ v \in V \vert \alpha(v) = w \}$. Then for some $w \in W$, $\alpha(y) = w$.
+
+\end{solution}
+
+\end{document}
