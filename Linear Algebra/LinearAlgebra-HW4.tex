@@ -1,0 +1,483 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Linear Algebra HW4\\
+Exercises 476, 516, 542, 585, 622, 670, 683, 760, 880}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}[section]
+\newtheorem{solution}{Solution}[problem]
+\renewcommand{\thesolution}{\theproblem}
+
+\setcounter{section}{9}
+\setcounter{problem}{475}
+\begin{problem}
+Let $F$ be a field. Find a matrix $A \in \mathcal{M}_{4\times 4}(F)$ satisfying $A^{4}=I\ne A^{3}$.
+\end{problem}
+
+\begin{solution}
+Let the notation be as given in the problem. 
+
+Examine
+$\begin{bmatrix}
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0
+\end{bmatrix}$:
+\begin{align*}
+\begin{bmatrix}
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0
+\end{bmatrix}
+^{2}
+&=
+\begin{bmatrix}
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0
+\end{bmatrix}\\
+\begin{bmatrix}
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0
+\end{bmatrix}
+^{3}
+&=
+\begin{bmatrix}
+0 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0
+\end{bmatrix}\\
+\begin{bmatrix}
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0
+\end{bmatrix}
+^{4} &= I
+\end{align*}
+and thus this matrix fulfills the required conditions.
+\end{solution}
+
+\setcounter{problem}{515}
+\begin{problem}
+Let $n$ be a positive integer, let $F$ be a field, and let $A \in \mathcal{M}_{n\times n}(F)$ satisfy the condition $A=AA^{T}$. Show that $A^{2}=A$.
+\end{problem}
+
+\begin{solution}
+Let our notation be as given in the problem. Then $A=AA^{T}$ implies $A^{T}=(AA^{T})^{T}=(A^{T})^{T}A^{T}=AA^{T}=A$. Thus $A=AA^{T}=A^{2}$.
+\end{solution}
+
+\setcounter{problem}{541}
+\begin{problem}
+Let $n$ and $p$ be positive integers and let $F$ be a field. Let $A \in \mathcal{M}_{n\times n}(F)$ and let $B,C \in \mathcal{M}_{n\times p}(F)$ be matrices satisfying the condition that $A$ and $(I+C^{T}A^{-1}B)$ are nonsingular. Show that $A+BC^{T}$ is non-singular, and that
+\[ 
+\left( A +BC^{T} \right)^{-1} = A^{-1} - A^{-1}B\left( I+C^{T}A^{-1}B \right)^{-1}C^{T}A^{-1}
+\]
+\end{problem}
+
+\begin{solution}
+Let our notation be as given in the problem. Then since $(I+C^{T}A^{-1}B)$ is non-singular, by Proposition 9.1 on pg 154, $(I+BC^{T}A^{-1})$ is also nonsingular. So since $A$ is also non-singular, then their product will be as well by the same proposition:
+\[ (I+BC^{T}A^{-1})A = A+BC^{T} \]
+
+\paragraph{}
+Also by the same proposition
+\begin{align*}
+[A+BC^{T}]^{-1} &= [(I+BC^{T}A^{-1})A]^{-1} \\
+&= A^{-1}(I+BC^{T}A^{-1})^{-1} \\
+&= A^{-1}( I - B(I+C^{T}A^{-1}B)^{-1}C^{T}A^{-1} ) \\
+&= A^{-1} - A^{-1}B(I+C^{T}A^{-1}B)^{-1}C^{T}A^{-1}
+\end{align*}
+\end{solution}
+
+\setcounter{section}{10}
+\setcounter{problem}{584}
+\begin{problem}
+Find all solutions to the system
+\[
+\begin{bmatrix}
+1 & 2 & 3 & 4 \\
+2 & 1 & 2 & 3 \\
+3 & 2 & 1 & 2 \\
+4 & 3 & 2 & 1
+\end{bmatrix}
+\begin{bmatrix}
+X_{1}\\ X_{2}\\ X_{3}\\ X_{4}
+\end{bmatrix}
+=
+\begin{bmatrix}
+5\\ 1\\ 1\\ -5
+\end{bmatrix}
+\]
+\end{problem}
+
+\begin{solution}
+Using Gaussian elimination reduces the augmented matrix as follows:
+\begin{align*}
+\left[
+\begin{array}{c c c c | c}
+1 & 2 & 3 & 4 & 5\\
+2 & 1 & 2 & 3 & 1\\
+3 & 2 & 1 & 2 & 1\\
+4 & 3 & 2 & 1 & -5
+\end{array}
+\right]
+&
+\to\left[
+\begin{array}{c c c c | c}
+1 & 2 & 3 & 4 & 5\\
+0 & -3 & -4 & -5 & -9\\
+0 & -4 & -8 & -10 & -14\\
+0 & -5 & -10 & -15 & -25
+\end{array}
+\right]
+\\
+\to\left[
+\begin{array}{c c c c | c}
+1 & 2 & 3 & 4 & 5\\
+0 & -3 & -4 & -5 & -9\\
+0 & 0 & -8/3 & -10/3 & -2\\
+0 & 0 & -10/3 & -20/3 & -10
+\end{array}
+\right]
+&
+\to\left[
+\begin{array}{c c c c | c}
+1 & 2 & 3 & 4 & 5\\
+0 & -3 & -4 & -5 & -9\\
+0 & 0 & -8/3 & -10/3 & -2\\
+0 & 0 & -10/3 & -20/3 & -10
+\end{array}
+\right]\\
+\to\left[
+\begin{array}{c c c c | c}
+1 & 2 & 3 & 4 & 5\\
+0 & -3 & -4 & -5 & -9\\
+0 & 0 & -8/3 & -10/3 & -2\\
+0 & 0 & 0 & -5/2 & -15/2
+\end{array}
+\right]
+\end{align*}
+Then by back substitution
+\[
+\begin{bmatrix}
+X_{1}\\ X_{2}\\ X_{3}\\ X_{4}
+\end{bmatrix}
+=
+\begin{bmatrix}
+-2\\ 2\\ -3\\ 3
+\end{bmatrix}
+\]
+\end{solution}
+
+\setcounter{problem}{621}
+\begin{problem}
+Let $k$ and $n$ be positive integers and let $F$ be a field. For matrices $A,B \in \mathcal{M}_{k\times n}(F)$, show that the rank of $A+B$ is no more than the sum of the ranks of $A$ and of $B$.
+\end{problem}
+
+\begin{solution}
+Let our notation be as given in the problem, and let us call $a\le n$ the rank of $A$, and $b\le n$ the rank of $B$. 
+
+\paragraph{}
+Then the column space of each matrix has a respective basis, $\mathcal{B}(A) = \{ u_{1},\cdots,u_{a} \}$ and $\mathcal{B}(B) = \{ v_{1},\cdots,v_{b} \}$. The column space of $A+B$ can have at most $a+b$ vectors, where this is only if all of the basis vectors for $A\cup B$ are linearly independent: $\mathcal{B}(A) \cup \mathcal{B}(B) =  \{ u_{1},\cdots,u_{a} ,v_{1},\cdots,v_{b} \}$.
+
+When they are independent like this, the rank of $A+B$ is its maximum: the number of basis vectors, $a+b$, which is no more than the sum of the ranks of $A$ and $B$.
+\end{solution}
+
+\setcounter{section}{11}
+\setcounter{problem}{669}
+\begin{problem}
+Let $n$ be a positive integer and let $A=[a_{ij}] \in \mathcal{M}_{n\times n}(\mathbb{R})$ be the matrix defined by
+\[
+a_{ij} =
+\left\{
+\begin{array}{l l}
+0 & \text{if }i=j\\
+1 & \text{otherwise}
+\end{array}
+\right.
+\]
+Calculate $|A|$.
+\end{problem}
+
+\begin{solution}
+Let our notation be that same as given in the problem.
+
+Then since for every $j\in\mathbb{N}$ such that $j\le n$, we know $a_{jj}=0$, then by Proposition 11.11 on pg 231, 
+\[
+|A| = \sum_{j=1}^{n}(-1)^{j+j}a_{jj}\cdot|A_{ij}| = \sum_{j=1}^{n} 0\cdot|A_{ij}| = 0
+\]
+\end{solution}
+
+\setcounter{problem}{682}
+\begin{problem}
+Let $F$ be a field, let $n$ be a positive integer, and let $A = [a_{ij}] \in \mathcal{M}_{n\times n}(F)$ be nonsingular. Show that $\text{adj}(\text{adj}(A)) = |A|^{n-2}A$.
+\end{problem}
+
+\begin{solution}
+Let our notation be the same as given in the problem. Then notice that $A$ non-singular means that $A^{-1}$ is well defined. 
+
+\paragraph{}
+Now look at Proposition 11.13 on pg 235. Since $A$ is nonsingular, then 
+\begin{align*}
+A[\text{adj}(A)] &= |A|I \\
+\text{adj}(A) &= |A|A^{-1} \\
+\text{adj}(\text{adj}(A)) &= \left| |A|A^{-1} \right| (|A|A^{-1})^{-1}
+\end{align*}
+Now we take note that multiplying a whole matrix by a scalar $c\in F$ is equivalent to multiplying each column by the same scalar:
+\[
+cA = \left( \prod_{i=1}^{n} E_{i;c} \right)A
+\]
+and thus by the properties of determinant functions and elementary matrices:
+\begin{align*}
+\text{adj}(\text{adj}(A)) &= \left| |A|A^{-1} \right| (|A|A^{-1})^{-1} \\
+&= \left| \left( \prod_{i=1}^{n} E_{i;|A|} \right)A^{-1} \right| (\left( \prod_{i=1}^{n} E_{i;|A|} \right)A^{-1})^{-1} \\
+&= |A|^{n}|A^{-1}| A \left(\prod_{i=1}^{n} E_{i;|A|}\right)^{-1} \\
+&= |A|^{n-1} A \prod_{i=n}^{1} E_{i;|A|}^{-1} \\
+&= |A|^{n-1} A \prod_{i=n}^{1} E_{i;|A|^{-1}} \\
+&= |A|^{n-1} A |A|^{-1} \\
+\text{adj}(\text{adj}(A)) &= |A|^{n-2} A
+\end{align*}
+\end{solution}
+
+\setcounter{section}{12}
+\setcounter{problem}{759}
+\begin{problem}
+Fine the eigenvalues of the matrix
+$\begin{bmatrix}
+5 & 6 & -3 \\
+-1 & 0 & 1 \\
+2 & 2 & -1
+\end{bmatrix}
+\in \mathcal{M}_{3\times 3}(\mathbb{R})$
+and, for each such eigenvalue, find the associated eigenspace.
+\end{problem}
+
+\begin{solution}
+If we call the matrix above $A$, we can compute the characteristic polynomial by letting $\lambda\in\mathbb{C}$ be an eigenvalue, and setting the determinant of $|A-\lambda I|$ to zero:
+\begin{align*}
+|A-\lambda I| &= 
+\begin{vmatrix}
+5-\lambda & 6 & -3 \\
+-1 & -\lambda & 1 \\
+2 & 2 & -1-\lambda
+\end{vmatrix}
+\\
+&= (5-\lambda)(1+\lambda)\lambda +12 +6 -\left( 6\lambda +6(1+\lambda) +2(5-\lambda) \right) \\
+&= (5+4\lambda-\lambda^{2})\lambda +18 -\left( 6\lambda +6 +6\lambda +10 -2\lambda \right) \\
+&= (5+4\lambda-\lambda^{2})\lambda +18 -( 10\lambda +16 ) \\
+&= (5+4\lambda-\lambda^{2})\lambda -10\lambda +2 \\
+&= 5\lambda +4\lambda^{2} -\lambda^{3} -10\lambda +2 \\
+&= 2 -5\lambda +4\lambda^{2} -\lambda^{3} \\
+&= (2-\lambda)(1 -2\lambda +\lambda^{2}) \\
+&= (2-\lambda)(1 -\lambda)^{2} = 0
+\end{align*}
+and thus $A$ has eigenvalues $\lambda = 1,2$. We then consider these separately and find their respective eigenspaces.
+
+\paragraph{}
+So begin with $\lambda = 1$, and to find the eigenspace, we find the equivalent nullspace of $A-\lambda I$:
+\begin{align*}
+\left[
+\begin{array}{c c c | c}
+4 & 6 & -3 & 0\\
+-1 & -1 & 1 & 0 \\
+2 & 2 & -2 & 0
+\end{array}
+\right]
+&\to
+\left[
+\begin{array}{c c c | c}
+4 & 6 & -3 & 0\\
+0 & 1/2 & 1/4 & 0 \\
+0 & 0 & 0 & 0
+\end{array}
+\right]
+\end{align*}
+We then let $v\in\mathbb{R}^{3}$ be in the nullspace of $A-\lambda I$, and take $v_{3}\in\mathbb{R}$ to be a free variable. This allows us to see:
+\begin{align*}
+\frac{v_{2}}{2} + \frac{v_{3}}{4} &= 0 \\
+\frac{v_{2}}{2} &= \frac{-v_{3}}{4} \\
+v_{2} &= \frac{-v_{3}}{2} \\
+\end{align*}
+and 
+\begin{align*}
+4v_{1} + 6v_{2} -3v_{3} &= 0 \\
+4v_{1} &= -6v_{2} +3v_{3} \\
+4v_{1} &= 3v_{3} +3v_{3} \\
+4v_{1} &= 6v_{3} \\
+v_{1} &= \frac{3v_{3}}{2} \\
+\end{align*}
+
+Then we have that vectors in the eigenspace for $\lambda = 1$ are of the form
+\[
+v_{3}
+\begin{bmatrix}
+3/2\\ -1/2\\ 1
+\end{bmatrix}
+=
+\frac{v_{3}}{2}
+\begin{bmatrix}
+3\\ -1\\ 2
+\end{bmatrix} 
+\]
+
+\paragraph{}
+So now let us consider $\lambda = 2$. The associated $A-\lambda I$ reduces as follows:
+\begin{align*}
+\left[
+\begin{array}{c c c | c}
+3 & 6 & -3 & 0 \\
+-1 & -2 & 1 & 0 \\
+2 & 2 & -3 & 0
+\end{array}
+\right]
+&\to
+\left[
+\begin{array}{c c c | c}
+3 & 6 & -3 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & -2 & -1 & 0
+\end{array}
+\right]
+\end{align*}
+and for $v\in\mathbb{R}^{3}$ in the nullspace of $A-\lambda I$, we take $v_{2}$ to be a free variable this time so that:
+\begin{align*}
+-2v_{2} -v_{3} &= 0 \\
+v_{3} &= -2v_{2}
+\end{align*}
+and then
+\begin{align*}
+3v_{1} +6v_{2} -3v_{3} &= 0 \\
+3v_{1} &= -6v_{2} +3v_{3} \\
+3v_{1} &= -6v_{2} -6v_{2} \\
+3v_{1} &= -12v_{2} \\
+v_{1} &= -4v_{2} \\
+\end{align*}
+Showing that vectors in the eigenspace for $\lambda = 2$ are of the form:
+\[
+v_{2}
+\begin{bmatrix}
+-4\\ 1\\ -2
+\end{bmatrix}
+=
+-v_{2}
+\begin{bmatrix}
+4\\ -1\\ 2
+\end{bmatrix}
+\]
+\end{solution}
+
+\setcounter{section}{13}
+\setcounter{problem}{879}
+\begin{problem}
+Let $A \in \mathcal{M}_{n\times n}(\mathbb{R})$ differ from $I$ and $O$. If $A$ is idempotent, show that its Jordan canonical form is a diagonal matrix.
+\end{problem}
+
+\begin{solution}
+Let $A$ be as given in the problem.
+
+\paragraph{}
+Then by Proposition 13.7, there is some matrix $B\in \mathcal{M}_{n\times n}(\mathbb{R})$ expressed in canonical form that is similar to $A$. So then if we take the resulting $P \in \mathcal{M}_{n\times n}(\mathbb{R})$ where $A = P^{-1}BP$, we can then use the idepotence of $A$ to see
+\begin{align*}
+A^{2} &= P^{-1}BPP^{-1}BP = A = P^{-1}BP \\
+&= P^{-1}B^{2}P = P^{-1}BP
+\end{align*}
+which implies that $B^{2}=B$, showing $B$ is also idepotent.
+
+\paragraph{}
+Since $B$ is in canonical form, then there is an $m\in\mathbb{N}$ where for any $j\in\mathbb{N}$ such that $j\le m$, we have $c_{j}\in\mathbb{R}$ where blocks of the form
+\[
+B_{j} = 
+\begin{bmatrix}
+c_{j} & 0 & 0 & \cdots & 0 \\
+1 & c_{j} & 0 & \cdots & 0 \\
+0 & 1 & c_{j} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & c_{j}
+\end{bmatrix}
+\]
+make up the matrix $B$ in the following way:
+\[
+B =
+\begin{bmatrix}
+B_{1} & O & \cdots & O \\
+0 & B_{2} & \cdots & O \\
+\vdots & \vdots & \ddots & \vdots \\
+O & O & \cdots & B_{m}
+\end{bmatrix}
+\]
+
+So now we notice that 
+\[
+B^{2} =
+\begin{bmatrix}
+B_{1}^{2} & O & \cdots & O \\
+0 & B_{2}^{2} & \cdots & O \\
+\vdots & \vdots & \ddots & \vdots \\
+O & O & \cdots & B_{m}^{2}
+\end{bmatrix}
+\]
+where for each $j$, the idepotence of $B$ implies that 
+\begin{align*}
+B_{j}^{2} &= B_{j}\\
+\begin{bmatrix}
+c_{j} & 0 & 0 & \cdots & 0 \\
+1 & c_{j} & 0 & \cdots & 0 \\
+0 & 1 & c_{j} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & c_{j}
+\end{bmatrix}
+\begin{bmatrix}
+c_{j} & 0 & 0 & \cdots & 0 \\
+1 & c_{j} & 0 & \cdots & 0 \\
+0 & 1 & c_{j} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & c_{j}
+\end{bmatrix}
+&= 
+\begin{bmatrix}
+c_{j} & 0 & 0 & \cdots & 0 \\
+1 & c_{j} & 0 & \cdots & 0 \\
+0 & 1 & c_{j} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & c_{j}
+\end{bmatrix}
+\\
+\begin{bmatrix}
+c_{j}^{2} & 0 & 0 & 0 & \cdots & 0 \\
+2c_{j} & c_{j}^{2} & 0 & 0 & \cdots & 0 \\
+1 & 2c_{j} & c_{j}^{2} & 0 & \cdots & 0 \\
+0 & 1 & 2c_{j} & c_{j}^{2} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \ddots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & 2c_{j} & c_{j}^{2}
+\end{bmatrix}
+&= 
+\begin{bmatrix}
+c_{j} & 0 & 0 & \cdots & 0 \\
+1 & c_{j} & 0 & \cdots & 0 \\
+0 & 1 & c_{j} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1 & c_{j}
+\end{bmatrix}
+\end{align*}
+Since this implies that each $c_{j}^{2} = c_{j}$ and $2c_{j} = 1$, then $c_{j}$ must be simultaneously $1/2$ and either $1$ or $0$. This is a contradiction unless our blocks are only one row by one column:
+\[ B_{j} = [c_{j}] \]
+showing that $B$ is a diagonal matrix.
+\end{solution}
+
+\end{document}

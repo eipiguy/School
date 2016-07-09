@@ -25,25 +25,436 @@ Let $V$ and $W$ be vector spaces over a field $F$. Let $\alpha \in \text{Hom}(V,
 \end{problem}
 
 \begin{solution}
-Let our notation be as above, $w \in \text{im}(\alpha)$, and recall that $\alpha^{-1}(w) = \{ v \in V \vert \alpha(v) = w \}$.
+Let our notation be as above, $B = \{ \beta(w) +v -\beta\alpha(v) \vert v \in V \}$, $w \in \text{im}(\alpha)$, and recall that $\alpha^{-1}(w) = \{ v \in V \vert \alpha(v) = w \}$.
 
 \paragraph{}
-Assume $x \in \{ \beta(w) +v -\beta\alpha(v) \vert v \in V \}$ and notice that $\{ \beta(w) +v -\beta\alpha(v) \vert v \in V \} \subset V$. Then there is some $v \in V$ such that $x = \beta(w) +v -\beta\alpha(v)$. Since $w\in\text{im}(\alpha)$ there is also some $v\prime \in V$ such that $\alpha(v\prime) = w$. Then by applying $\alpha$, using its linearity, and its listed property we find
+Notice that $B \subseteq V$, and assume $x \in B$. Then there is some $v \in V$ such that $x = \beta(w) +v -\beta\alpha(v)$. Since $w\in\text{im}(\alpha)$ there is also some $v^{\prime} \in V$ such that $\alpha(v^{\prime}) = w$. Then by applying $\alpha$, using its linearity, and its listed property we find
 
 \begin{align*}
 \alpha(x) &= \alpha(\beta(w) +v -\beta\alpha(v))\\
-\alpha(x) &= \alpha(\beta\alpha(v\prime) +v -\beta\alpha(v))\\
-\alpha(x) &= \alpha\beta\alpha(v\prime) +\alpha(v) -\alpha\beta\alpha(v)\\
-\alpha(x) &= \alpha(v\prime) +\alpha(v) -\alpha(v)\\
-\alpha(x) &= \alpha(v\prime)\\
-\alpha(x) -\alpha(v\prime) &= 0\\
-\alpha(x -v\prime) &= 0
+\alpha(x) &= \alpha(\beta\alpha(v^{\prime}) +v -\beta\alpha(v))\\
+\alpha(x) &= \alpha\beta\alpha(v^{\prime}) +\alpha(v) -\alpha\beta\alpha(v)\\
+\alpha(x) &= \alpha(v^{\prime}) +\alpha(v) -\alpha(v)\\
+\alpha(x) &= \alpha(v^{\prime})\\
+\alpha(x) -\alpha(v^{\prime}) &= 0_{W}\\
+\alpha(x -v^{\prime}) &= 0_{W}
 \end{align*}
-showing that $x -v\prime$ is in the kernel of $\alpha$. Then by Proposition 6.6 on pg 96, and the fact that $v\prime \in \alpha^{-1}(w)$, we have that $(x -v\prime) +v\prime = x \in \alpha^{-1}(w)$
+showing that $x -v^{\prime}$ is in the kernel of $\alpha$. Then by Proposition 6.6 on pg 96, and the fact that $v^{\prime} \in \alpha^{-1}(w)$, we have that $(x -v^{\prime}) +v^{\prime} = x \in \alpha^{-1}(w)$. Then $B\subseteq \alpha^{-1}(w)$.
 
 \paragraph{}
-Now assume instead that $y \in \alpha^{-1}(w) = \{ v \in V \vert \alpha(v) = w \}$. Then for some $w \in W$, $\alpha(y) = w$.
+Now assume instead that $y \in \alpha^{-1}(w)$. Then $\alpha(y) = w$, and since $w\in\text{im}(\alpha)$, there is some $u \in V$ such that $\alpha(u) = w = \alpha(y)$. Now pick some $u^{\prime} \in V$. Using the linearity of $\alpha$, and its listed property, we find
 
+\begin{align*}
+\alpha(y) &= \alpha(u) \\
+\alpha(y) &= \alpha(u) + \alpha(u^{\prime}) - \alpha(u^{\prime})\\
+\alpha(y) &= \alpha\beta\alpha(u) + \alpha(u^{\prime}) - \alpha\beta\alpha(u^{\prime})\\
+0 &= \alpha\beta\alpha(u) + \alpha(u^{\prime}) - \alpha\beta\alpha(u^{\prime}) - \alpha(y)\\
+0 &= \alpha(\beta\alpha(u) + u^{\prime} - \beta\alpha(u^{\prime}) - y)\\
+0 &= \alpha(\beta(w) + u^{\prime} - \beta\alpha(u^{\prime}) - y)
+\end{align*}
+which implies that $\beta(w) + u^{\prime} - \beta\alpha(u^{\prime}) -y \in \ker(\alpha)$. 
+
+Then since $y \in \alpha^{-1}(w)$, by Proposition 9.6 on pg 96,
+\[
+\beta(w) + u^{\prime} - \beta\alpha(u^{\prime}) -y +y = \beta(w) + u^{\prime} - \beta\alpha(u^{\prime}) \in \alpha^{-1}(w)
+\]
+and since $u^{\prime}\in V$ was arbitrary, $\beta(w) + u^{\prime} - \beta\alpha(u^{\prime})$ is an arbitrary element of $B$. Thus $\alpha^{-1}(w) \subseteq B$, showing  $\alpha^{-1}(w)= B =\{ \beta(w) +v -\beta\alpha(v) \vert v \in V \}$ as desired.
+
+\end{solution}
+
+\setcounter{problem}{268}
+\begin{problem}
+Let $\alpha:\mathbb{R}^{3}\to\mathbb{R}^{3}$ be the linear transformation given by
+\[
+\alpha:
+\begin{bmatrix}
+a\\ b\\ c
+\end{bmatrix}
+\mapsto
+\begin{bmatrix}
+a+b+c\\ -a-c\\ b
+\end{bmatrix}
+\]
+Find $\ker(\alpha)$ and $\text{im}(\alpha)$.
+\end{problem}
+
+\renewcommand{\thesolution}{\theproblem.\alph{solution}}
+\begin{solution}
+Let $\alpha$ be as above. Then for $a,b,c \in \mathbb{R}$, $E = \begin{bmatrix}
+a\\ b\\ c
+\end{bmatrix} \in \ker(\alpha)$ iff
+\[
+\alpha\left(
+\begin{bmatrix}
+a\\ b\\ c
+\end{bmatrix}
+\right) =
+\begin{bmatrix}
+a+b+c\\ -a-c\\ b
+\end{bmatrix} =
+\begin{bmatrix}
+0\\ 0\\ 0
+\end{bmatrix}
+\]
+This implies that $b=0$, and thus $a+c=0$ and $-(a+c)=0$ consistently agree that $c=-a$.
+
+So then
+\[
+\ker(\alpha) = \left\{
+\begin{bmatrix}
+a\\ 0\\ -a
+\end{bmatrix}
+\bigg|
+a \in \mathbb{R}
+\right\}
+\]
+
+\end{solution}
+
+\begin{solution}
+Let $\alpha$ be as above. Then for $a,b,c \in \mathbb{R}$, $A = \begin{bmatrix}
+a\\ b\\ c
+\end{bmatrix} \in \text{im}(\alpha)$ iff $\exists x,y,z\in \mathbb{R}$ where 
+\[
+\begin{bmatrix}
+a\\ b\\ c
+\end{bmatrix} =
+\alpha\left(
+\begin{bmatrix}
+x\\ y\\ z
+\end{bmatrix}
+\right)
+= 
+\begin{bmatrix}
+x+y+z\\ -x-z\\ y
+\end{bmatrix}
+\]
+Then $y=c$, implying $c$ could be any real number. Also $-(x+z)=b$ and $x+y+z = a$ imply $c-b=a$.
+
+Since $\forall r,s\in\mathbb{R}$, $r=-((r-s)+s)$, every number is the negative of the sum of many binary combinations, and since $-(x+z)=b$, then $b$ could be any real number. Since we know $c$ and $b$ could be any real number, and we know $c-b=a$, then we can see that any vector in the image of $\alpha$ must have the form:
+\[
+\begin{bmatrix}
+c-b\\ b\\ c
+\end{bmatrix}
+\in \text{im}(\alpha)
+\]
+\end{solution}
+
+\renewcommand{\thesolution}{\theproblem}
+\setcounter{problem}{276}
+\begin{problem}
+Let $V$ be a finite dimensional vector space over a field $F$ and let $\alpha,\beta \in \text{Hom}(V, V)$ be linear transformations satisfying $\text{im}(\alpha)+\text{im}(\beta) = V = \ker(\alpha) + \ker(\beta)$. Show that $\text{im}(\alpha)\cap\text{im}(\beta) = \{ 0_{V} \} = \ker(\alpha) \cap\ker(\beta)$.
+\end{problem}
+
+\begin{solution}
+Let our notation be as above.
+
+\paragraph{}
+Then since $V$ is finite dimensional, then by Proposition 6.10 on pg 98, 
+\[
+\dim(V) = \dim(\text{im}(\alpha)) + \dim(\ker(\alpha)) = \dim(\text{im}(\beta)) + \dim(\ker(\beta))
+\]
+and by Grassmann's Theorem on pg 77,
+\[
+\dim(V) = \dim(\text{im}(\alpha) + \text{im}(\beta)) = \dim(\text{im}(\alpha)) + \dim(\text{im}(\beta)) - \dim(\text{im}(\alpha) \cap \text{im}(\beta))
+\]
+where similarly
+\[
+\dim(V) = \dim(\ker(\alpha) + \ker(\beta)) = \dim(\ker(\alpha)) + \dim(\ker(\beta)) - \dim(\ker(\alpha) \cap \ker(\beta))
+\]
+
+\paragraph{}
+We then collect these to find:
+\begin{align*}
+\dim(\text{im}(\alpha)) + \dim(\ker(\alpha)) &= \dim(\text{im}(\alpha)) + \dim(\text{im}(\beta)) - \dim(\text{im}(\alpha) \cap \text{im}(\beta))\\
+\dim(\text{im}(\beta)) - \dim(\ker(\alpha)) &= \dim(\text{im}(\alpha) \cap \text{im}(\beta))
+\end{align*}
+\begin{align*}
+\dim(\text{im}(\beta)) + \dim(\ker(\beta)) &= \dim(\text{im}(\alpha)) + \dim(\text{im}(\beta)) - \dim(\text{im}(\alpha) \cap \text{im}(\beta))\\
+\dim(\text{im}(\alpha)) - \dim(\ker(\beta)) &= \dim(\text{im}(\alpha) \cap \text{im}(\beta))
+\end{align*}
+
+Similarly we find with the other equation:
+\begin{align*}
+\dim(\text{im}(\alpha)) + \dim(\ker(\alpha)) &= \dim(\ker(\alpha)) + \dim(\ker(\beta)) - \dim(\ker(\alpha) \cap \ker(\beta))\\
+\dim(\ker(\beta)) - \dim(\text{im}(\alpha)) &= \dim(\ker(\alpha) \cap \ker(\beta))
+\end{align*}
+\begin{align*}
+\dim(\text{im}(\beta)) + \dim(\ker(\beta)) &= \dim(\ker(\alpha)) + \dim(\ker(\beta)) - \dim(\ker(\alpha) \cap \ker(\beta))\\
+\dim(\ker(\alpha)) - \dim(\text{im}(\beta)) &= \dim(\ker(\alpha) \cap \ker(\beta))
+\end{align*}
+
+Thus
+\[
+\dim(\text{im}(\alpha) \cap \text{im}(\beta)) +\dim(\ker(\alpha) \cap \ker(\beta)) = 0
+\]
+
+But since dimension is always non-negative, this can only be true if
+\[
+\dim(\text{im}(\alpha) \cap \text{im}(\beta)) =\dim(\ker(\alpha) \cap \ker(\beta)) = 0
+\]
+implying $\text{im}(\alpha)\cap\text{im}(\beta)$ and $\ker(\alpha) \cap\ker(\beta)$ are both the trivial subspace  $\{ 0_{V} \}$, which is what we desired.
+\end{solution}
+
+\setcounter{section}{7}
+\setcounter{problem}{319}
+\begin{problem}
+Let $V$ be a finitely-generated vector space over a field $F$ and let $\alpha\in\text{End}(V)$. Show that $\alpha$ is not monic if and only if there exists an endomorphism $\beta\ne\sigma_{0}$ of $V$ satisfying $\alpha\beta = \sigma_{0}$.
+\end{problem}
+
+\begin{solution}
+Let our notation be as used for the problem, and let us start by assuming there is some endomorphism $\beta \ne \sigma_{0}$ of $V$ where $\alpha\beta = \sigma_{0}$.
+
+\paragraph{}
+Since $\beta \ne \sigma_{0}$, then there are some $v,w\in V$ where $\beta(v) = w \ne 0$, but $\alpha\beta(v) = \alpha(w) = 0$, where we notice that $0 = \alpha(0)$ because $\alpha$ is an endomorphism. So since $w \ne 0$, but $\alpha(w)=\alpha(0)$, then $\alpha$ is not monic.
+
+\paragraph{}
+Now instead assume that $\alpha$ is not monic. Then there are some $a,b\in V$ such that $a \ne b$, but $\alpha(a)=\alpha(b)$. So since $V$ is finitely generated, there is some $n\in\mathbb{Z}$ where $B=\{ v_{1}, \cdots, v_{n} \}$ is a basis for $V$, and there are corresponding $\{ a_{1}, \cdots, a_{n} \}, \{ b_{1}, \cdots, b_{n} \} \subset\mathbb{R}$ such that $a=a_{1}v_{1} + \cdots + a_{n}v_{n}$, and $b=b_{1}v_{1} + \cdots + b_{n}v_{n}$. Then we know:
+\begin{align*}
+\alpha(a) &= \alpha(b)\\
+\alpha(a_{1}v_{1} + \cdots + a_{n}v_{n}) &= \alpha(b_{1}v_{1} + \cdots + b_{n}v_{n})\\
+\alpha((a_{1}v_{1} - b_{1}v_{1}) + \cdots + (a_{n}v_{n} - b_{n}v_{n})) &= 0\\
+\alpha((a_{1} - b_{1})v_{1} + \cdots + (a_{n} - b_{n})v_{n}) &= 0\\
+\end{align*}
+
+So let $\beta\in\text{End}(V)$ such that $\forall x\in V$, $\beta(x) = (a_{1} - b_{1})v_{1} + \cdots + (a_{n} - b_{n})v_{n}$.
+
+\paragraph{}
+Since $a\ne b$, there is at least one $i\in\mathbb{N}$ where $a_{i}-b_{i}\ne 0$, the function is a non-zero constant function, and thus an endomorphism where $\beta\ne\sigma_{0}$. Then based on our observation above 
+\[
+\alpha\beta(x) = \alpha((a_{1} - b_{1})v_{1} + \cdots + (a_{n} - b_{n})v_{n}) = 0 = \sigma_{0}(x)
+\]
+which is the property we desired.
+\end{solution}
+
+\begin{problem}
+Let $V$ be a vector space over a field $F$ and let $\alpha\in\text{End}(V)$. Show that $\ker(\alpha) = \ker(\alpha^{2})$ if and only if $\ker(\alpha)$ and $\text{im}(\alpha)$ are disjoint.
+\end{problem}
+
+\begin{solution}
+Let our notation be the same as in the problem, and let us start by assuming that $\ker(\alpha) = \ker(\alpha^{2})$. Then for any $e\in V$, $\alpha^{2}(e)=\alpha(\alpha(e))=0$ iff $\alpha(e)=0$.
+
+\paragraph{}
+Now let $e \in \ker(\alpha) \cap \text{im}(\alpha)$. Then there is some $v\in V$ such that $\alpha(v)=e$ and $\alpha(e)=\alpha(\alpha(v))=\alpha^{2}(v)=0$. Thus $v\in\ker(\alpha^{2})$, and by our property, $v\in\ker(\alpha)$ implying $\alpha(v)=e=0$. Thus $\ker(\alpha)$ and $\text{im}(\alpha)$ are disjoint.
+
+\paragraph{}
+Now instead assume that $\ker(\alpha)$ and $\text{im}(\alpha)$ are disjoint to start.
+
+\paragraph{}
+Since for any $e\in\ker(\alpha)$, $\alpha(e)=0$ implies that $\alpha^{2}(v)=\alpha(\alpha(v))=\alpha(0)=0$, since $\alpha$ is an endomorphism, showing $e\in\ker(\alpha^{2})$, and thus $\ker(\alpha) \subseteq \ker(\alpha^{2})$.
+
+So let $e\in\ker(\alpha^{2})$, so that $\alpha^{2}(e)=0$. Then there is some $v\in\text{im}(\alpha)$ where $\alpha(e)=v$ and $\alpha(v)=0$. Thus $v\in\ker(\alpha)$, but since $\ker(\alpha)$ and $\text{im}(\alpha)$ are disjoint, then we must have $v=0$, showing that $\alpha(e)=0$, and thus $e\in\ker(\alpha)$. Then we know $\ker(\alpha^{2}) \subseteq \ker(\alpha)$, and together with our previous result, $\ker(\alpha^{2}) = \ker(\alpha)$.
+\end{solution}
+
+\setcounter{problem}{378}
+\begin{problem}
+Let $\alpha$ and $\beta$ be endomorphisms of a vector space $V$ over a field $F$ satisfying $\alpha\beta = \beta\alpha$. Is $\ker(\alpha)$ invariant under $\beta$?
+\end{problem}
+
+\begin{solution}
+Let our notation be as used in the problem. Then $\ker(\alpha)$ is invariant under $\beta$ iff $\beta(\ker(\alpha)) \subseteq \ker(\alpha)$. So let $w\in\beta(\ker(\alpha))$. Then there is some $e\in\ker(\alpha)$ such that $\beta(e)=w$. So since $\alpha(e)=0$, and $\alpha\beta = \beta\alpha$, then
+\begin{align*}
+w &= \alpha(\beta(e))\\
+&= \beta(\alpha(e)) \\
+&= \beta(0)\\
+w &= 0
+\end{align*}
+
+\paragraph{}
+Thus $w$ must be in every kernel, implying $w\in\ker(\alpha)$, and $\beta(\ker(\alpha)) \subseteq \ker(\alpha)$, which shows $\ker(\alpha)$ is invariant under $\beta$.
+\end{solution}
+
+\setcounter{problem}{384}
+\begin{problem}
+Let $V$ be a vector space over a field $F$ and let $W$ and $Y$ be subspaces of $V$ satisfying $W+Y=V$. Let $Y^{\prime}$ be a complement of $Y$ in $V$ and let $Y^{\prime\prime}$ be a complement of $W\cap Y$ in $W$. Show that $Y^{\prime} \cong Y^{\prime\prime}$.
+\end{problem}
+
+\begin{solution}
+Let the notation be as used in the problem. Then since $Y^{\prime}$ is a complement of $Y$ in $V$, we have $Y^{\prime} \cap Y = \{0\}$, and $Y^{\prime} + Y = V$.
+
+\paragraph{}
+And since $Y^{\prime\prime}$ is a complement of $W\cap Y$ in $W$, then $Y^{\prime\prime} \cap W\cap Y = \{0\}$, and $Y^{\prime\prime} + (W\cap Y) = W$, also showing that $Y^{\prime\prime} \subseteq W$.
+
+\paragraph{}
+Then since $\{ 0 \} \subseteq Y^{\prime\prime} \cap Y \subseteq Y^{\prime\prime} \cap W\cap Y = \{ 0 \}$, we know $Y^{\prime\prime} \cap Y = \{ 0 \}$.
+
+\paragraph{}
+So $W+Y=V$ and $Y+(W\cap Y)=Y$, then imply
+\[ V = W+Y = Y^{\prime\prime} + (W\cap Y) + Y = Y^{\prime\prime} + Y \]
+showing that $Y^{\prime\prime}$ is a complement of $Y$ in $V$.
+
+\paragraph{}
+Now since $Y^{\prime}$ and $Y^{\prime\prime}$ are both complements of $Y$ in $V$, then by Proposition 7.8 on pg 119 they must be isomorphic.
+\end{solution}
+
+\setcounter{problem}{386}
+\begin{problem}
+Let $V$ be a vector space over $F$ and let $\alpha
+,\beta\in\text{End}(V)$. Show that $\alpha$ and $\beta$ are projections satisfying $\ker(\alpha) = \ker(\beta)$ if and only if $\alpha\beta = \alpha$ and $\beta\alpha = \beta$.
+\end{problem}
+
+\begin{solution}
+Let our notation be as above, and begin by assuming $\alpha\beta = \alpha$ and $\beta\alpha = \beta$.
+
+\paragraph{}
+Then $\alpha=\alpha\beta$, implies $\beta\alpha = \beta\alpha\beta$, and then $\beta\alpha=\beta$ imples $\beta=\beta^{2}$. By similar logic, $\alpha=\alpha^{2}$ and thus is also a projection.
+
+\paragraph{}
+So let $e\in\ker(\alpha)$. Then $\alpha(e)=0$, and $\beta\alpha(e)=\beta(0)=0$. But since $\beta\alpha=\beta$, then $\beta(e)=0$, showing $e\in\ker(\beta)$. Again, similar logic will show that $e\in\ker(\beta)$ implies $e\in\ker(\alpha)$, and thus $\alpha$ and $\beta$ are projections satisfying $\ker(\alpha) = \ker(\beta)$.
+
+\paragraph{}
+So instead begin by assuming $\alpha$ and $\beta$ are projections satisfying $\ker(\alpha) = \ker(\beta)$. Then 
+\begin{align*}
+\alpha^{2} &= \alpha\\
+\alpha^{2} -\alpha &= \sigma_{0} \\
+\alpha(\alpha - \sigma_{1}) &= \sigma_{0}
+\end{align*}
+
+Thus $\alpha-\sigma_{1} \in \ker(\alpha)$. Then since $\ker(\alpha)=\ker(\beta)$, we know $\beta(\alpha-\sigma_{1}) = \sigma_{0}$. So distributing $\beta$ gives $\beta\alpha-\beta = \sigma_{0}$, and thus $\beta\alpha=\beta$. Similar logic beginning with $\beta^{2}=\beta$ will show $\alpha\beta=\alpha$, as we desired.
+\end{solution}
+
+\setcounter{section}{8}
+\setcounter{problem}{420}
+\begin{problem}
+Let $B = \{ 1+i, 2+i \}$, which is a basis for $\mathbb{C}$ as a vector space over $\mathbb{R}$. Let $\alpha$ be the endomorphism of this space defined by $\alpha: z \mapsto \bar{z}$. Find $\Phi_{BB}(\alpha)$.
+\end{problem}
+
+\begin{solution}
+Let our notation be as given in the problem, call $b_{1}=1+i$, $b_{2}=2+i$, and let $z\in\mathbb{C}$. Then there are $x,y\in\mathbb{R}$ such that $z = xb_{1} +yb_{2}$, and $u,v\in\mathbb{R}$ such that $\bar{z} = ub_{1} +vb_{2}$.
+
+\paragraph{}
+Thus
+\begin{align*}
+\alpha(z) &= \bar{z} \\
+\alpha(x(1+i) +y(2+i)) &= u(1+i) +v(2+i) \\
+x(1-i) +y(2-i) &= u(1+i) +v(2+i) \\
+x-ix +2y-iy &= u+iu +2v+iv \\
+(x+2y)-i(x+y)&= (u+2v)+i(u+v)
+\end{align*}
+\[ [(x+2y)-(u+2v)]-i[(x+y)+(u+v)] = 0 \]
+
+This can only happen if
+\begin{align*}
+x+2y &= u+2v \\
+x+y &= -u-v \\
+\begin{bmatrix}
+1 & 2 \\
+1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x\\ y
+\end{bmatrix}
+&= 
+\begin{bmatrix}
+1 & 2 \\
+-1 & -1
+\end{bmatrix}
+\begin{bmatrix}
+u\\ v
+\end{bmatrix}
+\end{align*}
+
+So since
+\[
+\begin{bmatrix}
+-1 & -2 \\
+1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & 2 \\
+-1 & -1
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 0 \\
+0 & 1
+\end{bmatrix}
+\]
+then
+\begin{align*}
+\begin{bmatrix}
+u\\ v
+\end{bmatrix}
+&=
+\begin{bmatrix}
+-1 & -2 \\
+1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & 2 \\
+1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x\\ y
+\end{bmatrix}\\
+\begin{bmatrix}
+u\\ v
+\end{bmatrix}
+&=
+\begin{bmatrix}
+-3 & -4 \\
+2 & 3
+\end{bmatrix}
+\begin{bmatrix}
+x\\ y
+\end{bmatrix}
+\end{align*}
+
+Which is then how we define $\Phi_{BB}(\alpha)$.
+\end{solution}
+
+\setcounter{problem}{430}
+\begin{problem}
+Find a nonzero matrix $A$ in $\mathcal{M}_{2\times 2}(\mathbb{R})$ satisfying $v\odot Av = 0$ for all $v\in\mathbb{R}^{2}$.
+\end{problem}
+
+\begin{solution}
+Let $v=
+\begin{bmatrix}
+v_{1}\\ v_{2}
+\end{bmatrix}
+\in\mathbb{R}^{2}$, and $A=
+\begin{bmatrix}
+a & b\\
+c & d
+\end{bmatrix}
+\in\mathcal{M}_{2\times 2}(\mathbb{R})$.
+
+Then
+\begin{align*}
+v\odot Av &= 
+\begin{bmatrix}
+v_{1}\\ v_{2}
+\end{bmatrix}
+\odot
+\begin{bmatrix}
+a & b\\
+c & d
+\end{bmatrix}
+\begin{bmatrix}
+v_{1}\\ v_{2}
+\end{bmatrix}\\
+&= 
+\begin{bmatrix}
+v_{1}\\ v_{2}
+\end{bmatrix}
+\odot
+\begin{bmatrix}
+av_{1} + bv_{2}\\
+cv_{1} + dv_{2}
+\end{bmatrix}\\
+&= v_{1}(av_{1} + bv_{2}) +v_{2}(cv_{1} + dv_{2})\\
+&= av_{1}^{2} + bv_{1}v_{2} + cv_{1}v_{2} + dv_{2}^{2}\\
+&= av_{1}^{2} +  dv_{2}^{2} + (b+c)v_{1}v_{2}\\
+\end{align*}
+
+So for the product to be zero for any $v$, we must have $a=d=0$, and $c=-b$.
+\[ A = 
+\begin{bmatrix}
+0 & b \\
+-b & 0
+\end{bmatrix}
+\]
 \end{solution}
 
 \end{document}
