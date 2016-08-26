@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.5.9)  7 JUL 2016 17:50
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.5.9)  15 JUL 2016 17:37
 entering extended mode
 **LinearAlgebra-HW4.tex
 ("C:\Users\Neal\Documents\GitHub\School\Linear Algebra\LinearAlgebra-HW4.tex"
@@ -224,24 +224,35 @@ a-sis, $\OMS/cmsy/m/n/10 B\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 A\OT1/cmr/m/n/10 )
 = \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 u[]; []  ; u[]\OMS/cmsy/m/n/10 g$
  []
 
+
+Overfull \hbox (72.22133pt too wide) detected at line 279
+\OMS/cmsy/m/n/10   [] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10   [] \OT1/cmr/m/n/10 =
+ \OMS/cmsy/m/n/10   []
+ []
+
 [3]
-Overfull \hbox (3.377pt too wide) in paragraph at lines 261--269
+Overfull \hbox (4.78186pt too wide) detected at line 325
+\OMS/cmsy/m/n/10   [] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10   []
+ []
+
+[4]
+Overfull \hbox (3.377pt too wide) in paragraph at lines 378--386
 []\OT1/cmr/bx/n/10 Problem 12.760. []\OT1/cmr/m/n/10 Fine the eigen-val-ues of 
 the ma-trix $[] \OMS/cmsy/m/n/10 2 M[]\OT1/cmr/m/n/10 (\U/msb/m/n/10 R\OT1/cmr/
 m/n/10 )$
  []
 
-[4] [5] [6] [7]
+[5] [6] [7] [8]
 ("C:\Users\Neal\Documents\GitHub\School\Linear Algebra\LinearAlgebra-HW4.aux") 
 ) 
 Here is how much of TeX's memory you used:
  3326 strings out of 493921
  43985 string characters out of 3147286
- 110454 words of memory out of 3000000
+ 122454 words of memory out of 3000000
  6606 multiletter control sequences out of 15000+200000
  10591 words of font info for 42 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,16n,32p,424b,260s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,16n,32p,562b,260s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pro
 gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTe
@@ -254,9 +265,9 @@ sfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files
 /MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2
 .9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on LinearAlgebra-HW4.pdf (7 pages, 156696 bytes).
+Output written on LinearAlgebra-HW4.pdf (8 pages, 159188 bytes).
 PDF statistics:
- 78 PDF objects out of 1000 (max. 8388607)
+ 81 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

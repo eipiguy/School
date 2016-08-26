@@ -1,0 +1,159 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Complex Analysis HW1\\}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{solution}{Solution}[problem]
+\renewcommand{\thesolution}{\theproblem}
+
+\begin{problem}
+Show that
+\begin{enumerate}[(a)]
+\item \[ \text{Re}(iz) = -\text{Im}(z) \]
+\item \[ \text{Im}(iz) = -\text{Re}(z) \]
+\end{enumerate}
+\end{problem}
+
+
+\begin{solution}
+\begin{enumerate}[(a)]
+\item
+\begin{proof}
+Let $z\in\mathbb{C}$ such that $z=x+iy$ for some $x,y\in\mathbb{R}$.
+
+\paragraph{}
+Then since $i^{2}=-1$,
+\[ \text{Re}(iz) = \text{Re}(i(x+iy)) = \text{Re}(-y+ix) = -y \]
+and
+\[ -\text{Im}(z) = -\text{Im}(x+iy) = -y \]
+implying
+\[ \text{Re}(iz) = -\text{Im}(z) \]
+\end{proof}
+\item
+\begin{proof}
+Let $z\in\mathbb{C}$ such that $z=x+iy$ for some $x,y\in\mathbb{R}$.
+
+\paragraph{}
+Then since $i^{2}=-1$,
+\[ \text{Im}(iz) = \text{Im}(i(x+iy)) = \text{Im}(-y+ix) = x \]
+and
+\[ \text{Re}(z) = \text{Re}(x+iy) = x \]
+implying
+\[ \text{Im}(iz) = \text{Re}(z) \]
+\end{proof}
+\end{enumerate}
+\end{solution}
+
+\begin{problem}
+Solve the equation $z^{2}+z+1=0$ for $z=(x,y)$ by writing
+\[ (x,y)(x,y) + (x,y) + (1,0) = (0,0) \]
+\end{problem}
+
+\begin{solution}
+Let our notation be as above, and then work out $z^{2}$, and match the real and imaginary parts to find:
+\begin{align*}
+(x,y)(x,y) + (x,y) + (1,0) &= (0,0)\\
+(x^{2}-y^{2},2xy) + (x,y) + (1,0) &= (0,0)\\
+x^{2}-y^{2} + x + 1 &= 0	&	2xy + y &= 0\\
+x^{2}+x &= y^{2}-1	&	(2x+1)y &= 0
+\end{align*}
+
+The imaginary component's equation implies that potential solutions have components $x=-1/2$ and $y=0$.
+
+\paragraph{}
+So beginning with the first possibility we plug $x=-1/2$ back into the real component's equation to see
+\begin{align*}
+x^{2}+x &= y^{2}-1 \\
+\frac{1}{4}-\frac{1}{2} &= y^{2}-1 \\
+\frac{-1}{4} &= y^{2}-1 \\
+\frac{3}{4} &= y^{2} \\
+y &= \pm\sqrt{\frac{3}{4}} = \pm\sqrt{3}/2
+\end{align*}
+giving the pair of complex solutions $z=\left(-1\pm i\sqrt{3}\right)/2$.
+
+\paragraph{}
+Similarly, using $y=0$ in the same equation would show
+\begin{align*}
+x^{2}+x &= -1 \\
+x^{2}+x+1 &= 0 \\
+x &= \left( -1 \pm \sqrt{1-4} \right)/2 \\
+x &= \left( -1 \pm \sqrt{-3} \right)/2 \\
+x &= \left( -1 \pm i\sqrt{3} \right)/2 \\
+\end{align*}
+giving the same pair of solutions, but requiring the quadratic formula.
+\end{solution}
+
+\begin{problem}
+Reduce each of these quantities to a real number:
+\begin{enumerate}[(a)]
+\item 
+\[ \frac{1+i2}{3-i4} + \frac{2-i}{5i} \]
+\item $(1-i)^{4}$
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}[(a)]
+\item Start by multiplying the first fraction by th complex conjugate of the denominator over itself. Then simplify:
+\begin{align*}
+\frac{1+i2}{3-i4} + \frac{2-i}{5i} &= \frac{(1+i2)(3-i4)}{(9+16)} + \frac{1+i2}{5} \\
+&= \frac{3+8+i(6-4)}{9+16} + \frac{1+i2}{5} \\
+&= \frac{11+i2}{25} + \frac{1+i2}{5} \\
+&= \frac{11+i2}{25} + \frac{5+i10}{25} \\
+&= \frac{11+i2}{25} + \frac{5+i10}{25} \\
+&= \boxed{\frac{16+i12}{25}}
+\end{align*}
+\item
+Using $i^{2}=-1$, we can find
+\begin{align*}
+(1-i)^{4} &= \left( (1-i)^{2} \right)^{2} \\
+&= \left( -2i \right)^{2} = \boxed{-4}
+\end{align*}
+\end{enumerate}
+\end{solution}
+
+\begin{problem}
+Verify that $\sqrt{2}|z| \ge |\text{Re}(z)| + |\text{Im}(z)|$.
+\end{problem}
+
+\begin{solution}
+I we call $z=x+iy$, then we can see
+\begin{align*}
+(|x|-|y|)^{2} &\ge 0 \\
+|x|^{2} +|y|^{2} -2|x||y| &\ge 0 \\
+|x|^{2} +|y|^{2} &\ge 2|x||y| \\
+|z|^{2} &\ge 2|x||y| \\
+2|z|^{2} &\ge 2|x||y| + |x|^{2} +|y|^{2} \\
+2|z|^{2} &\ge \left(|x| +|y|\right)^{2} \\
+\sqrt{2}|z| &\ge |x| +|y| = |\text{Re}(z)| + |\text{Im}(z)| \\
+\end{align*}
+\end{solution}
+
+\begin{problem}
+In each case, sketch the set of points determined by the given condition:
+\begin{enumerate}[(a)]
+\item $|z-1+1|=1$
+\item $|z+i|\le 3$
+\item $|z-4i|\ge 4$
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}[(a)]
+\item
+\end{enumerate}
+\end{solution}
+
+\end{document}

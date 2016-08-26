@@ -1,0 +1,77 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+% Opening
+\title{Recurrence Properties of Irrational Cutting Sequences}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[subsection]
+
+\subsection{Introduction}
+
+Why do I care?
+
+\section{Topological Dynamic System}
+
+What is a topology? What is a dynamic system? How do the two work together?
+
+\subsection{Topology}
+
+\begin{definition}[power set of a set]\label{powerset}
+Pick an arbitrary set and call it $X$. Then the collection containing each subset of $X$ is called the \underline{power set of $X$}.
+\end{definition}
+
+\begin{definition}[topology on a set]\label{topology}
+Pick an arbitrary set, call it $X$, and call its power set $\mathcal{P}(X)$. We call $\mathcal{T}\subset\mathcal{P}(X)$ a \underline{topology on $X$} if and only if $\mathcal{T}$ is closed under both arbitrary unions and finite intersections.
+\end{definition}
+
+\subsection{Dynamic System}
+
+\section{Binary Shift Space}
+
+How do we characterize the properties of dynamic systems? We need specific ones as examples. Function spaces on a topology are very general, and metric spaces are easy to work with. So pick such a space where the domain of the functions are the integers, the topology is finite, and a metric between functions is well defined. What are we missing out on?
+
+\subsection{Continuous vs Discrete Shift Space}
+
+\subsection{Finite Alphabet Shift Space}
+
+\section{Irrational Cutting Sequences/``Sturmian Words"}
+
+One way of constructing sequences is to pass a continuous curve through a grid, or partition. The ordered intersections of the curve with the grid can be passed to a generating function that produces a corresponding sequence. We then imagine the curve to be a straight line, and the grid to be evenly spaced and orthogonal. Thus the angle of the generating line through the grid along with an initial position define a corresponding sequence based on a particular generating function.
+
+\subsection{Cutting Sequences}
+
+\subsection{Limits of Rationally Cut Sequences}
+
+\subsection{Metric Properties of Cutting Sequences}
+
+\section{Autocorrelations/Return Times}
+
+With our understanding of cutting sequences in mind, we begin to investigate how the dynamic moves from one sequence to the next. Tracking the distance traversed from one function to the next as on a map allows us to examine the semi-periodic nature of the dynamic's orbit. The interesting things happen when the orbit returns arbitrarily close to any given point it starts at, as it does with periodic points. But if the point is specifically not-periodic, then we must track the movement of the orbit explicitly to understand its nature.
+
+\subsection{Uniform Recurrence}
+
+\section{Product Recurrences}
+
+Consider now the product of many dynamic systems. How do we understand their nature as a collective in light of how we view them individually?
+
+\subsection{Weak Product Recurrence}
+
+\section{Periodic Correspondence}
+
+Is there a way to analyze the ``spectrum," or ``frequency space" for the shift space? Periodic
+
+\subsection{Power Correspondence}
+
+\subsection{Remainder Correspondence}
+
+\section{DeBrujin Graphs}
+
+\end{document}

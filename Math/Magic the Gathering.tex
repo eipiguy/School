@@ -1,0 +1,44 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+% Opening
+\title{Trading Card Games}
+\author{Neal D. Nesbitt}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[subsection]
+
+\begin{document}
+\maketitle
+
+Consider a trading card game consisting of players who each construct their own deck of different types of cards. An initial hand is drawn, and play proceeds in turns, where each player potentially draws some collection of cards from their own deck, potentially plays them in some succession, and potentially removes some of them from play. Some of the cards may be able to be played independent of the others, while others may have some number of combinations of dependencies.
+
+Let us now consider the interplay of the randomness of the draw, the dependencies of the cards on each other, and their movement between locations.
+
+\paragraph{}
+We can begin by giving each card in a deck of $n\in\mathbb{N}$ cards an arbitrarily unique number less than or equal to $n$. We can then call the deck $D = \{ 1, 2, \cdots, n \}$.
+
+\paragraph{}
+So we then partition the deck into a variety of sets, such that each partition consists of mutually disjoint collections of cards whose union is the deck. 
+
+\paragraph{}
+Consider the collection of cards in the deck that can be played independently of the others. This set will possibly have some cards that no others rely on. We will call this set $D_{0,0}$. $D_{0,1}$ is the set of independent cards that have exactly one other card depending on them.
+
+Similarly, for any $i$ and $j$, $D_{i,j}$ is the set of cards in the deck that rely on a minimum of $i$ other cards, and that a minimum of $j$ other cards relying on them. For example, lands are independent cards needed by almost every other card in a Magic the Gathering deck, so if a deck of $d$ cards contains $l$ lands, then each of the lands would be in the set $D_{0,(d-l)}$.
+
+\paragraph{}
+If we consider our hand as a statistically random sample of the deck, and that having cards in play lowers the dependencies of other cards, we can begin to formulate the dynamics of the play system. This partition also gives way to a probability matrix.
+
+\begin{align*}
+A &= |D|^{-1}
+\begin{bmatrix}
+|D_{0,0}| & \cdots & |D_{0,n}| \\
+\vdots & \ddots & \vdots \\
+|D_{m,0}| & \cdots & |D_{m,n}| \\
+\end{bmatrix}\\
+\end{align*}
+
+\end{document}

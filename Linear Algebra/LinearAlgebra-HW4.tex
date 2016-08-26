@@ -194,9 +194,7 @@ Let $k$ and $n$ be positive integers and let $F$ be a field. For matrices $A,B \
 Let our notation be as given in the problem, and let us call $a\le n$ the rank of $A$, and $b\le n$ the rank of $B$. 
 
 \paragraph{}
-Then the column space of each matrix has a respective basis, $\mathcal{B}(A) = \{ u_{1},\cdots,u_{a} \}$ and $\mathcal{B}(B) = \{ v_{1},\cdots,v_{b} \}$. The column space of $A+B$ can have at most $a+b$ vectors, where this is only if all of the basis vectors for $A\cup B$ are linearly independent: $\mathcal{B}(A) \cup \mathcal{B}(B) =  \{ u_{1},\cdots,u_{a} ,v_{1},\cdots,v_{b} \}$.
-
-When they are independent like this, the rank of $A+B$ is its maximum: the number of basis vectors, $a+b$, which is no more than the sum of the ranks of $A$ and $B$.
+Then the column space of each matrix has a respective basis, $\mathcal{B}(A) = \{ u_{1},\cdots,u_{a} \}$ and $\mathcal{B}(B) = \{ v_{1},\cdots,v_{b} \}$. The column space of $A+B$ can have dimension at most $a+b$, since $\mathcal{B}(A) \cup \mathcal{B}(B) =  \{ u_{1},\cdots,u_{a} ,v_{1},\cdots,v_{b} \}$ is a spanning set for $A+B$ and has $a+b$ vectors in it. If these vectors were linearly independent from each other, then this union would be a minimal spanning set of $A+B$, and therefore form a basis for this space.
 \end{solution}
 
 \setcounter{section}{11}
@@ -216,12 +214,131 @@ Calculate $|A|$.
 \end{problem}
 
 \begin{solution}
-Let our notation be that same as given in the problem.
-
-Then since for every $j\in\mathbb{N}$ such that $j\le n$, we know $a_{jj}=0$, then by Proposition 11.11 on pg 231, 
+Let our notation be that same as given in the problem, and call $n\in\mathbb{N}$ the number of rows of $A$. Then $A$ is of the form:
 \[
-|A| = \sum_{j=1}^{n}(-1)^{j+j}a_{jj}\cdot|A_{ij}| = \sum_{j=1}^{n} 0\cdot|A_{ij}| = 0
+\begin{bmatrix}
+0 & 1 & \cdots & 1 & 1 \\
+1 & 0 & 1 & \cdots & 1 \\
+\vdots & \ddots & \ddots & \ddots & \vdots \\
+1 & \cdots & 1 & 0 & 1 \\ 
+1 & 1 & \cdots & 1 & 0 \\
+\end{bmatrix}
 \]
+
+Noting the properties of a determinant function, we proceed to reduce the matrix using Gaussian elimination, beginning by flipping the first and last rows:
+\[
+\begin{vmatrix}
+0 & 1 & \cdots & 1 & 1 \\
+1 & 0 & 1 & \cdots & 1 \\
+\vdots & \ddots & \ddots & \ddots & \vdots \\
+1 & \cdots & 1 & 0 & 1 \\ 
+1 & 1 & \cdots & 1 & 0 \\
+\end{vmatrix}
+= -
+\begin{vmatrix}
+1 & 1 & \cdots & 1 & 0 \\
+1 & 0 & 1 & \cdots & 1 \\
+\vdots & \ddots & \ddots & \ddots & \vdots \\
+1 & \cdots & 1 & 0 & 1 \\ 
+0 & 1 & \cdots & 1 & 1 \\
+\end{vmatrix}
+\]
+
+Now subtract the first row from each row except the last:
+\[
+-
+\begin{vmatrix}
+1 & 1 & \cdots & 1 & 0 \\
+1 & 0 & 1 & \cdots & 1 \\
+\vdots & \ddots & \ddots & \ddots & \vdots \\
+1 & \cdots & 1 & 0 & 1 \\ 
+0 & 1 & \cdots & 1 & 1 
+\end{vmatrix}
+=
+-
+\begin{vmatrix}
+1 & 1 & 1 & 1 & \cdots & 1 & 0 \\
+1 & 0 & 1 & 1 & \cdots & 1 & 1 \\
+1 & 1 & 0 & 1 & \cdots & 1 & 1 \\
+\vdots & \vdots & \ddots & \ddots & \ddots & \vdots & \vdots \\
+1 & 1 & \cdots & 1 & 0 & 1 & 1 \\ 
+1 & 1 & \cdots & 1 & 1 & 0 & 1 \\ 
+0 & 1 & \cdots & 1 & 1 & 1 & 1 
+\end{vmatrix}
+=
+-
+\begin{vmatrix}
+1 & 1 & 1 & 1 & \cdots & 1 & 0 \\
+0 & -1 & 0 & 0 & \cdots & 0 & 1 \\
+0 & 0 & -1 & 0 & \cdots & 0 & 1 \\
+\vdots & \vdots & \ddots & \ddots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & 0 & -1 & 0 & 1 \\ 
+0 & 0 & \cdots & 0 & 0 & -1 & 1 \\ 
+0 & 1 & \cdots & 1 & 1 & 1 & 1 
+\end{vmatrix}
+\]
+
+Now add every row except the first to the last row:
+\[
+-
+\begin{vmatrix}
+1 & 1 & 1 & 1 & \cdots & 1 & 0 \\
+0 & -1 & 0 & 0 & \cdots & 0 & 1 \\
+0 & 0 & -1 & 0 & \cdots & 0 & 1 \\
+\vdots & \vdots & \ddots & \ddots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & 0 & -1 & 0 & 1 \\ 
+0 & 0 & \cdots & 0 & 0 & -1 & 1 \\ 
+0 & 1 & \cdots & 1 & 1 & 1 & 1 
+\end{vmatrix}
+= -
+\begin{vmatrix}
+1 & 1 & 1 & 1 & \cdots & 1 & 0 \\
+0 & -1 & 0 & 0 & \cdots & 0 & 1 \\
+0 & 0 & -1 & 0 & \cdots & 0 & 1 \\
+\vdots & \vdots & \ddots & \ddots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & 0 & -1 & 0 & 1 \\ 
+0 & 0 & \cdots & 0 & 0 & -1 & 1 \\ 
+0 & 0 & \cdots & 0 & 0 & 0 & n-1 
+\end{vmatrix}
+\]
+And finally add $\frac{1}{n-1}$ times the last row to every row except the first:
+\[-
+\begin{vmatrix}
+1 & 1 & 1 & 1 & \cdots & 1 & 0 \\
+0 & -1 & 0 & 0 & \cdots & 0 & 1 \\
+0 & 0 & -1 & 0 & \cdots & 0 & 1 \\
+\vdots & \vdots & \ddots & \ddots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & 0 & -1 & 0 & 1 \\ 
+0 & 0 & \cdots & 0 & 0 & -1 & 1 \\ 
+0 & 0 & \cdots & 0 & 0 & 0 & n-1 
+\end{vmatrix}
+= -
+\begin{vmatrix}
+1 & 1 & 1 & 1 & \cdots & 1 & 0 \\
+0 & -1 & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & -1 & 0 & \cdots & 0 & 0 \\
+\vdots & \vdots & \ddots & \ddots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & 0 & -1 & 0 & 0 \\ 
+0 & 0 & \cdots & 0 & 0 & -1 & 0 \\ 
+0 & 0 & \cdots & 0 & 0 & 0 & n-1 
+\end{vmatrix}
+\]
+
+The inner matrix is now diagonal, and we can see by processing down the first column that the determinant will be equivalent to the determinant of this inner matrix:
+\[
+-
+\begin{vmatrix}
+1 & 1 & 1 & 1 & \cdots & 1 & 0 \\
+0 & -1 & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & -1 & 0 & \cdots & 0 & 0 \\
+\vdots & \vdots & \ddots & \ddots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & 0 & -1 & 0 & 0 \\ 
+0 & 0 & \cdots & 0 & 0 & -1 & 0 \\ 
+0 & 0 & \cdots & 0 & 0 & 0 & n-1 
+\end{vmatrix}
+= (-1)^{n-1}(n-1)
+\]
+
 \end{solution}
 
 \setcounter{problem}{682}
