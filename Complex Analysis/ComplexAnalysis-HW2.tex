@@ -1,0 +1,87 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Complex Analysis HW1\\}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{solution}{Solution}[problem]
+\renewcommand{\thesolution}{\theproblem}
+
+\begin{problem}
+Find the principal argument, $\arg (z)$, when
+\begin{enumerate}[(a)]
+\item $z = \frac{i}{-2-2i}$
+\item $z = (\sqrt{3}-i)^{6}$
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}[(a)]
+\item  Since 
+\[ z = \frac{i}{-2-2i} = \frac{i(-2+2i)}{4+4} = \frac{-(1+i)}{4} \]
+Then the point has principal argument $\arg(z)=-\pi/3$
+\item Here we use Pascal's formula to see$z = (\sqrt{3}-i)^{6}$
+\end{enumerate}
+\end{solution}
+
+\begin{problem}
+Use de Moivere's formula to derive the following trigonometric identities:
+\begin{enumerate}[(a)]
+\item $\cos (3\theta) = \cos^{3}(\theta) -3\cos(\theta)\sin(\theta)$
+\item $\sin(3\theta) = 3\cos^{2}(\theta)\sin(\theta) -\sin^{3}(\theta)$
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Find the square roots of
+\begin{enumerate}[(a)]
+\item $2i$
+\item $1-\sqrt{3}i$
+\end{enumerate}
+and express them in rectangular coordinates.
+\end{problem}
+
+\begin{problem}
+Find the four zeros of the polynomial $z^{4}+4$, one of them being $z_{0}=\sqrt{2}e^{i\pi/4} = 1+i$. Then use those zeros to factor $z^{4}+4$ into quadratic factors with real coefficients.
+\end{problem}
+
+\begin{problem}
+Show that if $c$ is any $n$th root of unit other than unity itself, then
+\[ 1 + c + c^{2} + \cdots + c^{n-1} = 0 \]
+\end{problem}
+
+\begin{problem}
+Sketch the following sets and determine which are domains:
+\begin{enumerate}[(a)]
+\item $\text{Im}(z)>1$
+\item $\text{Im}(z)=1$
+\item $0 \le \arg(z) \le \pi/4$, $(z\ne0)$
+\item $|z-4| \ge |z|$
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+In each case, sketch the closure of the set:
+\begin{enumerate}[(a)]
+\item $|\text{Re}(z)| < |z|$
+\item $\text{Re}(1/z) \le 1/2$
+\item $\text{Re}(z^{2}) > 0$
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Prove that a finite set of points $z_{1},z_{2},\dots,z_{n}$ cannot have any accumulation points.
+\end{problem}
+
+\end{document}

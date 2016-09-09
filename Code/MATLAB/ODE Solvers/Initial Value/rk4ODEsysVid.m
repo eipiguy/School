@@ -1,4 +1,4 @@
-function [ tp,yp,f ] = rk4ODEsysVid( dydt,tspan,y0,h,varargin )
+function [ tp,yp,frames ] = rk4ODEsysVid( dydt,tspan,y0,h,varargin )
 %% rk4ODEsysVid: solves a system of first order ODEs, and plots the result
 %   [ t,y ] = rk4sys( dydt,tspan,y0,h,varargin )
 %       Uses the 4th order Runga Kutta method
@@ -148,10 +148,15 @@ end
 
 % Clear all current figures and turn off hold
 cla;
+clf;
 hold on;
 
+% get the current screen size, and resize the figure window
+% to fit directly in the middle of the screen at half it's size
+
+figHist = gcf;
 scrsz = get(groot,'ScreenSize');
-set(gcf,'Position',[scrsz(3)/4 scrsz(4)/4 scrsz(3)/2 scrsz(4)/2]);
+set(figHist,'Position',[scrsz(3)/6 scrsz(4)/6 (2*scrsz(3))/3 (2*scrsz(4))/3]);
 
 % Set up the grid of sub plots for each of the time and phase plots.
 for i=1:(m^(2))
@@ -159,12 +164,22 @@ for i=1:(m^(2))
     set(sub(i),'Visible','off');
 end
 
+ySpan = zeros(2,m);
 % Place each time plot solution in the left column.
 for i=1:m
     subplot(sub(1+(i-1)*m));
     plot(tp,yp(:,i));
     xlabel('t');
     ylabel(sprintf('y(%d)',i));
+    
+    % Set the span of the y-axis to be the 
+    % column with the corresponding index
+    ySpan(:,i) = ylim';
+    %display(ySpan);
+    
+    xlim manual;
+    ylim manual;
+    hold(sub(1+(i-1)*m),'on');
 end
 
 % Place phase graphs next to their corresponding time solutions
@@ -174,29 +189,155 @@ for i=1:m-1
         plot(yp(:,j),yp(:,i));
         xlabel(sprintf('y(%d)',j));
         ylabel(sprintf('y(%d)',i));
+        xlim manual;
+        ylim manual;
+        hold(sub(((i-1)*m)+j),'on');        
     end
 end
 
 %==========================================================================
 %% Make Video Frames:
 
-for t=1:((tf-ti)/h);
-    % Place each time plot solution in the left column.
+% Set the quivers' t and y seperation
+tDiv = (tf-ti)/20;
+
+% Create the row vectors for the sample points
+% of the time and the current y component
+tRV = ti:tDiv:tf;
+display(tRV);
+cDiv = floor(length(tp)/10);
+counter = 0;
+
+for t=1:length(tp);
+    % Place each time plot solution in the left column.        
     for i=1:m
+        
+        % Point at the correct subplot, 
         subplot(sub(1+(i-1)*m));
-        hold(sub(1+(i-1)*m),'on');
+        
+        % If we are at a "key" time,
+        % then compute a new column of dY
+        if (t==1)||(mod(t,cDiv)==0)
+            counter = counter+1;
+            
+            ySpan(3,i) = (ySpan(2,i)-ySpan(1,i))/10;
+            yRV = ySpan(1,i):ySpan(3,i):ySpan(2,i);
+            
+            % Compute the matrix of the current dY with
+            % time slots stored as rows again
+            if exist('dGrid','var')==0
+                dGrid = zeros(length(tRV),length(yRV));
+            end
+            for yM=1:length(yRV)
+                
+                % Create the y input to feed into dydt
+                % With each input slot as a row
+                
+                yIn = yp(t,:);      % Start with the current y values
+                yIn(i) = yRV(yM);   % Set the current component to 
+                                    % match a grid point
+                %display(yIn);
+                
+                % Compute the associated slope 
+                % and set the place in the grid
+                dY = dydt( tp(t), yIn );
+                dGrid(counter,yM) = dY(i);
+            end
+            %display(dGrid);
+        
+            % Normalize the solution vectior's components
+            % to fit in between each quiver
+            %dMax = max(max(abs(dGrid)));
+            %display(dMax);
+            dispGrid = dGrid(counter,:)';%/dMax;
+        
+            % Set up the vertices of the quivers
+            [ inMeshX, inMeshY ] = meshgrid(tp(t),yRV);
+            %display(inMeshX);
+            %display(inMeshY);
+            
+            q = quiver(inMeshX,inMeshY,ones(size(dispGrid)),dispGrid);
+            q.Color = 'k';
+            q.Marker = '+';
+            q.MarkerSize = 3;
+            q.ShowArrowHead = 'off';
+            %q.MaxHeadSize = max(tDiv,ySpan(3,i));
+            %q.AutoScale = 'off';
+            q.AlignVertexCenters = 'on';
+        end
+            
+        % Overlay the current time point
         plot(tp(t),yp(t,i),'ro');
     end
 
     % Place phase graphs next to their corresponding time solutions
     for i=1:m-1
         for j=i+1:m
+            % Start with the background dynamics
+            
+            % Point at the correct subplot, 
             subplot(sub(((i-1)*m)+j));
-            hold(sub(((i-1)*m)+j),'on');
+            
+            xPhDiv = (ySpan(2,j)-ySpan(1,j))/10;
+            xPhRV = ySpan(1,j):xPhDiv:ySpan(2,j);
+            yPhDiv = (ySpan(2,i)-ySpan(1,i))/10;
+            yPhRV = ySpan(1,i):yPhDiv:ySpan(2,i);
+            
+            % Compute the matrix of the current dY with
+            % time slots stored as rows again
+            dPhGridX = zeros(length(xPhRV),length(yPhRV));
+            dPhGridY = zeros(length(xPhRV),length(yPhRV));
+            for xM=1:length(xPhRV)
+                for yM=1:length(yPhRV)
+                
+                    % Create the y input to feed into dydt
+                    % With each input slot as a row
+                
+                    yIn = yp(t,:);      % Start with the current y values
+                    % Set the current component to match a grid point
+                    yIn(j) = xPhRV(xM);
+                    yIn(i) = yPhRV(yM);
+                    %display(yIn);
+                
+                    % Compute the associated slope 
+                    % and set the place in the grid
+                    dY = dydt( tp(t), yIn );
+                    dPhGridX(xM,yM) = dY(j);
+                    dPhGridY(xM,yM) = dY(i);
+                end
+            end
+            %display(dPhGridX);
+            %display(dPhGridY);
+        
+            % Normalize the solution vectior's components
+            % to fit in between each quiver
+            %dMaxX = max(max(abs(dPhGridX)));
+            %dMaxY = max(max(abs(dPhGridY)));
+            %display(dMaxX);
+            %display(dMaxY);
+            dispGridX = dPhGridX';%/dMaxX;
+            dispGridY = dPhGridY';%/dMaxY;
+        
+            % Set up the vertices of the quivers
+            [ inMeshX, inMeshY ] = meshgrid(xPhRV,yPhRV);
+            %display(inMeshX);
+            %display(inMeshY);
+            
+            dq.Visible = 'off';
+            dq = quiver(inMeshX,inMeshY,dispGridX,dispGridY);
+            dq.Color = 'k';
+            dq.Marker = '+';
+            dq.MarkerSize = 3;
+            dq.ShowArrowHead = 'off';
+            %q.MaxHeadSize = min(tDiv,ySpan(3,i));
+            %dq.AutoScale = 'off';
+            dq.AlignVertexCenters = 'on';
+        
+            % Overlay the current time point
             plot(yp(t,j),yp(t,i),'ro');
         end
     end
-    f(t) = getframe(gcf);
+    frames(t) = getframe(figHist);
 end
 %##########################################################################
 end
