@@ -1,0 +1,68 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{tasks}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Complex Analysis HW3\\}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{solution}{Solution}[problem]
+\renewcommand{\thesolution}{\theproblem}
+
+\begin{problem}
+Verify the mapping of the region and boundary shown in Fig. 7 of Appendix 2, where the transformation is $w=e^{z}$.
+\end{problem}
+
+\begin{problem}
+Find the image of the semi-infinite strip $x\ge 0$,$0\le y \le \pi$ under the transformation $w=e^{z}$, and label corresponding portions of the boundaries.
+\end{problem}
+
+\begin{problem}
+Use definition (2), Sec. 15, to prove that
+\begin{tasks}(3)
+\task $\lim\limits_{z\to z_{0}} \text{Re} (z) = \text{Re} (z_{0})$
+\task $\lim\limits_{z\to z_{0}} \bar{z} = \bar{z_{0}}$
+\task $\lim\limits_{z\to z_{0}} (\bar{z}^{2}/z) = 0$
+\end{tasks}
+\end{problem}
+
+\begin{problem}
+Let $a,b,c$ denote complex constants. Then use definition (2), Sec. 14, to show that
+\begin{tasks}(2)
+\task $\lim\limits_{z\to z_{0}} (az+b) = az_{0} + b$
+\task $\lim\limits_{z\to z_{0}} (z^{2}+c) = z_{0}^{2} + c$
+\end{tasks}
+\end{problem}
+
+\begin{problem}
+Show that the limit of the function
+\[ f(z) = \left(\frac{z}{\bar{z}}\right)^{2} \]
+as $z$ tends to $0$ does not exist.
+\end{problem}
+
+\begin{problem}
+Show that
+\[ \lim\limits_{z\to z_{0}} f(z)g(z) = 0 \text{ if } \lim\limits_{z\to z_{0}} f(z) = 0 \]
+and if there exists a positive number $M$ such that $|g(z)\le M$ for all $z$ in some neighborhood of $z_{0}$
+\end{problem}
+
+\begin{problem}
+Use the theorem in Sec. 17 to show that
+\begin{tasks}(3)
+\task \[ \lim\limits_{z\to z_{0}} \frac{4z^{2}}{(z-1)^{2}} = 4\]
+\task \[ \lim\limits_{z\to z_{0}} \frac{1}{(z-1)^{3}} = \infty \]
+\task \[ \lim\limits_{z\to z_{0}} \frac{z^{2}+1}{(z-1)^{3}} = \infty \]
+\end{tasks}
+\end{problem}
+
+\end{document}

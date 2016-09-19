@@ -20,7 +20,7 @@ function [ dtheta ] = thetaNeuron( t, theta, I )
 %##########################################################################
 %% ODE Equation:
 
-    dtheta = 1 - cos(theta) + (( 1 + cos(theta) ).*(I(t)));        
+    dtheta = 1 - cos(theta) + ((I(t)).*( 1 + cos(theta) ));        
 
 %##########################################################################
 end

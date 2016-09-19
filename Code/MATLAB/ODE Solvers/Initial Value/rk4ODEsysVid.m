@@ -161,7 +161,9 @@ set(figHist,'Position',[scrsz(3)/6 scrsz(4)/6 (2*scrsz(3))/3 (2*scrsz(4))/3]);
 % Set up the grid of sub plots for each of the time and phase plots.
 for i=1:(m^(2))
     sub(i) = subplot(m,m,i);
-    set(sub(i),'Visible','off');
+    if (floor(i./m) > mod(i,m)+1)
+        set(sub(i),'Visible','off');
+    end
 end
 
 ySpan = zeros(2,m);
@@ -176,12 +178,12 @@ for i=1:m
     % column with the corresponding index
     ySpan(:,i) = ylim';
     %display(ySpan);
-    
     xlim manual;
     ylim manual;
     hold(sub(1+(i-1)*m),'on');
 end
 
+if m >= 2
 % Place phase graphs next to their corresponding time solutions
 for i=1:m-1
     for j=i+1:m
@@ -194,7 +196,7 @@ for i=1:m-1
         hold(sub(((i-1)*m)+j),'on');        
     end
 end
-
+end
 %==========================================================================
 %% Make Video Frames:
 
@@ -204,7 +206,7 @@ tDiv = (tf-ti)/20;
 % Create the row vectors for the sample points
 % of the time and the current y component
 tRV = ti:tDiv:tf;
-display(tRV);
+%display(tRV);
 cDiv = floor(length(tp)/10);
 counter = 0;
 
@@ -240,7 +242,7 @@ for t=1:length(tp);
                 
                 % Compute the associated slope 
                 % and set the place in the grid
-                dY = dydt( tp(t), yIn );
+                dY = dydt( tp(t), yIn, varargin{:} );
                 dGrid(counter,yM) = dY(i);
             end
             %display(dGrid);
@@ -270,6 +272,7 @@ for t=1:length(tp);
         plot(tp(t),yp(t,i),'ro');
     end
 
+    if m >= 2
     % Place phase graphs next to their corresponding time solutions
     for i=1:m-1
         for j=i+1:m
@@ -301,7 +304,7 @@ for t=1:length(tp);
                 
                     % Compute the associated slope 
                     % and set the place in the grid
-                    dY = dydt( tp(t), yIn );
+                    dY = dydt( tp(t), yIn, varargin{:} );
                     dPhGridX(xM,yM) = dY(j);
                     dPhGridY(xM,yM) = dY(i);
                 end
@@ -336,6 +339,7 @@ for t=1:length(tp);
             % Overlay the current time point
             plot(yp(t,j),yp(t,i),'ro');
         end
+    end
     end
     frames(t) = getframe(figHist);
 end

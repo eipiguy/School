@@ -1,0 +1,163 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{blindtext}
+\usepackage{enumitem}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+
+% Opening
+\title{Notes of S. Coombes and A. Byrne's\\
+``Next Generation Neural Mass Models"}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{function}{Function}[section]
+
+\section*{Summary}
+
+\underline{Neural mass models} are ways of measuring \underline{coarse grained activity} of large populations of neurons and synapses. They were developed in the 1970s and have been proven useful in understanding brain rhythms. We consider the \underline{$\theta$-neuron model} that admits an \underline{exact mean-field description} for \underline{instantaneous pulsatile interactions}.
+
+\paragraph{}
+More realistic synapse models lead to a mean-field model that accounts for the evolution of \underline{neural network synchrony}. \underline{Bifurcation analysis} is used to uncover the primary mechanism for generating oscillations at the \underline{single and two population level}, and numerical simulations can show event related synchronization and de-synchronization.
+
+\section{Introduction}
+
+\begin{definition}{\it{neural mass model}}\label{def:neuralmassmodel}
+\begin{itemize}[noitemsep]
+\item low dimensional
+\item aim to describe the coarse grained activity of large populations of neurons and synapses
+\item typically cast as systems of ODEs
+\end{itemize}
+\end{definition}
+
+Most currently used neural mass models are modern variants of the \underline{2d Wilson-Cowan model} which tracks two populations of neurons: \underline{excitatory} and \underline{inhibitory}. This can be broadened in a variety of ways:
+\begin{enumerate}
+\item Zetterberg model for EEG:
+\begin{enumerate}
+\item three interacting neural mass models (instead of two) as a minimal representation of a \underline{cortical column}: \underline{pyramidal cells}, excitatory inter-neurons, and inhibitory inter-neurons.
+\item used to explain epileptic brain dynamics
+\end{enumerate}
+\item Liley's model pays particular attention to the role of \underline{synaptic reversal potentials}
+\begin{enumerate}
+\item used in understanding the importance of chaos in cognition and perception
+\item used to understand EEG rhythms within the delta (1-4 Hz) to gamma (30-70 Hz) bands.
+\end{enumerate}
+\end{enumerate}
+
+\paragraph{}
+Neural mass models have been used to describe \underline{brain resonance phenomena}, \underline{resting brain state activity}, and are used widely within the neuro-imaging community. While they are useful, it is important to remember that they are phenomenological in nature, and at best describe populations of many thousands of near identical interconnected neurons with a preference to operate in synchrony.
+
+\paragraph{}
+The variation of synchrony within a neural population is believed to underly the decrease or increase of power seen within given EEG frequency bands. A decrease in power is called an ``event-related desynchronization," or ERD, while an increase in power is called an ``event-related synchronization," or ERS. Naive neural mass models' reliance on synchrony means they are not capable of describing ERDs or ERSs at the single population level.
+
+\paragraph{}
+In order to revise the current models, observations of \underline{macroscopic coherent states} in large networks of coupled spiking neuron models has lead to a search to equivalent low-dimensional dynamical descriptions. The $\theta$-neuron model seems well-suited for such a use.
+
+\paragraph{}
+An outline of the contained sections is as follows:
+\begin{enumerate}
+\item introduction
+\item synaptic processing in standard neural mass models
+\item a similar synapse model using a $\theta$-neuron network
+\item bifurcation analysis to find primary mechanisms for generating oscillations within neural populations
+\begin{enumerate}
+\item numerical simulations support ERD and ERS
+\end{enumerate}
+\item future use in large scale brain simulations
+\end{enumerate}
+
+\section{Neural Mass Modeling}
+
+Neural mass models generate brain rhythms using the notion of population firing rates. This is an attempt to sidestep large scale simulations of individual neurons.
+
+\paragraph{}
+Pre-synaptic firing results in post-synaptic current modeled by
+\begin{function}{Post-Synaptic Current}\label{fun:I}
+\[ I = g( v_{\text{syn}} - v ) \]
+\begin{itemize}[noitemsep]
+\item $v$ voltage potential of the post-synaptic neuron
+\item $v_{\text{syn}}$ reversal potential of the post-synaptic membrane
+\item $g$ conductance
+\end{itemize}
+\end{function}
+
+\paragraph{}
+The conductance $g$ is proportional to the probability that a synaptic receptor channel is in an open conducting state. This is in turn related to the concentration of neurotransmitter present in the synaptic cleft.
+
+\paragraph{}
+The sign of $v_{\text{syn}}$ relative to the resting potential (assumed to be zero) determines whether the synapse is considered:
+\begin{itemize}
+\item excitatory $( v_{\text{syn}} > 0 )$
+\item inhibitory $( v_{\text{syn}} < 0 )$
+\end{itemize}
+
+\paragraph{}
+To simplify we can remove the noisy influences of the synaptic cleft, and instead model the post-synaptic current as a result only of pre-synaptic neurotransmitter activity. A post-synaptic conductance change $g(t)$ would be given by
+\begin{function}{Post-Synaptic Conductance Change}\label{fun:g}
+\[ g(t) = ks( t- T ) \]
+\begin{itemize}
+\item $T$ arrival time of pre-synaptic action potential
+\item $t \ge T$
+\item $s(t)$ fits the shape of experimental post-synaptic conductance
+\item $k$ scaling constant
+\end{itemize}
+\end{function}
+
+\paragraph{}
+A common normalized choice for $s(t)$ is the $\alpha$-function:
+\begin{function}{Normalized Post-Synaptic Conductance Shape}
+\[ s(t) = \alpha ^{2}t e^{-\alpha t} \Theta(t) \]
+where $\Theta(t)$ is the Heaviside step function.
+\end{function}
+
+\paragraph{}
+The conductance change arising from a train of action potentials with firing times $T^{m}$ is then given by $g(t) = k \sum\limits_{m} s( t - T^{m} )$.
+
+\paragraph{}
+If $s$ is the \underline{Green's function} of a \underline{linear differential operator}, so that $\mathcal{Q}s=\delta$, then this is written equivalently as 
+\[ \mathcal{Q} g(t) = k \sum\limits_{m} \delta( t - T^{m} ) \]
+
+This is the case for our choice of $s$, and in this case
+\[ \mathcal{Q} = \left( 1 + \alpha^{-1} \frac{d}{dt} \right)^{2} \]
+
+\paragraph{}
+Neural population models rely on firing rates rather than action potentials. To derive this as a natural extension of the above, we perform a short time average of $\mathcal{Q}g(t)$ over some time scale $\tau$ and assume that $s(t)$ is sufficiently slow so that $\langle\mathcal{Q}g\rangle_{t}$ is approximately constant, where 
+\[ \langle x \rangle_{t} = \tau^{-1}\int_{t-\tau}^{t} x( t^{\prime} ) dt^{\prime} \]
+
+\paragraph{}
+Then $\mathcal{Q}g = kf$ where $f$ is the instantaneous firing rate (number of spikes over some time $\Delta$).
+
+\paragraph{}
+Take a single neuron experiencing a constant drive to be a function of pre-synaptic activity alone. Then if we assume that a neuron spends the majority of its time close to rest, such that $v_{\text{syn}} - v \approx v_{\text{syn}}$, and then absorb a factor of $v_{\text{syn}}$ into $k$, we will be led to equations of the form 
+\[ \mathcal{Q}g = \kappa f(g) \]
+for some strength of coupling $\kappa$, and population firing rate function $f(g)$.
+
+\paragraph{}
+A common choice for the population firing rate function $f$ is the sigmoid function
+\[ f(g) = \frac{f_{0}}{1 + e^{-r(g-g_{0})}} \]
+where $g_{0}$ is the population firing threshold, $r$ is a steepness parameter. This function saturates to $f_{0}$ for large $g$.
+
+\paragraph{}
+An classical example of the extension of this model to multiple interacting populations can be found in the Jansen-Rit model. It can be written in the form:
+\begin{align*}
+\begin{bmatrix}
+\mathcal{Q}_{E}g_{P} \\
+\mathcal{Q}_{E}g_{E} \\
+\mathcal{Q}_{I}g_{I}
+\end{bmatrix} = 
+\begin{bmatrix}
+\kappa_{P} f( g_{E} - g_{I} ) \\
+\kappa_{E} f( w_{1} g_{P} ) + A \\
+\kappa_{E} f( w_{2} g_{P} ) + A
+\end{bmatrix}
+\end{align*}
+which represents a network of interacting pyramidal neurons ($P$), inhibitory inter-neurons ($I$), and excitatory inter-neurons ($E$).
+
+
+\end{document}
