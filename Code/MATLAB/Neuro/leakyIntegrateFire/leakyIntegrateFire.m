@@ -50,9 +50,30 @@ tTC = 10;   % threshold decreasing time constant (ms)
 
 nPop = length(V);   % the number of neurons in the population
 
-% Set the excitatory population:
+% Set the inputs for the respective neuron types
 for i=1:nPop
     
+    % First set the extitatory population
+    if (i/nPop) <= ePercent
+        
+        % Set the leak influence and 
+        % the direct input's influence
+        dV(i) = (gIn.*In(i)) - (gL.*(V(i)-eL));
+        
+        % Set any excitatory influence
+        if true
+            dV(i) = dV(i) - (gE);
+        end
+        
+        % Set any inhibitory influence
+        if true
+            
+        end       
+        
+    % Then set the fast inhibitory population
+    else
+        
+    end
 end
 
 %==========================================================================
