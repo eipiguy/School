@@ -1,0 +1,101 @@
+
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{arydshln}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Opening
+\title{Neural Networks}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\lstset{basicstyle=\ttfamily,
+		language=Matlab,
+		keywordstyle=\color{blue},
+		commentstyle=\color{dkgreen},
+		stringstyle=\color{mauve},
+		identifierstyle=\bf
+		}
+
+\section{Background}
+
+\subsection{Neuronal Population Characteristics}
+
+\paragraph{}
+To begin, let us consider some population of $N$ neurons and give them each an index from an indexing set $\{ 1, \dots, N \}$. We can then define a potential vector $V = ( V_{1}, \dots, V_{N} )$, where for any $i \in \{ 1, \dots, N \}$, $V_{i}$ is the electric potential difference across the membrane of the $i^{\text{th}}$ neuron.
+
+\begin{definition}[$\mathbf{v}(t) = \textbf{potential vector}$]\label{v}
+Given a population of $N\in\mathbb{N}$ neurons, for any $i \in \{ 1, \dots, N \}$, let $V_{i}(t)\in\mathbb{R}$ be the electric potential difference (in volts, V) across the membrane of the $i^{\text{th}}$ neuron at time $t\in\mathbb{R}$.\\
+\\
+Define the potential difference, or voltage, vector $\mathbf{v}(t)\in\mathbb{R}^{N}\times\mathbb{R}$ to be $\mathbf{v}(t) = ( V_{1}(t), \dots, V_{N}(t) )$. 
+\end{definition}
+
+\paragraph{}
+In a normal resting state, each neuron sits at a particular equilibrium voltage given the neuron's characteristics. So let us also define a corresponding equilibrium voltage vector to account for these.
+
+\begin{definition}[$\mathbf{e}(t) = \textbf{equilibrium potential vector}$]\label{e}
+Given a population of $N\in\mathbb{N}$ neurons, for any $i \in \{ 1, \dots, N \}$, let $E_{i}\in\mathbb{R}$ be the equilibrium, or resting, potential difference (in volts, V) across the membrane of the $i^{\text{th}}$ neuron at time $t\in\mathbb{R}$.\\
+\\
+Define the equilibrium potential difference, or voltage, vector $\mathbf{e}(t)\in\mathbb{R}^{N}\times\mathbb{R}$ to be $\mathbf{e}(t) = ( E_{1}(t), \dots, E_{N}(t) )$. 
+\end{definition}
+
+Now, with $N$ total neurons, there are a possibility of $N^{2}$ inter-neural connections, or synapses. Each of these connections has an associated conductance which we idealize as constant. We set these conductances within a $N\times N$ matrix, where the columns index the sending neurons, and the rows index the receivers. Because of the directional nature of the connections, (received and delivered signals pass through separate channels) this matrix is not normally considered symmetric.
+
+\begin{definition}[$G = \textbf{conductance matrix}$]\label{G}
+Given a population of $N\in\mathbb{N}$ neurons, for any $i,j \in \{ 1, \dots, N \}$, let $G_{ij}\in\mathbb{R}$ be the conductance (multiplicative inverse of the resistance) of the channel starting from neuron $i$ and feeding into neuron $j$.\\
+\\
+Define the matrix, $G\in\mathbb{R}^{N}\times\mathbb{R}^{N}$, to have elements $[ G_{ij} ]_{i,j=1}^{N}$.
+\end{definition}
+
+\subsection{Electrical Considerations}
+
+\paragraph{}
+We now look to some properties of electrical circuits to give us the beginnings of a dynamic system. To start, imagine the membrane of each neuron as a capacitor that holds charged ions separated on either side of its surface. The capacitance is the ratio of the charge on either side to the corresponding potential difference:
+\[ C(t) = \frac{q(t)}{V(t)} \implies q(t) = C(t)V(t) \]
+
+If we idealize the capacitance as a fixed physical constant for each neuron ($\forall t$, $C(t)=C$), then the resulting derivative collapses:
+\[ \dot{q}(t) = V(t)\dot{C}(t) + C(t)\dot{V}(t) = C\dot{V}(t) \]
+And since current is defined as the change in charge over time, $I(t) = \dot{q}(t)$, then
+\[ C\dot{V}(t) = I(t) \]
+
+\paragraph{}
+We can track the current in and out of a neuron very well conceptually, so this is a convenient way to correlate synaptic activity to the potential in each cell. Let us formalize these definitions before we move on.
+
+\begin{definition}[$\mathbf{c} = \textbf{capacitence vector}$]\label{c}
+Given a population of $N\in\mathbb{N}$ neurons, for any $i \in \{ 1, \dots, N \}$, let $C_{i}\in\mathbb{R}$ be the $i^{\text{th}}$ neuron's membrane capacitance (in farads, F).\\
+\\
+Define the capacitance vector $\mathbf{c}\in\mathbb{R}^{N}$ to be $\mathbf{c} = ( C_{1}, \dots, C_{N} )$. 
+\end{definition}
+
+\begin{definition}[$\mathbf{i}(t) = \textbf{current vector}$]\label{i}
+Given a population of $N\in\mathbb{N}$ neurons, for any $i \in \{ 1, \dots, N \}$, let $I_{i}(t)\in\mathbb{R}$ be the net current entering the $i^{\text{th}}$ neuron's membrane (in amperes, A) at time $t\in\mathbb{R}$.\\
+\\
+Define the current vector $\mathbf{i}(t)\in\mathbb{R}^{N}\times\mathbb{R}$ to be $\mathbf{i}(t) = ( I_{1}(t), \dots, I_{N}(t) )$.
+\end{definition}
+
+If we apply Ohm's law ($V=IR\implies I=V/R=GV$) across each synapse, then
+\[ \mathbf{i}(t) = G\mathbf{v}(t) \]
+giving us our differential equation
+\[ \mathbf{c}\cdot\dot{\mathbf{v}}(t) = G\mathbf{v}(t) \]
+
+\section{Equilibrium Dynamics}
+Since we know that each neuron self regulates to maintain a certain voltage, we must add in a ``leaking" term that maintains this by allowing each neuron to pull its associated equilibrium current from each synapse all times:
+\begin{align*}
+\mathbf{c}\cdot\dot{\mathbf{v}}(t) &= G\mathbf{v}(t) - G\mathbf{e}\\
+	&= G \left( \mathbf{v}(t) - \mathbf{e} \right) 
+\end{align*}
+
+\end{document}

@@ -1,4 +1,4 @@
-function [ tp,yp,frames ] = rk4ODEsysVid( dydt,tspan,y0,h,varargin )
+function [ tp,yp,fireT,threshT,frames ] = rk4NeuroSysVid( dydt,tspan,y0,h,threshold,fireV,holdTime,varargin )
 %% rk4ODEsysVid: solves a system of first order ODEs, and plots the result
 %   [ t,y ] = rk4sys( dydt,tspan,y0,h,varargin )
 %       Uses the 4th order Runga Kutta method
@@ -12,6 +12,8 @@ function [ tp,yp,frames ] = rk4ODEsysVid( dydt,tspan,y0,h,varargin )
 %   OR tspan = [ti,t1,t2...,tf] points to approximate the function at
 %   y0 = initial values of dependent variables
 %   h = step size
+%   threshold = threshold potential for each neuron
+%   fireV = voltage to hold each neuron to simulate firing
 %   p1,p2,... = additional parameters used by dydt
 % output:
 %   tp = vector of independent variables
@@ -24,6 +26,9 @@ function [ tp,yp,frames ] = rk4ODEsysVid( dydt,tspan,y0,h,varargin )
 %   Variable Declarations:
 %   ====
 %   Main Algorithm:
+%       ----
+%       Threshold:
+%       ----
 %   ====
 %   Plot Results:
 %   ====
@@ -63,7 +68,13 @@ end
 % Set up the other initial parameters for the method
 tt = ti; y(1,:) = y0;
 np = 1; tp(np) = tt; yp(np,:) = y(1,:);
-i = 1;
+i = 1; 
+resetTime = zeros(m);
+threshCurrent = threshold;
+threshT = zeros(n,m);
+fireT = zeros(n,m);
+threshIT = zeros(n,m);
+fireIT = zeros(n,m);
 
 %==========================================================================
 %% Main Algorithm:
@@ -126,21 +137,79 @@ while(1)
         % to find the value of the function for the start of the next step
         y(i+1,:) = y(i,:) +phi*hh;
             % 2m flops for projecting to the next step
+            
+%--------------------------------------------------------------------------
+%%Intermediate Threshold
         
-        % Move to the next intermediate step in the approximation,
+        % Check each neuron to see which ones have fired.
+        for j=1:m
+        
+            % The neuron isn't firing at rest
+            threshIT(i,j) = false;
+            fireIT(i,j) = false;
+            
+            % If we are post fire on a previous neuron,
+            if ( tt < resetTime(j) )
+                % set firing voltage and move to the next neuron.
+                y(i+1,j) = fireV;
+                threshIT(i,j) = true;
+                continue
+            end
+        
+            % Any non-post fire neurons we check for threshold potential.
+            if ( y(i+1,j) >= threshCurrent )
+                y(i+1,j) = fireV;
+                threshIT(i,j) = true;
+                fireIT(i,j) = true;
+                resetTime(j) = tt + holdTime;
+                continue
+            end
+        end
+%--------------------------------------------------------------------------
+
+        % Set up the next intermediate step in the approximation,
         % and break once we reach the next given time interval
         tt = tt+hh;
         i = i+1;
         if tt>=tend,break,end
             % 1 flop for moving to the next step
     end
-    
+
     % Once we have reached the end of each time interval,
     % we record the values for output, and move to the next one.
     np = np+1; tp(np) = tt; yp(np,:) = y(i,:);
-    
+
     % Once we hit the end of tspan, we break the loop.
     if tt>=tf,break,end
+
+%--------------------------------------------------------------------------
+%%Firing Threshold
+        
+        % Check each neuron to see which ones have fired.
+        for j=1:m
+        
+            % The neuron isn't firing at rest
+            threshT(np,j) = false;
+            fireT(np,j) = false;
+            
+            % If we are post fire on a previous neuron,
+            if ( tt < resetTime(j) )
+                % keep firing voltage and move to the next neuron.
+                yp(np,j) = fireV;
+                threshT(np,j) = true;
+                fireT(np,j) = true;
+                continue
+            end
+        
+            % Any non-post fire neurons we check for threshold potential.
+            if ( yp(np,j) >= threshCurrent )
+                yp(np,j) = fireV;
+                resetTime(j) = tt + holdTime;
+                threshT(np,j) = true;
+                continue
+            end
+        end
+%--------------------------------------------------------------------------
 end
 
 %==========================================================================
