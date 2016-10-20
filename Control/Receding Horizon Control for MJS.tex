@@ -1,0 +1,128 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{arydshln}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Opening
+\title{Receding Horizon Control for MJS}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\lstset{basicstyle=\ttfamily,
+		language=Matlab,
+		keywordstyle=\color{blue},
+		commentstyle=\color{dkgreen},
+		stringstyle=\color{mauve},
+		identifierstyle=\bf
+		}
+
+Given the control system
+\[ x_{k} = A_{k-1}x_{k-1} + B_{k-1}u_{k-1} \]
+where $u$ is dependent on $x$, we can recursively calculate the highest order term in terms of all the lower ones:
+
+\[ x_{L} = \left[ \prod_{n = L-1}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{L-1} \left[ \prod_{n = L-1}^{l} A_{n} \right]B_{l-1}u_{l-1} + B_{L-1}u_{L-1} \]
+
+Use the following cost function:
+\[ J(x_{0}) = \sum_{k = 1}^{L} x_{k}^{\text{T}}R_{k}x_{k} + u_{k-1}^{\text{T}}Q_{k-1}u_{k-1} \]
+
+To minimize the control vector $u$ with respect to the cost function, we take it's derivative with respect to the highest order term, since it is calculated with respect to the others.
+\[ \frac{\partial}{\partial u_{L-1}} \left[ J(x_{0}) \right] = 2 \left( x_{L}^{\text{T}}R_{L}B_{L-1} + u_{L-1}^{\text{T}}Q_{L-1} \right) \]
+
+Then set this equal to zero to find critical points.
+\begin{align*}
+2 \left( x_{L}^{\text{T}}R_{L}B_{L-1} + u_{L-1}^{\text{T}}Q_{L-1} \right) &= 0 \\
+x_{L}^{\text{T}}R_{L}B_{L-1} + u_{L-1}^{\text{T}}Q_{L-1} &= 0 \\
+u_{L-1}^{\text{T}}Q_{L-1} &= -x_{L}^{\text{T}}R_{L}B_{L-1} \\
+u_{L-1}^{\text{T}} &= -x_{L}^{\text{T}}R_{L}B_{L-1}Q_{L-1}^{-1} \\
+u_{L-1} &= -Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} x_{L}
+\end{align*}
+
+Replace $x_{L}$ with the recursive formula, and solve for $u_{L-1}$
+\begin{align*}
+u_{L-1} &= -Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \left( \left[ \prod_{n = L-1}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{L-1} \left[ \prod_{n = L-1}^{l} A_{n} \right]B_{l-1}u_{l-1} + B_{L-1}u_{L-1} \right) \\
+u_{L-1} &= -Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \left( \left[ \prod_{n = L-1}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{L-1} \left[ \prod_{n = L-1}^{l} A_{n} \right]B_{l-1}u_{l-1} \right) - Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L}B_{L-1}u_{L-1}
+\end{align*}
+
+\begin{align*}
+u_{L-1} + Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L}B_{L-1}u_{L-1} &= -Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \left( \left[ \prod_{n = L-1}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{L-1} \left[ \prod_{n = L-1}^{l} A_{n} \right]B_{l-1}u_{l-1} \right) \\
+\left( I + Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L}B_{L-1} \right) u_{L-1} &= -Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \left( \left[ \prod_{n = L-1}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{L-1} \left[ \prod_{n = L-1}^{l} A_{n} \right]B_{l-1}u_{l-1} \right)
+\end{align*}
+
+\begin{align*}
+u_{L-1} &= - \left( I + Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L}B_{L-1} \right)^{-1} Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \left( \left[ \prod_{n = L-1}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{L-1} \left[ \prod_{n = L-1}^{l} A_{n} \right]B_{l-1}u_{l-1} \right) \\
+u_{L-1} &= -\left[ \left( Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \right)^{-1} \left( I + Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L}B_{L-1} \right) \right]^{-1} \left( \left[ \prod_{n = L-1}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{L-1} \left[ \prod_{n = L-1}^{l} A_{n} \right]B_{l-1}u_{l-1} \right) \\
+u_{L-1} &= -\left[ \left( Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \right)^{-1} + B_{L-1} \right]^{-1} \left( \left[ \prod_{n = L-1}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{L-1} \left[ \prod_{n = L-1}^{l} A_{n} \right]B_{l-1}u_{l-1} \right) \\
+u_{L-1} &= - B_{L-1}^{-1} \left[ \left( B_{L-1} Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \right)^{-1} + I \right]^{-1} \left( \left[ \prod_{n = L-1}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{L-1} \left[ \prod_{n = L-1}^{l} A_{n} \right]B_{l-1}u_{l-1} \right)
+u_{L-1} &= - B_{L-1}^{-1} \left[ \left( B_{L-1} Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \right)^{-1} + I \right]^{-1} \left( \left[ \prod_{n = L-1}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{L-1} \left[ \prod_{n = L-1}^{l} A_{n} \right]B_{l-1}u_{l-1} \right)
+\end{align*}
+
+Now call $\boxed{G_{k} = B_{k} Q_{k}^{-1} B_{k}^{\text{T}} R_{k+1}}$, call $\boxed{H_{k} = [ G_{k} + I ]^{-1}}$, and notice both the commutativity of the matrices, the following identity,
+\begin{align*}
+G_{k} H_{k} &= ( G_{k}^{-1} )^{-1} [ G_{k} + I ]^{-1} \\
+G_{k} H_{k} &= [ (G_{k} + I) G_{k}^{-1} ]^{-1} \\
+G_{k} H_{k} &= \boxed{[ I + G_{k}^{-1} ]^{-1} }\\
+G_{k} H_{k} &= [ G_{k}^{-1} (G_{k} + I) ]^{-1} \\
+G_{k} H_{k} &= [ G_{k} + I ]^{-1} G_{k} = H_{k} G_{k}
+\end{align*}
+and the combination that produces $G_{k}^{-1}$:
+\begin{align*}
+G_{k} H_{k} &= [ I + G_{k}^{-1} ]^{-1} \\
+(G_{k} H_{k})^{-1} &= I + G_{k}^{-1} \\
+(G_{k} H_{k})^{-1} - I &= G_{k}^{-1}
+\end{align*}
+
+Then starting from the smallest term possible, solve upwards in terms of the original using the result above: $\forall k \ge 1$
+\[ u_{k} = - B_{k}^{-1} G_{k} H_{k} \left( \left[ \prod_{n = k}^{0} A_{n} \right]x_{0} + \sum_{l = 1}^{k} \left[ \prod_{n = k}^{l} A_{n} \right]B_{l-1}u_{l-1} \right) \]
+\\
+For $k=0$, begin the process with:
+\[ \boxed{u_{0} = - B_{0}^{-1} G_{0} H_{0} A_{0} x_{0}} \]
+$k=1$ substitutes in the result,
+\begin{align*}
+u_{1} &= - B_{1}^{-1} G_{1} H_{1} \left( A_{1} A_{0} x_{0} + A_{1} B_{0} u_{0} \right) \\
+u_{1} &= - B_{1}^{-1} G_{1} H_{1} A_{1} \left( A_{0} x_{0} + B_{0} u_{0} \right) \\
+u_{1} &= - B_{1}^{-1} G_{1} H_{1} A_{1} \left( A_{0} x_{0} - G_{0} H_{0} A_{0} x_{0} \right) \\
+u_{1} &= - B_{1}^{-1} G_{1} H_{1} A_{1} \left( I - G_{0} H_{0} \right) A_{0} x_{0} \\
+u_{1} &= - B_{1}^{-1} G_{1} H_{1} A_{1} G_{0} H_{0} \left( (G_{0} H_{0})^{-1} - I \right) A_{0} x_{0} \\
+u_{1} &= - B_{1}^{-1} G_{1} H_{1} A_{1} G_{0} H_{0} G_{0}^{-1} A_{0} x_{0} \\
+u_{1} &= - B_{1}^{-1} G_{1} H_{1} A_{1} H_{0} A_{0} x_{0}
+\end{align*}
+\[ \boxed{u_{1} = - B_{1}^{-1} G_{1} H_{1} A_{1} H_{0} A_{0} x_{0}} \]
+
+And with $k=2$, the pattern should start to emerge:
+\begin{align*}
+u_{2} &= - B_{2}^{-1} G_{2} H_{2} \left( A_{2} A_{1} A_{0} x_{0} + A_{2} A_{1} B_{0} u_{0} + A_{2} B_{1} u_{1} \right) \\
+u_{2} &= - B_{2}^{-1} G_{2} H_{2} A_{2} \left( A_{1} A_{0} x_{0} + A_{1} B_{0} u_{0} + B_{1} u_{1} \right) \\
+u_{2} &= - B_{2}^{-1} G_{2} H_{2} A_{2} \left( A_{1} A_{0} x_{0} - A_{1} G_{0} H_{0} A_{0} x_{0}  - G_{1} H_{1} A_{1} H_{0} A_{0} x_{0} \right) \\
+u_{2} &= - B_{2}^{-1} G_{2} H_{2} A_{2} \left( A_{1} - A_{1} G_{0} H_{0}  - G_{1} H_{1} A_{1} H_{0} \right) A_{0} x_{0} \\
+u_{2} &= - B_{2}^{-1} G_{2} H_{2} A_{2} \left( A_{1} G_{0} H_{0}([G_{0} H_{0}]^{-1} - I) - G_{1} H_{1} A_{1} H_{0} \right) A_{0} x_{0} \\
+u_{2} &= - B_{2}^{-1} G_{2} H_{2} A_{2} \left( A_{1} H_{0} - G_{1} H_{1} A_{1} H_{0} \right) A_{0} x_{0} \\
+u_{2} &= - B_{2}^{-1} G_{2} H_{2} A_{2} \left( I - G_{1} H_{1} \right) A_{1} H_{0} A_{0} x_{0} \\
+u_{2} &= - B_{2}^{-1} G_{2} H_{2} A_{2} G_{1} H_{1} \left( [G_{1} H_{1}]^{-1} - I \right) A_{1} H_{0} A_{0} x_{0} \\
+u_{2} &= - B_{2}^{-1} G_{2} H_{2} A_{2} H_{1} A_{1} H_{0} A_{0} x_{0}
+\end{align*}
+
+\[ \boxed{ u_{2} = - B_{2}^{-1} G_{2} H_{2} A_{2} H_{1} A_{1} H_{0} A_{0} x_{0} } \]
+
+With these results, it seems that
+\[ \boxed{ u_{k} = -B_{k}^{-1} G_{k} \left( \prod_{i = k}^{0} H_{i} A_{i} \right) x_{0} } \]
+where
+\begin{align*}
+G_{k} &= B_{k} Q_{k}^{-1} B_{k}^{\text{T}} R_{k+1} \\
+H_{k} &= \left( G_{k} + I \right)^{-1}
+\end{align*}
+This should be enough to start simulations, though I have to complete the formal proof for the general case.
+
+\end{document}

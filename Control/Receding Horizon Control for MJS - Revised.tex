@@ -1,0 +1,150 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{arydshln}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Opening
+\title{Receding Horizon Control for MJS}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{theorem}{Theorem}[section]
+
+\lstset{basicstyle=\ttfamily,
+		language=Matlab,
+		keywordstyle=\color{blue},
+		commentstyle=\color{dkgreen},
+		stringstyle=\color{mauve},
+		identifierstyle=\bf
+		}
+
+Given the control system
+\[ x_{k} = A_{k-1}x_{k-1} + B_{k-1}u_{k-1} \]
+where $u$ is dependent on $x$, we can recursively calculate the highest order term in terms of all the lower ones: $\forall k \in\mathbb{N}$
+
+\begin{align*}
+x_{1} &= A_{0}x_{0} + B_{0}u_{0} \\
+x_{2} &= A_{1}\left( A_{0}x_{0} + B_{0}u_{0} \right) + B_{1}u_{1} \\
+&= A_{1}A_{0}x_{0} + A_{1}B_{0}u_{0} + B_{1}u_{1} \\
+x_{3} &= A_{2}x_{2} + B_{2}u_{2} \\
+&= A_{2}\left( A_{1}A_{0}x_{0} + A_{1}B_{0}u_{0} + B_{1}u_{1} \right) + B_{2}u_{2} \\
+&= A_{2}A_{1}A_{0}x_{0} + A_{2}A_{1}B_{0}u_{0} + A_{2}B_{1}u_{1} + B_{2}u_{2} \\
+& \qquad \vdots \\
+x_{k} &= \left( A_{k-1}\dots A_{1}A_{0} \right) x_{0} + \left( A_{k-2}\dots A_{2}A_{1} \right)B_{0}u_{0} + \left( A_{k-3}\dots A_{3}A_{2} \right)B_{1}u_{1} + \cdots \\ 
+& \qquad + \left( A_{k-2}A_{k-1} \right) B_{k-3}u_{k-3} + A_{k-1}B_{k-2}u_{k-2} + B_{k-1}u_{k-1}
+\end{align*}
+
+\[ x_{k+1} = \left[ \prod_{n = k}^{0} A_{n} \right]x_{0} + \sum_{j = 1}^{k} \left[ \prod_{n = k}^{j} A_{n} \right]B_{j-1}u_{j-1} + B_{k}u_{k} \]
+
+\paragraph{}
+So consider the following cost function:
+\begin{align*}
+J(x_{0}) &= \sum_{k = 1}^{L} x_{k}^{\text{T}}R_{k}x_{k} + \sum_{k = 0}^{L-1} u_{k}^{\text{T}}Q_{k}u_{k} \\
+J(x_{0}) &= \sum_{k = 1}^{L} x_{k}^{\text{T}}R_{k}x_{k} + u_{k-1}^{\text{T}}Q_{k-1}u_{k-1}
+\end{align*}
+Notice that there is no well defined $R_{0}$ or $Q_{L}$, and $x_{0}$ and $u_{L}$ are not taken into account.
+
+To minimize the cost function with respect to the control vector, $u$, we take it's derivative with respect to the highest order term, since it has no other variables that depend on it. So then, because
+\[ \frac{\partial}{\partial u_{k-1}} \left[ x_{k} \right] = \frac{\partial}{\partial u_{k-1}} \left[ A_{k-1}x_{k-1} + B_{k-1}u_{k-1} \right] = B_{k-1} \]
+the chain rule gives
+\[ \frac{\partial}{\partial u_{L-1}} \left[ J(x_{0}) \right] = 2 \left( x_{L}^{\text{T}}R_{L}B_{L-1} + u_{L-1}^{\text{T}}Q_{L-1} \right) \]
+Set this equal to zero to find critical points.
+\begin{align*}
+2 \left( x_{L}^{\text{T}}R_{L}B_{L-1} + u_{L-1}^{\text{T}}Q_{L-1} \right) &= 0 \\
+x_{L}^{\text{T}}R_{L}B_{L-1} + u_{L-1}^{\text{T}}Q_{L-1} &= 0 \\
+u_{L-1}^{\text{T}}Q_{L-1} &= -x_{L}^{\text{T}}R_{L}B_{L-1} \\
+u_{L-1}^{\text{T}} &= -x_{L}^{\text{T}}R_{L}B_{L-1}Q_{L-1}^{-1} \\
+u_{L-1} &= -Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} x_{L} \\
+u_{L-1} &= -Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \left( A_{L-1}x_{L-1} + B_{L-1}u_{L-1} \right) \\
+Q_{L-1}u_{L-1} &= -B_{L-1}^{\text{T}} R_{L} A_{L-1} x_{L-1} - B_{L-1}^{\text{T}} R_{L} B_{L-1} u_{L-1} \\
+B_{L-1}^{\text{T}} R_{L} B_{L-1} u_{L-1} + Q_{L-1}u_{L-1} &= -B_{L-1}^{\text{T}} R_{L} A_{L-1} x_{L-1} \\
+\left( B_{L-1}^{\text{T}} R_{L} B_{L-1} + Q_{L-1} \right) u_{L-1} &= -B_{L-1}^{\text{T}} R_{L} A_{L-1} x_{L-1}
+\end{align*}
+So assuming that $\left( B_{L-1}^{\text{T}} R_{L} B_{L-1} + Q_{L-1} \right)$ is invertible for all $L\in\mathbb{N}$, then
+\[ \boxed{u_{L-1} = -\left( B_{L-1}^{\text{T}} R_{L} B_{L-1} + Q_{L-1} \right)^{-1} B_{L-1}^{\text{T}} R_{L} A_{L-1} x_{L-1}} \]
+
+\paragraph{}
+Now equivalently, for all $k\in\mathbb{Z}^{+}$, we have assumed that $\left( B_{k}^{\text{T}} R_{k+1} B_{k} + Q_{k} \right)$ is invertible. So call 
+\[ \boxed{G_{k} = -\left( B_{k}^{\text{T}} R_{k+1} B_{k} + Q_{k} \right)^{-1} B_{k}^{\text{T}} R_{k+1} A_{k}} \]
+so that
+\[ \boxed{ u_{L-1} = G_{L-1} x_{L-1} }  \]
+
+\paragraph{}
+Starting with $L=1$ gives
+\[ \boxed{u_{0} = G_{0} x_{0}} \]
+and finding the next predicted position:
+\begin{align*}
+x_{1} &= A_{0}x_{0} + B_{0}u_{0} \\
+x_{1} &= A_{0} x_{0} + B_{0} G_{0} x_{0} \\
+x_{1} &= \left( A_{0} + B_{0} G_{0} \right) x_{0}
+\end{align*}
+Increase the prediction distance to $L=2$ and reuse the prediction for $x_{1}$ to solve for the next control:
+\begin{align*}
+u_{1} &= G_{1} x_{1} \\
+u_{1} &= G_{1} \left( A_{0} + B_{0} G_{0} \right) x_{0}
+\end{align*}
+Predict forward one more time to $L=3$ and the pattern will emerge:
+\begin{align*}
+x_{2} &= A_{1}x_{1} + B_{1}u_{1} \\
+x_{2} &= A_{1} \left( A_{0} + B_{0} G_{0} \right) x_{0} + B_{1} G_{1} \left( A_{0} + B_{0} G_{0} \right) x_{0} \\
+x_{2} &= \left( A_{1} + B_{1} G_{1} \right) \left( A_{0} + B_{0} G_{0} \right) x_{0}
+\end{align*}
+solving for $u_{2}$ just adds a $G_{2}$ term on the front.
+\begin{align*}
+u_{2} &= G_{2} x_{2} \\
+u_{2} &= G_{2} \left( A_{1} + B_{1} G_{1} \right) \left( A_{0} + B_{0} G_{0} \right) x_{0}
+\end{align*}
+
+\paragraph{}
+\begin{theorem}
+For any $k\in\mathbb{N}$, $k\le L$, if the predictions for $x_{1},\dots,x_{k-1}$ are used recursively, and the control vector $u_{k}$ is found by minimizing the cost function $J(x_{0})$ at each step, then
+\[ \boxed{ x_{k} = \left[ \prod_{n=k-1}^{0} A_{n} + B_{n} G_{n} \right] x_{0} } \]
+\end{theorem}
+
+\begin{proof}
+Notice that for $k\in\mathbb{N}$, if $k=1$, then as noted above:
+\[ \boxed{ x_{1} = \left( A_{0} + B_{0} G_{0} \right) x_{0} } \]
+
+Assume that for $k\ge 1$,
+\[ x_{k} = \left[ \prod_{n=k-1}^{0} A_{n} + B_{n} G_{n} \right] x_{0} \]
+
+Then by the derived control formula above: $\forall k\in\mathbb{N}$
+\[ \boxed{ u_{k-1} = G_{k-1} x_{k-1} } \]
+and using the original system equation, it follows that,
+\begin{align*}
+x_{k+1} &= A_{k}x_{k} + B_{k}u_{k} \\
+x_{k+1} &= A_{k}x_{k} + B_{k} G_{k} x_{k} \\
+x_{k+1} &= \left( A_{k} + B_{k} G_{k} \right) x_{k} \\
+x_{k+1} &= \left( A_{k} + B_{k} G_{k} \right)  \left[ \prod_{n=k-1}^{0} A_{n} + B_{n} G_{n} \right] x_{0} \\
+x_{k+1} &= \left[ \prod_{n=k}^{0} A_{n} + B_{n} G_{n} \right] x_{0}
+\end{align*}
+
+So by induction, the formula must be valid for all $k\in\mathbb{N}$
+\end{proof}
+
+\begin{corollary}
+For any $k,L\in\mathbb{N}$, $L>2$, and $k<L$; if the predictions for $x_{1},\dots,x_{k-1}$ are used recursively, and the control vector $u_{k}$ is found by minimizing the cost function $J(x_{0})$ at each step, then
+\[ \boxed{ u_{k} = G_{k} \left[ \prod_{n=k-1}^{0} A_{n} + B_{n} G_{n} \right] x_{0} } \]
+\end{corollary}
+
+\begin{proof}
+This follows directly from the theorem, and the derived control formula above (after shifting up one index): $\forall k\in\mathbb{N}$
+\begin{align*}
+u_{k} &= G_{k} x_{k} \\
+u_{k} &= G_{k} \left[ \prod_{n=k-1}^{0} A_{n} + B_{n} G_{n} \right] x_{0}
+\end{align*}
+\end{proof}
+
+\end{document}

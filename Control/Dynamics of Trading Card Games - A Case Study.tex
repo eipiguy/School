@@ -1,0 +1,71 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{arydshln}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Opening
+\title{The Dynamics and Control\\
+ of Trading Card Games\\
+A Case Study of ``Magic: The Gathering"}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\lstset{basicstyle=\ttfamily,
+		language=Matlab,
+		keywordstyle=\color{blue},
+		commentstyle=\color{dkgreen},
+		stringstyle=\color{mauve},
+		identifierstyle=\bf
+		}
+		
+\section{Introduction}
+
+Motivation: why do we care about trading cards games? What is there to be gained by studying them?
+
+\subsection{Setup}
+
+\paragraph{}
+In the play of each game, there are 5 defined locations that cards can occupy:
+\begin{itemize}
+\item the deck of unused cards (also called the library),
+\item the hand into which cards are normally drawn from the deck,
+\item the field of cards in active play,
+\item the graveyard of cards removed from active play,
+\item and a collection of cards removed from the game entirely, called exile.
+\end{itemize}
+
+Each person's cards are shuffled, cut, and placed in the library in the resulting order. Then, in the classic game, each player then draws seven cards, initial turn is determined by the flip of a coin, or some other fair selection process, and the game begins.
+
+\paragraph{}
+In the modern rendition of the game, the small sample size of the initial hand has been shown to occasionally produce critically one sided games. An additional offset common with turn based games also comes from the sizable advantage gained by playing first. Both of these have lead to developing what is called a ``mulligan." 
+
+If a player is not satisfied with their initial hand, they may choose to mulligan: forfeit the hand, reshuffle it into the deck, and draw a different starting hand of one less card. This process can be repeated as many times as is desired by both players, except that one can not mulligan with no cards in hand.
+
+\paragraph{}
+Finally, after each player has accepted a starting hand, players that have taken a mulligan are allowed to look at the top card of the deck, and then choose to either leave it where it is, or place it on the bottom of the deck. This is called ``skrying" one card, and it was in response to a long realization that starting with one less card gave just as much of a disadvantage as a bad initial hand.
+
+\subsection{Initial Definitions}
+So begin by noticing that 
+
+\subsection{Turn Structure}
+
+\section{Cards as Dynamic Forces}
+
+\section{Mana and Costs}
+
+\section{Probabilities of Play}
+
+\end{document}

@@ -47,6 +47,8 @@ if any(diff(tspan)<=0),error('tspan not in ascending order');end
 %==========================================================================
 %% Variable Declarations:
 
+gray = 0.25;    % Percentage black for background vector fields.
+
 m = length(y0);                 % Number of variables in the system
 n = length(tspan);              % Number of steps between endpoints
 ti = tspan(1); tf = tspan(n);   % Set variables first time and last time
@@ -65,16 +67,31 @@ else
     t = tspan; % Otherwise the times to approximate at are given explicitly
 end
 
-% Set up the other initial parameters for the method
-tt = ti; y(1,:) = y0;
-np = 1; tp(np) = tt; yp(np,:) = y(1,:);
-i = 1; 
+% Set up the other initial parameters for the method:
+
+% Inner solver starting conditions
+i=1; tt = ti; y(1,:) = y0;
+
+% Threshold condition initializations
 resetTime = zeros(m);
 threshCurrent = threshold;
 threshT = zeros(n,m);
 fireT = zeros(n,m);
-threshIT = zeros(n,m);
-fireIT = zeros(n,m);
+
+%--------------------------------------------------------------------------
+%% Initial Threshold Check
+for j=1:m
+    if y0(j)>=threshold;
+        y(i,j) = fireV(j);
+        threshT(i,j) = true;
+        fireT(i,j) = true;
+        resetTime(j) = tt + holdTime(j);
+    end
+end
+%--------------------------------------------------------------------------
+
+% Partition starting conditions
+np = 1; tp(np) = tt; yp(np,:) = y(1,:);
 
 %==========================================================================
 %% Main Algorithm:
@@ -139,29 +156,31 @@ while(1)
             % 2m flops for projecting to the next step
             
 %--------------------------------------------------------------------------
-%%Intermediate Threshold
+%% Firing Threshold:
         
         % Check each neuron to see which ones have fired.
         for j=1:m
         
+            iNext = i+1;
+            
             % The neuron isn't firing at rest
-            threshIT(i,j) = false;
-            fireIT(i,j) = false;
+            threshT(iNext,j) = false;
+            fireT(iNext,j) = false;
             
             % If we are post fire on a previous neuron,
             if ( tt < resetTime(j) )
                 % set firing voltage and move to the next neuron.
-                y(i+1,j) = fireV;
-                threshIT(i,j) = true;
+                y(iNext,j) = fireV(j);
+                threshT(iNext,j) = true;
                 continue
             end
         
             % Any non-post fire neurons we check for threshold potential.
-            if ( y(i+1,j) >= threshCurrent )
-                y(i+1,j) = fireV;
-                threshIT(i,j) = true;
-                fireIT(i,j) = true;
-                resetTime(j) = tt + holdTime;
+            if ( y(i+1,j) >= threshCurrent(j) )
+                y(iNext,j) = fireV(j);
+                threshT(iNext,j) = true;
+                fireT(iNext,j) = true;
+                resetTime(j) = tt + holdTime(j);
                 continue
             end
         end
@@ -173,43 +192,17 @@ while(1)
         i = i+1;
         if tt>=tend,break,end
             % 1 flop for moving to the next step
+            
     end
-
+    
     % Once we have reached the end of each time interval,
     % we record the values for output, and move to the next one.
-    np = np+1; tp(np) = tt; yp(np,:) = y(i,:);
+    np = np+1;
+    tp(np) = tt;
+    yp(np,:) = y(i,:);
 
     % Once we hit the end of tspan, we break the loop.
     if tt>=tf,break,end
-
-%--------------------------------------------------------------------------
-%%Firing Threshold
-        
-        % Check each neuron to see which ones have fired.
-        for j=1:m
-        
-            % The neuron isn't firing at rest
-            threshT(np,j) = false;
-            fireT(np,j) = false;
-            
-            % If we are post fire on a previous neuron,
-            if ( tt < resetTime(j) )
-                % keep firing voltage and move to the next neuron.
-                yp(np,j) = fireV;
-                threshT(np,j) = true;
-                fireT(np,j) = true;
-                continue
-            end
-        
-            % Any non-post fire neurons we check for threshold potential.
-            if ( yp(np,j) >= threshCurrent )
-                yp(np,j) = fireV;
-                resetTime(j) = tt + holdTime;
-                threshT(np,j) = true;
-                continue
-            end
-        end
-%--------------------------------------------------------------------------
 end
 
 %==========================================================================
@@ -258,18 +251,18 @@ end
 %display(ySpan);
 
 if m >= 2
-% Place phase graphs next to their corresponding time solutions
-for i=1:m-1
-    for j=i+1:m
-        subplot(sub(((i-1)*m)+j));
-        plot(yp(:,j),yp(:,i));
-        xlabel(sprintf('y(%d)',j));
-        ylabel(sprintf('y(%d)',i));
-        xlim manual;
-        ylim manual;
-        hold(sub(((i-1)*m)+j),'on');        
+    % Place phase graphs next to their corresponding time solutions
+    for i=1:m-1
+        for j=i+1:m
+            subplot(sub(((i-1)*m)+j));
+            plot(yp(:,j),yp(:,i));
+            xlabel(sprintf('y(%d)',j));
+            ylabel(sprintf('y(%d)',i));
+            xlim manual;
+            ylim manual;
+            hold(sub(((i-1)*m)+j),'on');        
+        end
     end
-end
 end
 %==========================================================================
 %% Make Video Frames:
@@ -332,7 +325,7 @@ for t=1:length(tp);
             %display(inMeshY);
             
             q = quiver(inMeshX,inMeshY,ones(size(dispGrid)),dispGrid);
-            q.Color = 'k';
+            q.Color = (1-gray)*[1,1,1];
             q.Marker = '+';
             q.MarkerSize = 3;
             q.ShowArrowHead = 'off';
@@ -357,6 +350,7 @@ for t=1:length(tp);
                 % Point at the correct subplot, 
                 subplot(sub(((i-1)*m)+j));
             
+                % Set up the rowvectors for each axis
                 %display(ySpan);
                 xPhRV = ySpan(1,j):ySpan(3,j):ySpan(2,j);
                 yPhRV = ySpan(1,i):ySpan(3,i):ySpan(2,i);
@@ -374,7 +368,9 @@ for t=1:length(tp);
                         % Create the y input to feed into dydt
                         % With each input slot as a row
                 
-                        yIn = yp(t,:);      % Start with the current y values
+                        % Start with the current y values
+                        yIn = yp(t,:);
+                        
                         % Set the current component to match a grid point
                         yIn(j) = xPhRV(xM);
                         yIn(i) = yPhRV(yM);
@@ -404,8 +400,9 @@ for t=1:length(tp);
                 %display(inMeshX);
                 %display(inMeshY);
                 
+                % Display the appropriate quiver graph
                 dq(i,j) = quiver(inMeshX,inMeshY,dispGridX,dispGridY);
-                dq(i,j).Color = 'k';
+                dq(i,j).Color = (1-gray)*[1,1,1];
                 dq(i,j).Marker = '+';
                 dq(i,j).MarkerSize = 3;
                 dq(i,j).ShowArrowHead = 'off';
@@ -417,6 +414,25 @@ for t=1:length(tp);
                 plot(yp(t,j),yp(t,i),'ro');
             end
         end
+        
+        % Point at the "inner" lower left hand plo
+        subplot(sub((m*(m-1))+2));
+        
+        % Plot the current firing state for each neuron
+        for j=1:m
+            if threshT(t,j)
+                plot(tp(t),j,'mo')
+                xlim([ti,tf]);
+                ylim([1,m]);
+                hold on;                
+            end
+            
+            if fireT(t,j)
+                plot(tp(t),j,'ko')        
+            end
+        end
+        %colormap(gray(2));
+        
     end
     frames(t) = getframe(figHist);
 end

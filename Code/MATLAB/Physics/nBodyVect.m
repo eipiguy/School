@@ -1,4 +1,4 @@
-function [ dXV ] = nBody( t, XV, m, G )
+function [ dXV1 ] = nBodyVect( t, XV1, dim, m, G )
 %% nBody:
 %   [ dx ] = nBody( t, x )
 %       Description
@@ -21,8 +21,19 @@ function [ dXV ] = nBody( t, XV, m, G )
 %##########################################################################
 %% Parameters:
 
+XV1 = XV1';
+
 % Numer of Masses
 n = length(m);
+
+XV = zeros(2*n,dim);
+
+for i=0:n-1
+    for j=1:dim
+        XV((2*i)+1,j) = XV1((2*dim*i)+j);
+    end
+end
+
 sysDim = size(XV);
 
 % Radius Matrix:
@@ -36,6 +47,7 @@ dv = zeros(n,sysDim(2));
 
 % Output Derivative Vector
 dXV = zeros(2*n,sysDim(2));
+dXV1 = zeros(size(XV1));
 
 %==========================================================================
 %% Main ODE:
@@ -76,5 +88,14 @@ for i=0:(n-1)
     dXV((2*i)+1,:) = XV(2*(i+1),:);
     dXV(2*(i+1),:) = dv(i+1,:);
 end
+
+for i=0:n-1
+    for j=1:dim
+        dXV1((2*dim*i)+j) = dXV((2*i)+1,j);
+    end
+end
+
+%dXV1 = dXV1';
+%display(dXV1);
 
 end    

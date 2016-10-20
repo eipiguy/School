@@ -37,7 +37,7 @@
 \paragraph{}
 To begin, let us consider some population of $N$ neurons and give them each an index from an indexing set $\{ 1, \dots, N \}$. We can then define a potential vector $V = ( V_{1}, \dots, V_{N} )$, where for any $i \in \{ 1, \dots, N \}$, $V_{i}$ is the electric potential difference across the membrane of the $i^{\text{th}}$ neuron.
 
-\begin{definition}[$\mathbf{v}(t) = \textbf{potential vector}$]\label{v}
+\begin{definition}[$\mathbf{v}(t) = \textbf{neuron potential vector}$]\label{v}
 Given a population of $N\in\mathbb{N}$ neurons, for any $i \in \{ 1, \dots, N \}$, let $V_{i}(t)\in\mathbb{R}$ be the electric potential difference (in volts, V) across the membrane of the $i^{\text{th}}$ neuron at time $t\in\mathbb{R}$.\\
 \\
 Define the potential difference, or voltage, vector $\mathbf{v}(t)\in\mathbb{R}^{N}\times\mathbb{R}$ to be $\mathbf{v}(t) = ( V_{1}(t), \dots, V_{N}(t) )$. 
@@ -54,10 +54,10 @@ Define the equilibrium potential difference, or voltage, vector $\mathbf{e}(t)\i
 
 Now, with $N$ total neurons, there are a possibility of $N^{2}$ inter-neural connections, or synapses. Each of these connections has an associated conductance which we idealize as constant. We set these conductances within a $N\times N$ matrix, where the columns index the sending neurons, and the rows index the receivers. Because of the directional nature of the connections, (received and delivered signals pass through separate channels) this matrix is not normally considered symmetric.
 
-\begin{definition}[$G = \textbf{conductance matrix}$]\label{G}
-Given a population of $N\in\mathbb{N}$ neurons, for any $i,j \in \{ 1, \dots, N \}$, let $G_{ij}\in\mathbb{R}$ be the conductance (multiplicative inverse of the resistance) of the channel starting from neuron $i$ and feeding into neuron $j$.\\
+\begin{definition}[$G(t) = \textbf{synapse conductance matrix}$]\label{G}
+Given a population of $N\in\mathbb{N}$ neurons, let $G \in \mathbb{R}^{N} \times \mathbb{R}^{N}$ where $G = [g_{ij}]_{i,j=1}^{n}$. \\
 \\
-Define the matrix, $G\in\mathbb{R}^{N}\times\mathbb{R}^{N}$, to have elements $[ G_{ij} ]_{i,j=1}^{N}$.
+Then for any $i,j \in \{ 1, \dots, N \}$ such that $i \ne j$, let $g_{ij}(t) \in \mathbb{R}$ represent the conductance of the connection passing from the $i^{\text{th}}$ neuron to the $j^{\text{th}}$ neuron at time $t\in\mathbb{R}$. In the case that $i=j$, let $g_{ii}(t)$ be the conductance across the membrane between the $i^{\text{th}}$ neuron and its immediate surroundings at time $t$.
 \end{definition}
 
 \subsection{Electrical Considerations}
@@ -74,13 +74,13 @@ And since current is defined as the change in charge over time, $I(t) = \dot{q}(
 \paragraph{}
 We can track the current in and out of a neuron very well conceptually, so this is a convenient way to correlate synaptic activity to the potential in each cell. Let us formalize these definitions before we move on.
 
-\begin{definition}[$\mathbf{c} = \textbf{capacitence vector}$]\label{c}
+\begin{definition}[$\mathbf{c} = \textbf{membrane capacitance vector}$]\label{c}
 Given a population of $N\in\mathbb{N}$ neurons, for any $i \in \{ 1, \dots, N \}$, let $C_{i}\in\mathbb{R}$ be the $i^{\text{th}}$ neuron's membrane capacitance (in farads, F).\\
 \\
 Define the capacitance vector $\mathbf{c}\in\mathbb{R}^{N}$ to be $\mathbf{c} = ( C_{1}, \dots, C_{N} )$. 
 \end{definition}
 
-\begin{definition}[$\mathbf{i}(t) = \textbf{current vector}$]\label{i}
+\begin{definition}[$\mathbf{i}(t) = \textbf{incoming current vector}$]\label{i}
 Given a population of $N\in\mathbb{N}$ neurons, for any $i \in \{ 1, \dots, N \}$, let $I_{i}(t)\in\mathbb{R}$ be the net current entering the $i^{\text{th}}$ neuron's membrane (in amperes, A) at time $t\in\mathbb{R}$.\\
 \\
 Define the current vector $\mathbf{i}(t)\in\mathbb{R}^{N}\times\mathbb{R}$ to be $\mathbf{i}(t) = ( I_{1}(t), \dots, I_{N}(t) )$.
@@ -92,10 +92,52 @@ giving us our differential equation
 \[ \mathbf{c}\cdot\dot{\mathbf{v}}(t) = G\mathbf{v}(t) \]
 
 \section{Equilibrium Dynamics}
-Since we know that each neuron self regulates to maintain a certain voltage, we must add in a ``leaking" term that maintains this by allowing each neuron to pull its associated equilibrium current from each synapse all times:
+
+\subsection{Self Regulation}
+
+\paragraph{}
+We know that each neuron self regulates to maintain a certain voltage. So think about our previous equation:
+\[ \mathbf{c}\cdot\dot{\mathbf{v}}(t) = G\mathbf{v}(t) \]
+If we consider
+\[ G(t) =
+\begin{bmatrix}
+g_{11}(t) & \cdots & g_{1n}(t) \\
+\vdots & \ddots & \vdots \\
+g_{n1}(t) & \cdots & g_{nn}(t) \\
+\end{bmatrix}
+\]
+Then for each $i,j \in \{ 1, \dots, n \}$ where $i \ne j$, each $g_{ij}(t)$  is the conductance across the synapse going from neuron $i$ to neuron $j$.\\
+
+It makes conceptual sense to add the currents coming from each attached neuron, but we must have the system account for the equilibrium state we see experimentally.
+
+\paragraph{}
+What is we considered an unconnected set of neurons?
+\[ G_{0} =
+\begin{bmatrix}
+g_{11} & \cdots & 0\\
+\vdots & \ddots & \vdots \\
+0 & \cdots & g_{nn} \\
+\end{bmatrix}
+\]
+
+The only non-zero are the diagonals, and these entries represent the conductance between the neuron and it's surroundings. If $\forall i$, $g_{ii} \ne 0$, then the potential of each neuron will either grow or shrink unbounded. So we must have another term if we hope to maintain equilibrium.
+
+\paragraph{}
+Instead of regulating the conductance, consider that each neuron is covered in protein pumps. They allow for both active and inactive transport of ions, and thus potential and current. We can use the experimentally found equilibrium vector $\mathbf{e}(t)$ to model this self regulating activity by assuming that each connection is a channel by which the neurons may exert their particular equilibrium potential:
 \begin{align*}
-\mathbf{c}\cdot\dot{\mathbf{v}}(t) &= G\mathbf{v}(t) - G\mathbf{e}\\
-	&= G \left( \mathbf{v}(t) - \mathbf{e} \right) 
+\mathbf{c}\cdot\dot{\mathbf{v}}(t) &= G\mathbf{v}(t) -G\mathbf{e}(t) \\
+\mathbf{c}\cdot\dot{\mathbf{v}}(t) &= G\left( \mathbf{v}(t) - \mathbf{e}(t)\right)
 \end{align*}
+
+\subsection{Coupling Strength}
+
+\paragraph{}
+It would be very nice if the conductance between each neuron was the same for all synapses of that type. The problem with this assumption is that each neuron may have more than one synapse connecting the same sender and receiver. To separate out the conductance of the physical synapses, we must first account for the coupling strength $w_{ij}$ that represents the number of synapses going from neuron $i$ to neuron $j$.
+
+\begin{definition}[$W(t) = \textbf{coupling strength matrix}$]\label{W}
+Given a population of $N\in\mathbb{N}$ neurons, let $W \in \mathbb{R}^{N} \times \mathbb{R}^{N}$ where $W = [w_{ij}]_{i,j=1}^{n}$. \\
+\\
+Then for any $i,j \in \{ 1, \dots, N \}$ such that $i \ne j$, let $w_{ij}(t) \in \mathbb{R}$ represent the number of synapses passing from the $i^{\text{th}}$ neuron to the $j^{\text{th}}$ neuron at time $t\in\mathbb{R}$. In the case that $i=j$, let $w_{ii}(t)=1$.
+\end{definition}
 
 \end{document}
