@@ -1,0 +1,373 @@
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{arydshln}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Opening
+\title{Receding Horizon Control for MJS}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{theorem}{Theorem}[section]
+
+\lstset{basicstyle=\ttfamily,
+		language=Matlab,
+		keywordstyle=\color{blue},
+		commentstyle=\color{dkgreen},
+		stringstyle=\color{mauve},
+		identifierstyle=\bf
+		}
+
+Given the control system
+\[ x_{k} = A_{k-1}x_{k-1} + B_{k-1}u_{k-1} \]
+where $u$ is dependent on $x$, we can recursively calculate the highest order term in terms of all the lower ones: $\forall k \in\mathbb{N}$
+
+\begin{align*}
+x_{1} &= A_{0}x_{0} + B_{0}u_{0} \\
+x_{2} &= A_{1}\left( A_{0}x_{0} + B_{0}u_{0} \right) + B_{1}u_{1} \\
+&= A_{1}A_{0}x_{0} + A_{1}B_{0}u_{0} + B_{1}u_{1} \\
+x_{3} &= A_{2}x_{2} + B_{2}u_{2} \\
+&= A_{2}\left( A_{1}A_{0}x_{0} + A_{1}B_{0}u_{0} + B_{1}u_{1} \right) + B_{2}u_{2} \\
+&= A_{2}A_{1}A_{0}x_{0} + A_{2}A_{1}B_{0}u_{0} + A_{2}B_{1}u_{1} + B_{2}u_{2} \\
+& \qquad \vdots \\
+x_{k} &= \left( A_{k-1}\dots A_{1}A_{0} \right) x_{0} + \left( A_{k-2}\dots A_{2}A_{1} \right)B_{0}u_{0} + \left( A_{k-3}\dots A_{3}A_{2} \right)B_{1}u_{1} + \cdots \\ 
+& \qquad + \left( A_{k-2}A_{k-1} \right) B_{k-3}u_{k-3} + A_{k-1}B_{k-2}u_{k-2} + B_{k-1}u_{k-1}
+\end{align*}
+
+\[ x_{k+1} = \left[ \prod_{n = k}^{0} A_{n} \right]x_{0} + \sum_{j = 1}^{k} \left[ \prod_{n = k}^{j} A_{n} \right]B_{j-1}u_{j-1} + B_{k}u_{k} \]
+
+\paragraph{}
+So consider the following cost function:
+\begin{align*}
+J(x_{0}) &= \sum_{k = 1}^{L} x_{k}^{\text{T}}R_{k}x_{k} + \sum_{k = 0}^{L-1} u_{k}^{\text{T}}Q_{k}u_{k} \\
+J(x_{0}) &= \sum_{k = 1}^{L} x_{k}^{\text{T}}R_{k}x_{k} + u_{k-1}^{\text{T}}Q_{k-1}u_{k-1}
+\end{align*}
+Notice that there is no well defined $R_{0}$ or $Q_{L}$, and $x_{0}$ and $u_{L}$ are not taken into account.
+
+To begin minimizing the cost function, $J$, with respect to the control vector, $u$, we take it's derivative with respect to the highest order term of $u$, since it has no other variables that depend on it. Then, because
+\[ \frac{\partial}{\partial u_{k-1}} \left[ x_{k} \right] = \frac{\partial}{\partial u_{k-1}} \left[ A_{k-1}x_{k-1} + B_{k-1}u_{k-1} \right] = B_{k-1} \]
+the chain rule gives
+\[ \frac{\partial}{\partial u_{L-1}} \left[ J(x_{0}) \right] = 2 \left( x_{L}^{\text{T}}R_{L}B_{L-1} + u_{L-1}^{\text{T}}Q_{L-1} \right) \]
+Set this equal to zero to find critical points.
+\begin{align*}
+2 \left( x_{L}^{\text{T}}R_{L}B_{L-1} + u_{L-1}^{\text{T}}Q_{L-1} \right) &= 0 \\
+x_{L}^{\text{T}}R_{L}B_{L-1} + u_{L-1}^{\text{T}}Q_{L-1} &= 0 \\
+u_{L-1}^{\text{T}}Q_{L-1} &= -x_{L}^{\text{T}}R_{L}B_{L-1} \\
+u_{L-1}^{\text{T}} &= -x_{L}^{\text{T}}R_{L}B_{L-1}Q_{L-1}^{-1} \\
+u_{L-1} &= -Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} x_{L} \\
+u_{L-1} &= -Q_{L-1}^{-1} B_{L-1}^{\text{T}} R_{L} \left( A_{L-1}x_{L-1} + B_{L-1}u_{L-1} \right) \\
+Q_{L-1}u_{L-1} &= -B_{L-1}^{\text{T}} R_{L} A_{L-1} x_{L-1} - B_{L-1}^{\text{T}} R_{L} B_{L-1} u_{L-1} \\
+B_{L-1}^{\text{T}} R_{L} B_{L-1} u_{L-1} + Q_{L-1}u_{L-1} &= -B_{L-1}^{\text{T}} R_{L} A_{L-1} x_{L-1} \\
+\left( B_{L-1}^{\text{T}} R_{L} B_{L-1} + Q_{L-1} \right) u_{L-1} &= -B_{L-1}^{\text{T}} R_{L} A_{L-1} x_{L-1}
+\end{align*}
+So assuming that $\left( B_{L-1}^{\text{T}} R_{L} B_{L-1} + Q_{L-1} \right)$ is invertible for all $L\in\mathbb{N}$, then
+\[ \boxed{u_{L-1} = -\left( B_{L-1}^{\text{T}} R_{L} B_{L-1} + Q_{L-1} \right)^{-1} B_{L-1}^{\text{T}} R_{L} A_{L-1} x_{L-1}} \]
+
+\paragraph{}
+So substitute this into the original system to find $x_{L}$:
+\begin{align*}
+x_{L} &= A_{L-1}x_{L-1} + B_{L-1}u_{L-1} \\
+x_{L} &= A_{L-1}x_{L-1} - B_{L-1} \left( B_{L-1}^{\text{T}} R_{L} B_{L-1} + Q_{L-1} \right)^{-1} B_{L-1}^{\text{T}} R_{L} A_{L-1} x_{L-1} \\
+x_{L} &= \left( A_{L-1} - B_{L-1} \left( B_{L-1}^{\text{T}} R_{L} B_{L-1} + Q_{L-1} \right)^{-1} B_{L-1}^{\text{T}} R_{L} A_{L-1} \right) x_{L-1} \\
+\end{align*}
+and let
+\[ \boxed{ G_{L-1} = \left( B_{L-1}^{\text{T}} R_{L} B_{L-1} + Q_{L-1} \right)^{-1} B_{L-1}^{\text{T}} R_{L} A_{L-1} } \]
+so that 
+\[ \boxed{ u_{L-1} = -G_{L-1} x_{L-1} } \]
+and
+\[ x_{L} = \left( A_{L-1} - B_{L-1} G_{L-1} \right) x_{L-1} \]
+And call
+\[ \boxed{ H_{L-1} = \left( A_{L-1} - B_{L-1} G_{L-1} \right) } \]
+so that 
+\[ \boxed{ x_{L} = H_{L-1} x_{L-1} } \]
+
+\paragraph{}
+Now reevaluate the cost function with the resulting derivations:
+\begin{align*}
+x_{L}^{\text{T}} R_{L} x_{L} &= \left( H_{L-1} x_{L-1} \right)^{\text{T}} R_{L} H_{L-1} x_{L-1} \\
+&= x_{L-1}^{\text{T}} H_{L-1}^{\text{T}} R_{L} H_{L-1} x_{L-1} \\
+u_{L-1}^{\text{T}} Q_{L-1} u_{L-1} &= \left( G_{L-1} x_{L-1} \right)^{\text{T}} R_{L} G_{L-1} x_{L-1} \\
+&= x_{L-1}^{\text{T}} G_{L-1}^{\text{T}} R_{L} G_{L-1} x_{L-1}
+\end{align*}
+
+Then
+\[ \boxed{ x_{L}^{\text{T}} R_{L} x_{L} + u_{L-1}^{\text{T}} Q_{L-1} u_{L-1} = x_{L-1}^{\text{T}} \left( H_{L-1}^{\text{T}} R_{L} H_{L-1} + G_{L-1}^{\text{T}} R_{L} G_{L-1} \right) x_{L-1} } \]
+
+\paragraph{}
+So consider $L \ge 2$. Substitute the result into the original system equation to reduce the number of terms by one.
+\begin{align*}
+J(x_{0}) &= \left( \sum_{k = 1}^{L-2} x_{k}^{\text{T}}R_{k}x_{k} + u_{k-1}^{\text{T}}Q_{k-1}u_{k-1} \right) + x_{L-1}^{\text{T}}R_{L-1}x_{L-1} + u_{L-2}^{\text{T}}Q_{L-2}u_{L-2} + x_{L}^{\text{T}}R_{L}x_{L} + u_{L-1}^{\text{T}}Q_{L-1}u_{L-1}
+\end{align*}
+The trailing terms become
+\begin{align*}
+&x_{L-1}^{\text{T}}R_{L-1}x_{L-1} + x_{L}^{\text{T}}R_{L}x_{L} + u_{L-1}^{\text{T}}Q_{L-1}u_{L-1}\\
+&= x_{L-1}^{\text{T}}R_{L-1}x_{L-1} + x_{L-1}^{\text{T}} \left( H_{L-1}^{\text{T}} R_{L} H_{L-1} + G_{L-1}^{\text{T}} R_{L} G_{L-1} \right) x_{L-1} \\
+&= x_{L-1}^{\text{T}} \left[ R_{L-1} + H_{L-1}^{\text{T}} R_{L} H_{L-1} + G_{L-1}^{\text{T}} R_{L} G_{L-1} \right] x_{L-1}
+\end{align*}
+Then, to simplify the math, call
+\[ \boxed{ R^{\star}_{L-1} = R_{L-1} + H_{L-1}^{\text{T}} R_{L} H_{L-1} + G_{L-1}^{\text{T}} R_{L} G_{L-1} } \]
+so that the last terms of the cost function reduce to
+\[ \boxed{ x_{L-1}^{\text{T}}R_{L-1}x_{L-1} + u_{L-2}^{\text{T}}Q_{L-2}u_{L-2} + x_{L}^{\text{T}}R_{L}x_{L} + u_{L-1}^{\text{T}}Q_{L-1}u_{L-1} = x_{L-1}^{\text{T}} R^{\star}_{L-1} x_{L-1} + u_{L-2}^{\text{T}}Q_{L-2}u_{L-2} } \]
+
+Now again since the last terms do not have anything else dependent on them, and since
+\[ \frac{\partial}{\partial u_{k-1}} \left[ x_{k} \right] = \frac{\partial}{\partial u_{k-1}} \left[ A_{k-1}x_{k-1} + B_{k-1}u_{k-1} \right] = B_{k-1} \]
+the chain rule with the new derivation gives
+\[ \frac{\partial}{\partial u_{L-2}} \left[ J(x_{0}) \right] = 2 \left( x_{L-1}^{\text{T}} R^{\star}_{L-1} B_{L-2} + u_{L-1}^{\text{T}}Q_{L-1} \right) \]
+and minimizing with respect to this term is equivalent to the process above, producing the following for $L \ge 2$:
+\[ \boxed{u_{L-2} = -\left( B_{L-2}^{\text{T}} R^{\star}_{L-1} B_{L-2} + Q_{L-2} \right)^{-1} B_{L-2}^{\text{T}} R^{\star}_{L-1} A_{L-2} x_{L-2}} \]
+\[ \boxed{ G_{L-2} = \left( B_{L-2}^{\text{T}} R^{\star}_{L-1} B_{L-2} + Q_{L-2} \right)^{-1} B_{L-2}^{\text{T}} R^{\star}_{L-1} A_{L-2} } \]
+\[ \boxed{ u_{L-2} = -G_{L-2} x_{L-2} } \]
+\[ x_{L-1} = \left( A_{L-2} - B_{L-2} G_{L-2} \right) x_{L-2} \]
+\[ \boxed{ H_{L-2} = \left( A_{L-2} - B_{L-2} G_{L-2} \right) } \]
+\[ \boxed{ x_{L-1} = H_{L-2} x_{L-2} } \]
+and for any $j\in\mathbb{N}$, where $L > j$, this can be repeated where
+\[ \boxed{u_{L-(j+1)} = -\left( B_{L-(j+1)}^{\text{T}} R^{\star}_{L-j} B_{L-(j+1)} + Q_{L-(j+1)} \right)^{-1} B_{L-(j+1)}^{\text{T}} R^{\star}_{L-j} A_{L-(j+1)} x_{L-(j+1)}} \]
+\[ \boxed{ G_{L-(j+1)} = \left( B_{L-(j+1)}^{\text{T}} R^{\star}_{L-j} B_{L-(j+1)} + Q_{L-(j+1)} \right)^{-1} B_{L-(j+1)}^{\text{T}} R^{\star}_{L-j} A_{L-(j+1)} } \]
+\[ \boxed{ u_{L-(j+1)} = -G_{L-(j+1)} x_{L-(j+1)} } \]
+\[ x_{L-j} = \left( A_{L-(j+1)} - B_{L-(j+1)} G_{L-j} \right) x_{L-(j+1)} \]
+\[ \boxed{ H_{L-(j+1)} = \left( A_{L-(j+1)} - B_{L-(j+1)} G_{L-(j+1)} \right) } \]
+\[ \boxed{ x_{L-j} = H_{L-(j+1)} x_{L-(j+1)} } \]
+\[ \boxed{ R^{\star}_{L-(j+1)} = R_{L-(j+1)} + H_{L-(j+1)}^{\text{T}} R^{\star}_{L-j} H_{L-(j+1)} + G_{L-(j+1)}^{\text{T}} R^{\star}_{L-j} G_{L-(j+1)} } \]
+all the way to the last terms in the cost function where:
+\[ x_{1}^{\text{T}}R_{1}x_{1} + u_{0}^{\text{T}}Q_{0}u_{0} + x_{2}^{\text{T}}R_{2}x_{2} + u_{1}^{\text{T}}Q_{1}u_{1} = x_{1}^{\text{T}} R^{\star}_{1} x_{1} + u_{0}^{\text{T}}Q_{0}u_{0} \]
+\[ \boxed{u_{0} = -\left( B_{0}^{\text{T}} R^{\star}_{1} B_{0} + Q_{0} \right)^{-1} B_{0}^{\text{T}} R^{\star}_{1} A_{0} x_{0}} \]
+\[ \boxed{ G_{0} = \left( B_{0}^{\text{T}} R^{\star}_{1} B_{0} + Q_{0} \right)^{-1} B_{0}^{\text{T}} R^{\star}_{1} A_{0} } \]
+\[ \boxed{ u_{0} = -G_{0} x_{0} } \]
+\[ \boxed{ x_{1} = \left( A_{0} - B_{0} G_{0} \right) x_{0} } \]
+
+\paragraph{}
+Then if $L>2$, for any $j\in\mathbb{Z}^{+}$ such that $j<L$, an explicit formula for $R^{\star}_{j}$ is needed.
+
+Begin by recalling the initial case,
+\[ \boxed{ R^{\star}_{L-1} = R_{L-1} + G_{L-1}^{\text{T}} R_{L} G_{L-1} + H_{L-1}^{\text{T}} R_{L} H_{L-1} } \]
+and noticing that we can write this as
+\[ R^{\star}_{L-1} = R_{L-1} +
+\begin{bmatrix}
+G_{L-1}^{\text{T}} & H_{L-1}^{\text{T}}
+\end{bmatrix}
+R_{L}
+\begin{bmatrix}
+G_{L-1} \\
+H_{L-1}
+\end{bmatrix}
+ \]
+Substituting this into the next iteration:
+\begin{align*}
+R^{\star}_{L-2} &= R_{L-2} \\
+&\qquad +
+\begin{bmatrix}
+G_{L-2}^{\text{T}} & H_{L-2}^{\text{T}}
+\end{bmatrix}
+R_{L-1}
+\begin{bmatrix}
+G_{L-2} \\
+H_{L-2}
+\end{bmatrix} +
+\begin{bmatrix}
+G_{L-2}^{\text{T}} & H_{L-2}^{\text{T}}
+\end{bmatrix}
+\left(
+\begin{bmatrix}
+G_{L-1}^{\text{T}} & H_{L-1}^{\text{T}}
+\end{bmatrix}
+R_{L}
+\begin{bmatrix}
+G_{L-1} \\
+H_{L-1}
+\end{bmatrix}
+\right)
+\begin{bmatrix}
+G_{L-2} \\
+H_{L-2}
+\end{bmatrix}
+\end{align*}
+and if we expand algebraically instead,
+\begin{align*}
+R^{\star}_{L-2} &= R_{L-2} \\
+&\qquad + G_{L-2}^{\text{T}} \left( R_{L-1} + G_{L-1}^{\text{T}} R_{L} G_{L-1} + H_{L-1}^{\text{T}} R_{L} H_{L-1} \right) G_{L-2} \\
+&\qquad + H_{L-2}^{\text{T}} \left( R_{L-1} + G_{L-1}^{\text{T}} R_{L} G_{L-1} + H_{L-1}^{\text{T}} R_{L} H_{L-1} \right) H_{L-2} \\
+R^{\star}_{L-2} &= R_{L-2} \\
+&\qquad + G_{L-2}^{\text{T}} R_{L-1} G_{L-2} + H_{L-2}^{\text{T}} R_{L-1} H_{L-2} \\ 
+&\qquad + G_{L-2}^{\text{T}} G_{L-1}^{\text{T}} R_{L} G_{L-1} G_{L-2} + H_{L-2}^{\text{T}} G_{L-1}^{\text{T}} R_{L} G_{L-1} H_{L-2} \\
+&\qquad + G_{L-2}^{\text{T}} H_{L-1}^{\text{T}} R_{L} H_{L-1} G_{L-2} + H_{L-2}^{\text{T}} H_{L-1}^{\text{T}} R_{L} H_{L-1} H_{L-2}
+\end{align*}
+Where in vector notation this becomes
+\begin{align*}
+R^{\star}_{L-2} &= R_{L-2} \\
+&\qquad + \begin{bmatrix}
+G_{L-2}^{\text{T}} & H_{L-2}^{\text{T}}
+\end{bmatrix}
+R_{L-1}
+\begin{bmatrix}
+G_{L-2} \\
+H_{L-2}
+\end{bmatrix} \\
+&\qquad + 
+\begin{bmatrix}
+G_{L-1}^{\text{T}} G_{L-2}^{\text{T}} & H_{L-2}^{\text{T}} G_{L-1}^{\text{T}} & G_{L-2}^{\text{T}} H_{L-1}^{\text{T}} & H_{L-1}^{\text{T}} H_{L-2}^{\text{T}}
+\end{bmatrix}
+R_{L-1}
+\begin{bmatrix}
+G_{L-1} G_{L-2} \\
+G_{L-1} H_{L-2} \\
+H_{L-1} G_{L-2} \\
+H_{L-1} H_{L-2}
+\end{bmatrix}
+\end{align*}
+
+\paragraph{}
+So consider following the improper notation:
+\[ \boxed{
+\begin{bmatrix}
+A \\
+B
+\end{bmatrix}
+\begin{bmatrix}
+C \\
+D \\
+E
+\end{bmatrix}
+=
+\begin{bmatrix}
+AC \\
+AD \\
+AE \\
+BC \\
+BD \\
+BE \\
+\end{bmatrix}
+}
+\]
+so that
+\[
+\begin{bmatrix}
+A \\
+B
+\end{bmatrix}^{2}
+=
+\begin{bmatrix}
+AA \\
+AB \\
+BA \\
+BB
+\end{bmatrix}
+\]
+\[ 
+\begin{bmatrix}
+A \\
+B
+\end{bmatrix}^{3}
+=
+\begin{bmatrix}
+AAA \\
+AAB \\
+ABA \\
+ABB \\
+BAA \\
+BAB \\
+BBA \\
+BBB
+\end{bmatrix}
+\]
+and so on.
+
+\paragraph{}
+Additionally, call
+\[ \boxed{
+\begin{bmatrix}
+A \\
+B
+\end{bmatrix}^{\text{T}\star}
+=
+\begin{bmatrix}
+A^{\text{T}} & B^{\text{T}}
+\end{bmatrix}
+} \]
+
+\paragraph{}
+so that we can write
+\[ \boxed{
+R^{\star}_{L-j} = R_{L-j} + \sum_{k=0}^{j-1} \left( \left( \prod_{h = k+1}^{j}
+\begin{bmatrix}
+G_{L-h} \\
+H_{L-h}
+\end{bmatrix}
+\right)^{\text{T}\star}
+R_{L-k}
+\left( \prod_{h = k+1}^{j}
+\begin{bmatrix}
+G_{L-h} \\
+H_{L-h}
+\end{bmatrix}
+\right)
+\right)
+} \]
+We must then use this to find an explicit formula for $G$, and consequently $H$.
+
+\paragraph{}
+So again, consider the initial cases for $G$ and $H$,
+\[ \boxed{ G_{L-1} = \left( B_{L-1}^{\text{T}} R_{L} B_{L-1} + Q_{L-1} \right)^{-1} B_{L-1}^{\text{T}} R_{L} A_{L-1} } \]
+\[ \boxed{ H_{L-1} = \left( A_{L-1} - B_{L-1} G_{L-1} \right) } \]
+and for the first case including an $R^{\star}$ term,
+\[ G_{L-2} = \left( B_{L-2}^{\text{T}} R^{\star}_{L-1} B_{L-2} + Q_{L-2} \right)^{-1} B_{L-2}^{\text{T}} R^{\star}_{L-1} A_{L-2} \]
+replace in the formula for $R^{\star}_{L-1}$.
+\begin{align*}
+G_{L-2} &= \left( B_{L-2}^{\text{T}} R^{\star}_{L-1} B_{L-2} + Q_{L-2} \right)^{-1} B_{L-2}^{\text{T}} R^{\star}_{L-1} A_{L-2} \\
+G_{L-2} &= \left( B_{L-2}^{\text{T}} \left( R_{L-1} + G_{L-1}^{\text{T}} R_{L} G_{L-1} + H_{L-1}^{\text{T}} R_{L} H_{L-1} \right) B_{L-2} + Q_{L-2} \right)^{-1} \\
+&\qquad B_{L-2}^{\text{T}} \left( R_{L-1} + G_{L-1}^{\text{T}} R_{L} G_{L-1} + H_{L-1}^{\text{T}} R_{L} H_{L-1} \right) A_{L-2} \\
+\end{align*}
+Then compute separately
+\begin{align*}
+H_{L-1}^{\text{T}} R_{L} H_{L-1} &= \left( A_{L-1} - B_{L-1} G_{L-1} \right)^{\text{T}} R_{L} \left( A_{L-1} - B_{L-1} G_{L-1} \right) \\
+&= \left( A_{L-1}^{\text{T}} - G_{L-1}^{\text{T}} B_{L-1}^{\text{T}} \right) R_{L} \left( A_{L-1} - B_{L-1} G_{L-1} \right) \\
+&= \left( A_{L-1}^{\text{T}} R_{L} - G_{L-1}^{\text{T}} B_{L-1}^{\text{T}} R_{L} \right) \left( A_{L-1} - B_{L-1} G_{L-1} \right) \\
+&= A_{L-1}^{\text{T}} R_{L} A_{L-1} + G_{L-1}^{\text{T}} B_{L-1}^{\text{T}} R_{L} B_{L-1} G_{L-1} - A_{L-1}^{\text{T}} R_{L} B_{L-1} G_{L-1} - G_{L-1}^{\text{T}} B_{L-1}^{\text{T}} R_{L} A_{L-1} \\
+&= 
+\begin{bmatrix}
+A_{L-1}^{\text{T}} & G_{L-1}^{\text{T}} B_{L-1}^{\text{T}}
+\end{bmatrix}
+R_{L}
+\begin{bmatrix}
+A_{L-1} \\
+B_{L-1} G_{L-1}
+\end{bmatrix}
+-
+\begin{bmatrix}
+A_{L-1}^{\text{T}} & G_{L-1}^{\text{T}} B_{L-1}^{\text{T}}
+\end{bmatrix}
+R_{L}
+\begin{bmatrix}
+B_{L-1} G_{L-1} \\
+A_{L-1}
+\end{bmatrix} \\ 
+&= 
+\begin{bmatrix}
+A_{L-1}^{\text{T}} & G_{L-1}^{\text{T}} B_{L-1}^{\text{T}}
+\end{bmatrix}
+R_{L}
+\left(
+\begin{bmatrix}
+A_{L-1} \\
+B_{L-1} G_{L-1}
+\end{bmatrix}
+-
+\begin{bmatrix}
+B_{L-1} G_{L-1} \\
+A_{L-1}
+\end{bmatrix}
+\right)
+\end{align*}
+
+\end{document}

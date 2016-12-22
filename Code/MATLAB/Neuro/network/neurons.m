@@ -7,7 +7,6 @@ function [ El, Er, C, GMax, W ] = neurons( n, ePercent, fsRatio, CP, iCP )
 %   ePercent = percentage of neurons that are excitatory
 %   fsRatio = fast to slow ratio of remaining inhibitory neurons
 % output:
-%   L =
 %   El =
 %   Er = 
 %   C = 

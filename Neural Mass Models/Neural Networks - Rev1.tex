@@ -1,0 +1,281 @@
+
+
+\documentclass{article}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{arydshln}
+\usepackage{listings,color}
+\usepackage{graphicx}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Opening
+\title{Neural Networks}
+\author{Neal D. Nesbitt}
+
+\begin{document}
+\maketitle
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\lstset{basicstyle=\ttfamily,
+		language=Matlab,
+		keywordstyle=\color{blue},
+		commentstyle=\color{dkgreen},
+		stringstyle=\color{mauve},
+		identifierstyle=\bf
+		}
+
+\section{Neurons as Dynamical Systems}
+We assume some basic knowledge of neuron physiology. From a dynamics system perspective, our main focuses are the electrical potential and related current flow between different parts of the system.
+
+\subsection{Competing Ion Transport Across the Membrane}
+To have an electrical potential, there must be some difference of charge. There are generally 4 species of free ions found in each neuron's local environment: sodium ($\text{Na}^{+}$), potassium ($\text{K}^{+}$), calcium ($\text{Ca}^{2+}$), and chloride ($\text{Cl}^{-}$). The difference in concentrations of each of these produces an associated potential difference.
+
+Each neuron is in effect a large membrane corral, embedded with protein channels, which ions traverse either passively through redistribution, or actively through the pumping action of these channels. 
+
+Passive redistribution is governed by the competing ion pressure of each species and the electrical ``pressure" exerted by their collective charges. When these forces balance each other the corresponding equilibrium potential $E$ is given by the Nernst Equation, where if $[\text{Ion}]_{\text{in}}$ and $[\text{Ion}]_{\text{out}}$ are the respective concentrations of a ion species inside and outside the membrane, then
+\[ E_{\text{ion}} =  \frac{RT}{zF} \ln \frac{[\text{Ion}]_{\text{out}}}{[\text{Ion}]_{\text{in}}} \]
+where $R$ is the universal gas constant, $F$ is Faraday's constant, $T$ is the absolute temperature of the system in degrees Kelvin, and $z$ is the valence of the ion species.
+\begin{align*}
+R &= 8315 \quad \text{mJ}/\text{K}\cdot\text{Mol} \\
+F &= 96480 \quad \text{coulombs}/\text{Mol}
+\end{align*}
+
+Experimentally determined values for a typical mammalian neuron at a body temperature of $T=37^{\circ}\text{C} = 310^{\circ}\text{K}$ are as follows (using $\log_{10}$ rather than $\ln$).
+\begin{align*}
+\min E_{\text{Na}^{+}} &= 62 \log \frac{145}{15} \text{mV} &\min E_{\text{Na}^{+}} &= 61 \quad \text{mV} \\
+\max E_{\text{Na}^{+}} &= 62 \log \frac{145}{5} \text{mV} &\max E_{\text{Na}^{+}} &= 90 \quad \text{mV} \\
+E_{\text{K}^{+}} &= 62 \log \frac{5}{140} \text{mV} &E_{\text{K}^{+}} &= -90 \quad \text{mV} \\
+E_{\text{Cl}^{-}} &= -62 \log \frac{110}{4} \text{mV} &E_{\text{Cl}^{-}} &= -89 \quad \text{mV} \\
+\min E_{\text{Ca}^{2+}} &= 31 \log \frac{2.5}{10^{-4}} \text{mV} &\min E_{\text{Ca}^{2+}} &= 136 \quad \text{mV} \\
+\max E_{\text{Ca}^{2+}} &= 31 \log \frac{5}{10^{-4}} \text{mV} &\max E_{\text{Ca}^{2+}} &= 146 \quad \text{mV}
+\end{align*}
+
+\subsection{Equivalent Circuit and Associated Dynamics}
+
+\section{Networks}
+
+\subsection{Neuronal Population Characteristics}
+
+\paragraph{}
+To begin, consider some population of $N\in\mathbb{N}$ neurons ordered in the following way: $P_{N} = \{ n_{1}, \dots, n_{N} \}$.
+\begin{definition}[$P =$ \textbf{neuron population}]\label{P}
+Consider a population of $N$ neurons for some $N\in\mathbb{N}$. Call the indexed collection of neurons $P_{N} = \{ n_{1}, \dots, n_{N} \}$.
+\end{definition}
+
+Then define a potential vector $V = ( V_{1}, \dots, V_{N} )$, where for any $i \in \{ 1, \dots, N \}$, $V_{i}$ is the electric potential difference across the membrane to ground of the $i^{\text{th}}$ neuron.
+
+\begin{definition}[$\mathbf{v}(t) = \textbf{neuron potential vector}$]\label{v}
+Given a population of neurons $P_{N}$, for any $i \in \{ 1, \dots, N \}$, let $V_{i}(t)\in\mathbb{R}$ be the electric potential difference (in volts, V) across the membrane of neuron $n_{i}$, with respect to its local surroundings, at time $t\in\mathbb{R}$.
+
+Call the neurons' potential difference, or voltage, vector $\mathbf{v}(t)\in\mathbb{R}^{N}\times\mathbb{R}$
+\[ \mathbf{v}(t) =
+\begin{bmatrix}
+V_{1}(t) \\
+\vdots \\
+V_{N}(t)
+\end{bmatrix} \]
+\end{definition}
+
+\paragraph{}
+In a normal resting state, each neuron sits at a particular equilibrium voltage given the neuron's characteristics. So define a corresponding equilibrium voltage vector to account for these.
+
+\begin{definition}[$\mathbf{e}(t) = \textbf{neuron equilibrium potential vector}$]\label{e}
+Given a population of neurons $P_{N}$, for any $i \in \{ 1, \dots, N \}$, let $E_{i}\in\mathbb{R}$ be the equilibrium, or resting, potential difference (in volts, V) across the membrane of neuron $n_{i}$, with respect to its local surroundings, at time $t\in\mathbb{R}$.
+
+Call the neurons' equilibrium potential difference, or voltage, vector $\mathbf{e}(t)\in\mathbb{R}^{N}\times\mathbb{R}$ 
+\[ \mathbf{e}(t) =
+\begin{bmatrix}
+E_{1}(t) \\
+\vdots \\
+E_{N}(t)
+\end{bmatrix} \]
+\end{definition}
+
+Now, with $N$ total neurons, there are a possibility of $N(N-1)$ inter-neural connections, or synapses (not counting self connections). Each of these synapses in an open state has an associated maximum conductance, which we idealize as constant. So set these conductances within a $N\times N$ matrix, where the columns index the sending neurons, and the rows index the receivers.
+
+Because the connections are directional in nature (that is to say that incoming and outgoing signals pass through separate channels) this matrix will not normally be symmetric.
+
+\begin{definition}[$G = \textbf{synapse maximum conductance matrix}$]\label{G}
+Given a population of neurons $P_{N}$, let $G(t) \in \mathbb{R}^{N} \times \mathbb{R}^{N}$ where $G = [g_{ij}]_{i,j=1}^{n}$.
+
+Then for any $i,j \in \{ 1, \dots, N \}$ such that $i \ne j$, let $g_{ij}\in \mathbb{R}$ be the maximum conductance of the collective synapse (in siemens, S) passing from neuron $n_{j}$ to neuron $n_{i}$ in an open state, and in the case that $i=j$, let $g_{ii}(t) = 0$ so that
+\[ G =
+\begin{bmatrix}
+0	&	g_{12}	& \cdots & g_{1N} \\
+g_{21}	& \ddots & \ddots & \vdots \\
+\vdots	& \ddots & \ddots & g_{(N-1)N} \\
+g_{N1}	& \cdots & g_{N(N-1)} & 0 \\
+\end{bmatrix}\]
+\end{definition}
+
+\subsection{Electrical Considerations}
+
+\paragraph{}
+Now we consider some properties of electrical circuits to gain the beginnings of a dynamic system. To start, imagine the membrane of each neuron as a capacitor that holds charged ions separated on either side of its surface. The capacitance of the membrane is the ratio of the separated charge over the corresponding potential difference:
+\[ C(t) = \frac{q(t)}{V(t)} \implies q(t) = C(t)V(t) \]
+
+If we idealize the capacitance as a fixed physical constant for each neuron ($\forall t$, $C(t)=C$), then the resulting derivative collapses:
+\[ \dot{q}(t) = V(t)\dot{C}(t) + C(t)\dot{V}(t) = C\dot{V}(t) \]
+And since current is defined as the change in charge over time, $I(t) = \dot{q}(t)$, then
+\[ C\dot{V}(t) = I(t) \]
+
+\paragraph{}
+We can track the current in and out of a neuron very well conceptually, so this is a convenient way to correlate synaptic activity to the potential in each cell. Let us formalize these definitions before we move on:
+
+\begin{definition}[$\mathbf{c} = \textbf{membrane capacitance vector}$]\label{c}
+Given a population of neurons $P_{N}$, for any $i \in \{ 1, \dots, N \}$, let $C_{i}\in\mathbb{R}$ be neuron $n_{i}$'s membrane capacitance (in farads, F).
+
+Call the neurons' membrane capacitance vector $\mathbf{c}\in\mathbb{R}^{N}$
+\[ \mathbf{c} =
+\begin{bmatrix}
+C_{1} \\
+\vdots \\
+C_{N}
+\end{bmatrix} \]
+\end{definition}
+
+Now to correlate the derivative and create a system of ODEs, we define the total incoming current for each neuron as follows:
+
+\begin{definition}[$\mathbf{i}(t) = \textbf{incoming current vector}$]\label{i}
+Given a population of neurons $P_{N}$, for any $i \in \{ 1, \dots, N \}$, let $I_{i}(t)\in\mathbb{R}$ be the net current entering the neuron $n_{i}$'s membrane (in amperes, A) at time $t\in\mathbb{R}$.
+
+Define the current vector $\mathbf{i}(t)\in\mathbb{R}^{N}\times\mathbb{R}$ to be 
+\[ \mathbf{i}(t) =
+\begin{bmatrix}
+I_{1}(t) \\
+\vdots \\
+I_{N}(t)
+\end{bmatrix} \]
+\end{definition}
+
+If we apply Ohm's law ($V=IR\implies I=V/R=gV$) across each synapse, then since the current is coming out of each neuron,
+\[ \mathbf{i}(t) = -G\mathbf{v}(t) \]
+So along with the equation derived above, we
+\[ \mathbf{i}(t) = \mathbf{c}\cdot\dot{\mathbf{v}}(t) \]
+gives us the differential equation of a passive, or unregulating, population of neurons with all synapses in a completely open state:
+\[ \boxed{ \mathbf{c}\cdot\dot{\mathbf{v}}(t) = -G\mathbf{v}(t) } \]
+
+If we imagine there is some perfect way to put an electrode on each individual neuron, we can also define the associated input current vector
+\begin{definition}[$\mathbf{u}(t) = \textbf{applied current vector}$]\label{u}
+Given a population of neurons $P_{N}$, for any $i \in \{ 1, \dots, N \}$, let $u_{i}(t)\in\mathbb{R}$ be the electrical current (in amps, A) applied to neuron $n_{i}\in P_{N}$ at time $t\in\mathbb{R}$.
+
+Call the neurons' applied current vector $\mathbf{u}(t)\in\mathbb{R}^{N}\times\mathbb{R}$
+\[ \mathbf{u}(t) =
+\begin{bmatrix}
+u_{1}(t) \\
+\vdots \\
+u_{N}(t)
+\end{bmatrix} \]
+\end{definition}
+
+\begin{definition}[$\mathbf{x}(t) =$ \textbf{natural current vector}]\label{x}
+Given a population of neurons $P_{N}$, with a net current vector $\mathbf{i}(t)$, and an applied current vector $\mathbf{u}(t)$, then for any $i \in \{ 1, \dots, N \}$, call $x_{i}(t)\in\mathbb{R}$ the ``natural current" for neuron $n_{i}$ where $x_{i}(t) = I_{i}(t) - u_{i}(t)$
+
+Then call the neurons' natural current vector
+\[ \mathbf{x}(t) =
+\begin{bmatrix}
+x_{1}(t) \\
+\vdots \\
+x_{N}(t)
+\end{bmatrix}
+= 
+\begin{bmatrix}
+I_{1}(t) - u_{1}(t)\\
+\vdots \\
+I_{N}(t) - u_{N}(t)
+\end{bmatrix}
+= \mathbf{i}(t) - \mathbf{u}(t)\]
+\end{definition}
+
+Since the natural current is the only thing depending on the conductance of the synapses,
+\[ \mathbf{x}(t) = G\mathbf{v}(t) \]
+and thus, we can add in the incoming current from $\mathbf{u}(t)$,
+\[ \boxed{ \mathbf{c}\cdot\dot{\mathbf{v}}(t) = -G\mathbf{v}(t) + \mathbf{u}(t) } \]
+which is the system of differential equations for an unregulating population of neurons, with an input, and with all synapses open.
+
+\section{Equilibrium Dynamics}
+
+\paragraph{} 
+Now we must account for the properties of a neuron to settle a particular voltage. This activity is due to the active and passive ion pumps embedded in each neuron's membrane. We must also model the gating activity at each synapse, as well as the different synapses' connection weights.
+
+\subsection{Self Regulation}
+
+\paragraph{}
+So consider the previous equation:
+\[ \mathbf{c}\cdot\dot{\mathbf{v}}(t) = -G\mathbf{v}(t) + \mathbf{u}(t)\]
+
+If the input electrodes were perfect conductors and $G$ were invertible, then this would lead to an ideal case where we could regulate the neurons ourself:
+\begin{align*}
+\mathbf{c}\cdot\dot{\mathbf{v}}(t) &= -G\mathbf{v}(t) + \mathbf{u}(t) \\
+&= -G\mathbf{v}(t) + GG^{-1}\mathbf{u}(t) \\
+\mathbf{c}\cdot\dot{\mathbf{v}}(t) &= -G\left[ \mathbf{v}(t) - G^{-1}\mathbf{u}(t) \right]
+\end{align*}
+This would progressively move the voltage vector $\mathbf{v}(t) \to G^{-1}\mathbf{u}(t)$ for our choice of said input.
+
+\paragraph{}
+Now $G$ may not be invertible, but in the same way, we know that the protein pumps embedded in each neuron produce a net current across their membranes. This somehow regulates them to an equilibrium voltage for each neuron, as previously defined on pg.\pageref{e}.
+
+If we ignore the mechanism and simply model the self regulation to the defined equilibrium vector as above, then we can model the system using the conductance across each membrane locally.
+
+\begin{definition}[$G_{\text{L}} = \textbf{local membrane conductance matrix}$]\label{c}
+Given a population of neurons $P_{N}$, for any $i \in \{ 1, \dots, N \}$, let $(g_{\text{L}})_{i}\in\mathbb{R}$ be neuron $n_{i}$'s local membrane conductance (in siemens, S).
+
+Call the neurons' membrane conductance vector $\mathbf{g}_{\text{L}}\in\mathbb{R}^{N}$
+\[ \mathbf{g}_{\text{L}} =
+\begin{bmatrix}
+(g_{\text{L}})_{1} \\
+\vdots \\
+(g_{\text{L}})_{N}
+\end{bmatrix} \]
+
+and call the neurons' membrane conductance matrix $G_{\text{L}}\in\mathbb{R}^{N\times N}$
+\[ G_{\text{L}} = \text{diag}\{ \mathbf{g}_{\text{L}} \} =
+\begin{bmatrix}
+(g_{\text{L}})_{1} & 0 & \cdots & 0 \\
+0 & \ddots & \ddots & \vdots \\
+\vdots & \ddots & \ddots & 0 \\
+0 & \cdots & 0 & (g_{\text{L}})_{N}
+\end{bmatrix} \]
+\end{definition}
+
+With all this in place, since $G$ has no diagonal entries, and $G_{\text{L}}$ is a purely diagonal matrix, then using the formula above to set the equilibrium,
+\begin{align*}
+\mathbf{c}\cdot\dot{\mathbf{v}}(t) &=  -G \mathbf{v}(t) + G_{\text{L}} \mathbf{e} + \mathbf{u}(t) \\
+\mathbf{c}\cdot\dot{\mathbf{v}}(t) &= -\left( G + G_{\text{L}} \right) \left[ \mathbf{v}(t) - \mathbf{e} \right] + \mathbf{u}(t)
+\end{align*}
+
+So call 
+\[ \boxed{ G^{\star} = G + G_{\text{L}} } \]
+so that 
+\[ \boxed{ \mathbf{c}\cdot\dot{\mathbf{v}}(t) = -G^{\star} \left[ \mathbf{v}(t) - \mathbf{e} \right] + \mathbf{u}(t) } \]
+
+This is the system of differential equations for an actively regulating population of neurons with all synapses open.
+
+\subsection{Coupling Strength and Gating}
+
+\paragraph{}
+So with the given system, each synapse has an equal ``weight," but we know that synapses are not all the same. They slowly change the strength of their connections to account for frequency of use, as well as a variety of other factors. So ignore the slow change, and instead look at small time scales where the connections can be considered constant. The corresponding weights of each will be as well, and we account for them with another matrix that augments the maximum conductance matrix.
+
+\begin{definition}[$W = \textbf{coupling strength matrix}$]\label{W}
+Given a population of neurons $P_{N}$, let $W \in \mathbb{R}^{N} \times \mathbb{R}^{N}$ where $W = [w_{ij}]_{i,j=1}^{n}$. \\
+\\
+Then for any $i,j \in \{ 1, \dots, N \}$ such that $i \ne j$, let $w_{ij}(t) \in \mathbb{R}$ represent the relative weight of the synapses passing from neuron $n_{i}$ to $n_{j}$ at time $t\in\mathbb{R}$. In the case that $i=j$, let $w_{ii}(t)=1$ so that
+\[ W =
+\begin{bmatrix}
+1	&	w_{12}	& \cdots & w_{1N} \\
+w_{21}	& \ddots & \ddots & \vdots \\
+\vdots	& \ddots & \ddots & w_{(N-1)N} \\
+w_{N1}	& \cdots & w_{N(N-1)} & 1 \\
+\end{bmatrix}\]
+\end{definition}
+
+In a similar way
+
+\end{document}
