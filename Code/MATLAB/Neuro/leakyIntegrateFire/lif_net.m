@@ -1,5 +1,5 @@
 function [ dVS ] = lif_net( t, VS, fireTimes, In, ...
-                                delay, rise, decay, gl, G, El, E, C )
+                                gl, G, El, E, C, delay, rise, decay )
 %% lif: leaky integrate and fire ODE, single neuron, row in/row out
 %   [ dVS ] = lif( t, VS )
 %       Uses a column vector representing transmembrane potential and 
@@ -12,15 +12,11 @@ function [ dVS ] = lif_net( t, VS, fireTimes, In, ...
 %       [   V = transmembrane potential in miliVolts (mV),
 %           S = gating variable   ]
 %   ----
-%   lastFire = last firing time vector in seconds (s)
+%   fireTimes = firing time vector in seconds (s)
 %   ----
 %   In(t) = Input control current function,
 %           current in microAmps/cm^(2) (mA/cm2),
 %           at a given time t in seconds (s)
-%   ----
-%   delay = gating reaction delay in seconds(s)
-%   rise = constant that determines gate opening rate
-%   decay = constant that determines gate closing rate
 %   ----
 %   gl = [ gl_1; gl_2; ...; gl_m ]
 %        membrane leak conductance vector 
@@ -28,7 +24,7 @@ function [ dVS ] = lif_net( t, VS, fireTimes, In, ...
 %   G =  [ g_11, ..., g_1m;
 %          ..., ..., ...;
 %          g_m1, ..., g_mm ]
-%       maximum conductance matrix of synapses
+%       weighted maximum conductance matrix of synapses
 %       from column neuron to row neuron in miliSiemens/centimeter^(2)
 %           note that g is not the conductance 
 %           of the individual connections, but a weighted conductance
@@ -40,8 +36,13 @@ function [ dVS ] = lif_net( t, VS, fireTimes, In, ...
 %        equilibrium potential vector for outbound synapses in miliVolts (mV)
 %   C = [ C_1; C_2; ...; C_m ]
 %       membrane capacitane vector in miliFarads/centimeter^(2) (mF/cm2)
-% output:
-%   dVS = vector that indicates direction of change in phase space
+%   ----
+%   delay = gating reaction delay in seconds(s)
+%   rise = constant that determines gate opening rate
+%   decay = constant that determines gate closing rate
+%==========================================================================
+%% Output:
+%   dVS = vector that indicates slope in phase space
 %##########################################################################
 %% Pseudocode:
 %   ####
@@ -84,21 +85,21 @@ dV = (In(t) - (gl.*(V-El)) - syn)./C;
 
 %--------------------------------------------------------------------------
 %% Synaptic Gate:
-
-% Set the decay term of the gating variable
-dS = -S./decay;
-
+if(S(i)==0)
+    dS(i)=0;
+else
+    % Set the decay term of the gating variable
+    dS = -S./decay;
+end
 
 % Check the firing times to see if any activate their respective gate
 for i=1:m
-    if ~isnan(lastVFire(i))
-        if (( 0 < (t-lastVFire(i)-delay) ) && ( (t-lastVFire(i)-delay) < 1 ))
-            dS(i) = dS(i) + ( (1-S(i))./rise );
+    if ~isnan(lastVFire(i)) && ~isempty(lastVFire(i))
+        if (( 0 < (t-lastVFire(i)-delay(i)) ) && ( (t-lastVFire(i)-delay(i)) < 1 ))
+            dS(i) = dS(i) + ( (1-S(i))./rise(i) );
         end
     end
 end
-
-% If there was a spike within 0.5 ms of the delay time, the gate opens
 
 %==========================================================================
 %% Reparse Output:
@@ -111,5 +112,6 @@ for i=1:m
 end
 
 dVS = dVS';
+
 %##########################################################################
 end

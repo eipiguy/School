@@ -1,4 +1,4 @@
-function [ frames ] = phasePlot( tSol, ySol, threshSol, dydt, varargin )
+function [ frames ] = phaseInPlot( tSol, In, ySol, threshSol, dydt, varargin )
 %% Template: One line summary of the function goes here
 %   Detailed explanation goes here
 %##########################################################################
@@ -58,20 +58,46 @@ scrsz = get(groot,'ScreenSize');
 
 % Resize the figure window in the middle of the screen at half it's size
 set(figHist,'Position', ...
-    [scrsz(3)/6 scrsz(4)/6 (2*scrsz(3))/3 (2*scrsz(4))/3]);
+    [0 0 scrsz(3) scrsz(4)]);
 
-% Set up the grid of sub plots for both time and phase.
-for i=1:(m^(2))
-    sub(i) = subplot(m,m,i);
+% Set up the grid of sub plots for inputs, time, and phase.
+for i=1:(m^(2)+m)
+    sub(i) = subplot(m,m+1,i);
     set(sub(i),'Visible','off');
+end
+
+%==========================================================================
+%% Input Plots:
+    
+% Place each input on the leftmost column
+for i=1:m
+    if mod(i,2)==1
+        subplot(sub(1+(i-1)*(m+1)));    % Point to the subplot
+        % Draw the variable solution and threshold vs time
+        plot(tSol,In(((i+1)./2),:));
+        ylim([ min([0,min(In(((i+1)./2),:))]), max([0,max(In(((i+1)./2),:))]) ]);
+        xLab = xlabel('t');                 % Label the x-axis as time
+        if mod(i,2)==1
+            yLab = ylabel(sprintf('In(%d)',(i+1)./2));  % Label the y-axis with the index
+        end
+        set(gca,'FontSize',4+(8/m));        % Size scales with number of plots
+        xLab.FontSize = 4+(8/m);
+        yLab.FontSize = 4+(8/m);
+    end
+    
+    % Turn on hold so the solutions stay visible
+    %xlim manual;
+    %ylim manual;
+    hold(sub(1+(i-1)*(m+1)),'on');
+    grid(sub(1+(i-1)*(m+1)),'on');
 end
 
 %==========================================================================
 %% Time Plots:
 
-% Place each time plot solution in the left column.
+% Place each time plot solution in the second column.
 for i=1:m
-    subplot(sub(1+(i-1)*m));    % Point to the subplot
+    subplot(sub(2+(i-1)*(m+1)));    % Point to the subplot
     % Draw the variable solution and threshold vs time
     plot(tSol,ySol(:,i),tSol,threshSol(:,i),'--');
     %plot(tSol,threshSol(:,i),'--');
@@ -92,8 +118,8 @@ for i=1:m
     % Turn on hold so the solutions stay visible
     xlim manual;
     ylim manual;
-    hold(sub(1+(i-1)*m),'on');
-    grid(sub(1+(i-1)*m),'on');
+    hold(sub(2+(i-1)*(m+1)),'on');
+    grid(sub(2+(i-1)*(m+1)),'on');
 end
 
 % Set the difference between solution grid points
@@ -109,14 +135,14 @@ if m >= 2
 % Place phase graphs next to their corresponding time solutions
 for i=1:m-1
     for j=i+1:m
-        subplot(sub(((i-1)*m)+j));  % Point to the subplot
+        subplot(sub(((i-1)*(m+1))+j+1));  % Point to the subplot
         plot(ySol(:,j),ySol(:,i));  % Plot the orbit in the phase plane
-        if mod(int8(j),2)==1
+        if mod(j,2)==1
             xLab = xlabel(sprintf('V(%d)',(j+1)./2));  % Label the y-axis with the index
         else
             xLab = xlabel(sprintf('S(%d)',j./2));  % Label the y-axis with the index
         end
-        if mod(j,2)==1
+        if mod(i,2)==1
             yLab = ylabel(sprintf('V(%d)',(i+1)./2));  % Label the y-axis with the index
         else
             yLab = ylabel(sprintf('S(%d)',i./2));  % Label the y-axis with the index
@@ -128,8 +154,8 @@ for i=1:m-1
         % Turn on hold so the solutions stay visible
         xlim manual;
         ylim manual;
-        hold(sub(((i-1)*m)+j),'on');
-        grid(sub(((i-1)*m)+j),'on');
+        hold(sub(((i-1)*(m+1))+j+1),'on');
+        grid(sub(((i-1)*(m+1))+j+1),'on');
     end
 end
 end
@@ -144,7 +170,7 @@ for i=1:m
     counter = 0;
     
     % Point at the correct subplot, 
-    subplot(sub(1+(i-1)*m));
+    subplot(sub(2+(i-1)*(m+1)));
     
     % For each component, start by finding the static quiver plot
     % of that component's solution with respect to time
@@ -189,10 +215,16 @@ end
 % For each time in the solution,
 % make a 
 for t=1:tL;
-    % Place each time plot solution in the left column.        
-    for i=1:m        
+    % Place each time plot solution in the second column.        
+    for i=1:m  
+        % if we are at an odd number, plot the input as well
+        if mod(i,2)==1
+            subplot(sub(1+(i-1)*(m+1)));
+            plot(tSol(t),In((i+1)./2,t),'ro')
+        end
+        
         % Point at the correct subplot, 
-        subplot(sub(1+(i-1)*m));
+        subplot(sub(2+(i-1)*(m+1)));
             
         % Overlay the current time point
         plot(tSol(t),ySol(t,i),'ro');
@@ -208,7 +240,7 @@ for t=1:tL;
                 % Start with the background dynamics
             
                 % Point at the correct subplot, 
-                subplot(sub(((i-1)*m)+j));
+                subplot(sub(((i-1)*(m+1))+j+1));
             
                 % Create the row vectors of key grid points for each axis
                 xPhRV = ySpan(1,j):ySpan(3,j):ySpan(2,j);

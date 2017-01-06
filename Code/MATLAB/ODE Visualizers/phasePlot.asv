@@ -77,9 +77,9 @@ for i=1:m
     %plot(tSol,threshSol(:,i),'--');
     xLab = xlabel('t');                 % Label the x-axis as time
     if mod(i,2)==1
-        yLab = ylabel(sprintf('V(%d)',(i+1)./2));  % Label the y-axis with the index
+        yLab = ylabel(sprintf('y(%d)',(i+1)/2));  % Label the y-axis with the index
     else
-        yLab = ylabel(sprintf('S(%d)',i./2));  % Label the y-axis with the index
+            yLab = ylabel(sprintf('y(%d)',(i+1)/2));  % Label the y-axis with the index
     end
     set(gca,'FontSize',4+(8/m));        % Size scales with number of plots
     xLab.FontSize = 4+(8/m);
@@ -111,16 +111,8 @@ for i=1:m-1
     for j=i+1:m
         subplot(sub(((i-1)*m)+j));  % Point to the subplot
         plot(ySol(:,j),ySol(:,i));  % Plot the orbit in the phase plane
-        if mod(int8(j),2)==1
-            xLab = xlabel(sprintf('V(%d)',(j+1)./2));  % Label the y-axis with the index
-        else
-            xLab = xlabel(sprintf('S(%d)',j./2));  % Label the y-axis with the index
-        end
-        if mod(j,2)==1
-            yLab = ylabel(sprintf('V(%d)',(i+1)./2));  % Label the y-axis with the index
-        else
-            yLab = ylabel(sprintf('S(%d)',i./2));  % Label the y-axis with the index
-        end
+        xlabel(sprintf('y(%d)',j)); % Label the x-axis as the greater dim
+        ylabel(sprintf('y(%d)',i)); % Label the y-axis as the lesser dim
         set(gca,'FontSize',4+(8/m));
         xLab.FontSize = 4+(8/m);
         yLab.FontSize = 4+(8/m);
